@@ -1,2933 +1,3812 @@
-﻿export const UNIT_DATA = [
+const UNIT_DATA = [
+
     {
         "group":  "Shared",
         "unitType":  "Artillery",
         "techLevel":  7,
         "unitName":  "Houfnice",
+        "unitNameCn":  "胡夫尼采火炮",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  0,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  0,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "Shared",
         "unitType":  "Artillery",
         "techLevel":  7,
         "unitName":  "Large Cast Bronze Mortar",
+        "unitNameCn":  "大型铸铜迫击炮",
         "fireOff":  2,
         "fireDef":  0,
         "shockOff":  0,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  0,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "Shared",
         "unitType":  "Artillery",
         "techLevel":  10,
         "unitName":  "Culverin",
+        "unitNameCn":  "长炮",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  0,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "Shared",
         "unitType":  "Artillery",
         "techLevel":  10,
         "unitName":  "Pedrero",
+        "unitNameCn":  "佩德雷罗炮",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  0,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "Shared",
         "unitType":  "Artillery",
         "techLevel":  13,
         "unitName":  "Large Cast Iron Cannon",
+        "unitNameCn":  "大型铸铁炮",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  0,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "Shared",
         "unitType":  "Artillery",
         "techLevel":  13,
         "unitName":  "Small Cast Iron Cannon",
+        "unitNameCn":  "小型铸铁炮",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "Shared",
         "unitType":  "Artillery",
         "techLevel":  16,
         "unitName":  "Chambered Demi Cannon",
+        "unitNameCn":  "后装半加农炮",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  1,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "Shared",
         "unitType":  "Artillery",
         "techLevel":  16,
         "unitName":  "Demi-Culverin",
+        "unitNameCn":  "半长炮",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  1,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "Shared",
         "unitType":  "Artillery",
         "techLevel":  18,
         "unitName":  "Leather Cannon",
+        "unitNameCn":  "皮制火炮",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  2,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Shared",
         "unitType":  "Artillery",
         "techLevel":  18,
         "unitName":  "Chambered Cannon",
+        "unitNameCn":  "后装加农炮",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Shared",
         "unitType":  "Artillery",
         "techLevel":  20,
         "unitName":  "Swivel Cannon",
+        "unitNameCn":  "回旋炮",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Shared",
         "unitType":  "Artillery",
         "techLevel":  20,
         "unitName":  "Howitzer",
+        "unitNameCn":  "榴弹炮",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Shared",
         "unitType":  "Artillery",
         "techLevel":  22,
         "unitName":  "Coehorn Mortar",
+        "unitNameCn":  "库霍恩迫击炮",
         "fireOff":  2,
         "fireDef":  4,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Shared",
         "unitType":  "Artillery",
         "techLevel":  22,
         "unitName":  "Horse Artillery",
+        "unitNameCn":  "骑马炮兵",
         "fireOff":  3,
         "fireDef":  3,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  4,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Shared",
         "unitType":  "Artillery",
         "techLevel":  25,
         "unitName":  "Royal Mortar",
+        "unitNameCn":  "皇家迫击炮",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  5,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Shared",
         "unitType":  "Artillery",
         "techLevel":  25,
         "unitName":  "Licorne",
+        "unitNameCn":  "独角兽炮",
         "fireOff":  3,
         "fireDef":  4,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Shared",
         "unitType":  "Artillery",
         "techLevel":  29,
         "unitName":  "Flying Battery",
+        "unitNameCn":  "机动炮兵连",
         "fireOff":  5,
         "fireDef":  4,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Shared",
         "unitType":  "Artillery",
         "techLevel":  29,
         "unitName":  "Grand Battery",
+        "unitNameCn":  "大炮兵连",
         "fireOff":  4,
         "fireDef":  4,
         "shockOff":  2,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "Halberd Infantry",
+        "unitNameCn":  "戟兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "Latin Medieval Infantry",
+        "unitNameCn":  "拉丁中世纪步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  0,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Galloglaigh Infantry",
+        "unitNameCn":  "盖洛格拉斯步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  2,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Longbow",
+        "unitNameCn":  "长弓兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Men at Arms",
+        "unitNameCn":  "披甲兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  0,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  9,
         "unitName":  "Condotta Infantry",
+        "unitNameCn":  "孔多塔步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  9,
         "unitName":  "Landsknecht Infantry",
+        "unitNameCn":  "兰茨克内希特步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  9,
         "unitName":  "Reformed Galloglaigh Infantry",
+        "unitNameCn":  "改良盖洛格拉斯步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  2,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  12,
         "unitName":  "Free Shooter Infantry",
+        "unitNameCn":  "自由射手步兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  3,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  12,
         "unitName":  "Tercio Infantry",
+        "unitNameCn":  "大方阵步兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  15,
         "unitName":  "Charge Infantry",
+        "unitNameCn":  "冲锋步兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  15,
         "unitName":  "Maurician Infantry",
+        "unitNameCn":  "毛里茨步兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  19,
         "unitName":  "Gustavian Infantry",
+        "unitNameCn":  "古斯塔夫步兵",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  19,
         "unitName":  "Highlanders Infantry",
+        "unitNameCn":  "高地步兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  4,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  19,
         "unitName":  "Reformed Tercio",
+        "unitNameCn":  "改良大方阵步兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  23,
         "unitName":  "Caroline Infantry",
+        "unitNameCn":  "卡洛林步兵",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  23,
         "unitName":  "Grenzer Infantry",
+        "unitNameCn":  "边防步兵",
         "fireOff":  2,
         "fireDef":  3,
         "shockOff":  2,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  23,
         "unitName":  "Line Infantry",
+        "unitNameCn":  "线列步兵",
         "fireOff":  3,
         "fireDef":  3,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Blue Coat Infantry",
+        "unitNameCn":  "蓝衣步兵",
         "fireOff":  3,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Frederickian Infantry",
+        "unitNameCn":  "腓特烈步兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Redcoat Infantry",
+        "unitNameCn":  "红衣步兵",
         "fireOff":  3,
         "fireDef":  4,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "White Coat Infantry",
+        "unitNameCn":  "白衣步兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  28,
         "unitName":  "Impulse Infantry",
+        "unitNameCn":  "突击步兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  28,
         "unitName":  "Square Infantry",
+        "unitNameCn":  "方阵步兵",
         "fireOff":  3,
         "fireDef":  4,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  30,
         "unitName":  "Drill Infantry",
+        "unitNameCn":  "操练步兵",
         "fireOff":  4,
         "fireDef":  4,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  30,
         "unitName":  "Jager Infantry",
+        "unitNameCn":  "猎兵",
         "fireOff":  4,
         "fireDef":  4,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  30,
         "unitName":  "Mixed Order Infantry",
+        "unitNameCn":  "混合序列步兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Infantry",
         "techLevel":  30,
         "unitName":  "Napoleonic Square",
+        "unitNameCn":  "拿破仑方阵",
         "fireOff":  4,
         "fireDef":  4,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Cavalry",
         "techLevel":  1,
         "unitName":  "Chevaunchee",
+        "unitNameCn":  "劫掠骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Cavalry",
         "techLevel":  1,
         "unitName":  "Latin Knights",
+        "unitNameCn":  "拉丁骑士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Cavalry",
         "techLevel":  10,
         "unitName":  "Schwarze Reiter",
+        "unitNameCn":  "黑衣骑兵",
         "fireOff":  1,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Cavalry",
         "techLevel":  14,
         "unitName":  "Latin Caracole Cavalry",
+        "unitNameCn":  "拉丁半旋骑兵",
         "fireOff":  1,
         "fireDef":  0,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Cavalry",
         "techLevel":  18,
         "unitName":  "Gallop Cavalry",
+        "unitNameCn":  "疾驰骑兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Cavalry",
         "techLevel":  23,
         "unitName":  "Arme Blanche Cavalry",
+        "unitNameCn":  "白刃骑兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  5,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  5,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Cavalry",
         "techLevel":  23,
         "unitName":  "Latin Dragoons",
+        "unitNameCn":  "拉丁龙骑兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  4,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Cavalry",
         "techLevel":  23,
         "unitName":  "Latin Hussars",
+        "unitNameCn":  "拉丁骠骑兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Cavalry",
         "techLevel":  26,
         "unitName":  "Carabiniers",
+        "unitNameCn":  "卡宾枪骑兵",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  5,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  3,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Cavalry",
         "techLevel":  26,
         "unitName":  "Reformed Latin Hussars",
+        "unitNameCn":  "改良拉丁骠骑兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  4,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Cavalry",
         "techLevel":  26,
         "unitName":  "Uhlan Cavalry",
+        "unitNameCn":  "乌兰骑兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  5,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Cavalry",
         "techLevel":  28,
         "unitName":  "Latin Chasseur",
+        "unitNameCn":  "拉丁猎骑兵",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  4,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  5,
+        "moraleDef":  5
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Cavalry",
         "techLevel":  28,
         "unitName":  "Latin Cuirassiers",
+        "unitNameCn":  "拉丁胸甲骑兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  5,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  4,
+        "moraleDef":  5
     },
-    {
+{
         "group":  "Western",
         "unitType":  "Cavalry",
         "techLevel":  28,
         "unitName":  "Latin Lancers",
+        "unitNameCn":  "拉丁枪骑兵",
         "fireOff":  0,
         "fireDef":  2,
         "shockOff":  6,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  5,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "Bardiche Infantry",
+        "unitNameCn":  "长柄斧步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  0,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "Eastern Medieval Infantry",
+        "unitNameCn":  "东欧中世纪步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Eastern Militia",
+        "unitNameCn":  "东欧民兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Infantry",
         "techLevel":  9,
         "unitName":  "Pike Infantry",
+        "unitNameCn":  "长矛步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  1,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Infantry",
         "techLevel":  12,
         "unitName":  "Defensive Eastern Musketeers",
+        "unitNameCn":  "东欧防御火枪兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Infantry",
         "techLevel":  12,
         "unitName":  "Offensive Eastern Musketeers",
+        "unitNameCn":  "东欧进攻火枪兵",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Infantry",
         "techLevel":  15,
         "unitName":  "Eastern Tercio",
+        "unitNameCn":  "东欧大方阵步兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Infantry",
         "techLevel":  15,
         "unitName":  "Soldaty Infantry",
+        "unitNameCn":  "索尔达提步兵",
         "fireOff":  3,
         "fireDef":  1,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Infantry",
         "techLevel":  19,
         "unitName":  "Saxon Infantry",
+        "unitNameCn":  "萨克森步兵",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Infantry",
         "techLevel":  23,
         "unitName":  "Petrine Infantry",
+        "unitNameCn":  "彼得步兵",
         "fireOff":  2,
         "fireDef":  3,
         "shockOff":  2,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Green Coat Infantry",
+        "unitNameCn":  "绿衣步兵",
         "fireOff":  3,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Infantry",
         "techLevel":  30,
         "unitName":  "Mass Infantry",
+        "unitNameCn":  "大规模步兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Cavalry",
         "techLevel":  1,
         "unitName":  "Druzhina Cavalry",
+        "unitNameCn":  "德鲁日纳骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  0,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Cavalry",
         "techLevel":  1,
         "unitName":  "Eastern Knights",
+        "unitNameCn":  "东欧骑士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Cavalry",
         "techLevel":  6,
         "unitName":  "Stratioti Cavalry",
+        "unitNameCn":  "斯特拉迪奥蒂骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Cavalry",
         "techLevel":  10,
         "unitName":  "Eastern Hussar",
+        "unitNameCn":  "东欧骠骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Cavalry",
         "techLevel":  14,
         "unitName":  "Eastern Caracole",
+        "unitNameCn":  "东欧半旋骑兵",
         "fireOff":  2,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Cavalry",
         "techLevel":  14,
         "unitName":  "Reformed Eastern Hussars",
+        "unitNameCn":  "改良东欧骠骑兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Cavalry",
         "techLevel":  14,
         "unitName":  "Southern Cossacks",
+        "unitNameCn":  "南方哥萨克",
         "fireOff":  0,
         "fireDef":  1,
         "shockOff":  4,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Cavalry",
         "techLevel":  22,
         "unitName":  "Cossack Cavalry",
+        "unitNameCn":  "哥萨克骑兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Cavalry",
         "techLevel":  22,
         "unitName":  "Winged Hussars",
+        "unitNameCn":  "翼骑兵",
         "fireOff":  0,
         "fireDef":  1,
         "shockOff":  5,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Cavalry",
         "techLevel":  26,
         "unitName":  "Lancers",
+        "unitNameCn":  "枪骑兵",
         "fireOff":  0,
         "fireDef":  1,
         "shockOff":  5,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Cavalry",
         "techLevel":  26,
         "unitName":  "Reformed Cossack Cavalry",
+        "unitNameCn":  "改良哥萨克骑兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  4,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Cavalry",
         "techLevel":  28,
         "unitName":  "Advanced Cossack Cavalry",
+        "unitNameCn":  "精锐哥萨克骑兵",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  4,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  5,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Eastern",
         "unitType":  "Cavalry",
         "techLevel":  28,
         "unitName":  "Eastern Cuirassiers",
+        "unitNameCn":  "东欧胸甲骑兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  5,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Anatolian (Ottoman)",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "Yaya Infantry",
+        "unitNameCn":  "亚亚步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Anatolian (Ottoman)",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Azab Infantry",
+        "unitNameCn":  "阿扎布步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Anatolian (Ottoman)",
         "unitType":  "Infantry",
         "techLevel":  9,
         "unitName":  "Janissary Infantry",
+        "unitNameCn":  "耶尼切里近卫军",
         "fireOff":  1,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Anatolian (Ottoman)",
         "unitType":  "Infantry",
         "techLevel":  12,
         "unitName":  "Sekban Infantry",
+        "unitNameCn":  "塞克班步兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  2,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Anatolian (Ottoman)",
         "unitType":  "Infantry",
         "techLevel":  19,
         "unitName":  "Reformed Janissary Infantry",
+        "unitNameCn":  "改良耶尼切里近卫军",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Anatolian (Ottoman)",
         "unitType":  "Infantry",
         "techLevel":  23,
         "unitName":  "Nizami Cedid Infantry",
+        "unitNameCn":  "新秩序步兵",
         "fireOff":  2,
         "fireDef":  3,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Anatolian (Ottoman)",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Eastern Carabinier",
+        "unitNameCn":  "东欧卡宾枪步兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Anatolian (Ottoman)",
         "unitType":  "Infantry",
         "techLevel":  30,
         "unitName":  "Eastern New Model Infantry",
+        "unitNameCn":  "东欧新模范步兵",
         "fireOff":  3,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Anatolian (Ottoman)",
         "unitType":  "Cavalry",
         "techLevel":  1,
         "unitName":  "Musellem Cavalry",
+        "unitNameCn":  "穆塞勒姆骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Anatolian (Ottoman)",
         "unitType":  "Cavalry",
         "techLevel":  6,
         "unitName":  "Timariot Cavalry",
+        "unitNameCn":  "蒂玛尔骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  2,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Anatolian (Ottoman)",
         "unitType":  "Cavalry",
         "techLevel":  10,
         "unitName":  "Spahi Cavalry",
+        "unitNameCn":  "西帕希骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Anatolian (Ottoman)",
         "unitType":  "Cavalry",
         "techLevel":  18,
         "unitName":  "Reformed Spahi Cavalry",
+        "unitNameCn":  "改良西帕希骑兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Anatolian (Ottoman)",
         "unitType":  "Cavalry",
         "techLevel":  23,
         "unitName":  "Toprakli Hit and Run Cavalry",
+        "unitNameCn":  "托普拉克利袭扰骑兵",
         "fireOff":  2,
         "fireDef":  0,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Anatolian (Ottoman)",
         "unitType":  "Cavalry",
         "techLevel":  26,
         "unitName":  "Eastern Skirmisher",
+        "unitNameCn":  "东欧散兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Anatolian (Ottoman)",
         "unitType":  "Cavalry",
         "techLevel":  26,
         "unitName":  "Eastern Uhlan",
+        "unitNameCn":  "东欧乌兰骑兵",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  3,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Anatolian (Ottoman)",
         "unitType":  "Cavalry",
         "techLevel":  28,
         "unitName":  "Reformed Lancer",
+        "unitNameCn":  "改良枪骑兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  5,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  5,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Anatolian (Ottoman)",
         "unitType":  "Cavalry",
         "techLevel":  28,
         "unitName":  "Toprakli Dragoons",
+        "unitNameCn":  "托普拉克利龙骑兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "Muslim Archer",
+        "unitNameCn":  "穆斯林弓箭手",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  0,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "Muslim Foot Soldier",
+        "unitNameCn":  "穆斯林步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Muslim Duel Infantry",
+        "unitNameCn":  "穆斯林决斗步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Infantry",
         "techLevel":  9,
         "unitName":  "Shamshir Infantry",
+        "unitNameCn":  "弯刀步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Infantry",
         "techLevel":  12,
         "unitName":  "Muslim Musketeer",
+        "unitNameCn":  "穆斯林火枪兵",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Infantry",
         "techLevel":  15,
         "unitName":  "Afsharid Reformed Infantry",
+        "unitNameCn":  "阿夫沙尔改良步兵",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Infantry",
         "techLevel":  23,
         "unitName":  "Reformed Muslim Musketeers",
+        "unitNameCn":  "改良穆斯林火枪兵",
         "fireOff":  1,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Muslim Mass Infantry",
+        "unitNameCn":  "穆斯林大规模步兵",
         "fireOff":  3,
         "fireDef":  4,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Infantry",
         "techLevel":  30,
         "unitName":  "Muslim Rifle Infantry",
+        "unitNameCn":  "穆斯林线膛枪步兵",
         "fireOff":  3,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Cavalry",
         "techLevel":  1,
         "unitName":  "Charge Cavalry",
+        "unitNameCn":  "冲锋骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Cavalry",
         "techLevel":  1,
         "unitName":  "Muslim Cavalry",
+        "unitNameCn":  "穆斯林骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  2,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Cavalry",
         "techLevel":  1,
         "unitName":  "Muslim Cavalry Archers",
+        "unitNameCn":  "穆斯林骑射手",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Cavalry",
         "techLevel":  6,
         "unitName":  "Shaybanid Cavalry",
+        "unitNameCn":  "昔班尼骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Cavalry",
         "techLevel":  10,
         "unitName":  "Qizilbash Cavalry",
+        "unitNameCn":  "红头骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Cavalry",
         "techLevel":  14,
         "unitName":  "Muslim Musketeer Cavalry",
+        "unitNameCn":  "穆斯林火枪骑兵",
         "fireOff":  1,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Cavalry",
         "techLevel":  18,
         "unitName":  "Afsharid Reformed Cavalry",
+        "unitNameCn":  "阿夫沙尔改良骑兵",
         "fireOff":  0,
         "fireDef":  1,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Cavalry",
         "techLevel":  18,
         "unitName":  "Musket Charge Cavalry",
+        "unitNameCn":  "火枪冲锋骑兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Cavalry",
         "techLevel":  23,
         "unitName":  "Ali Bey Reformed Cavalry",
+        "unitNameCn":  "阿里贝伊改良骑兵",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Cavalry",
         "techLevel":  23,
         "unitName":  "Muslim Dragoon",
+        "unitNameCn":  "穆斯林龙骑兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  3,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Cavalry",
         "techLevel":  28,
         "unitName":  "Durrani Cavalry",
+        "unitNameCn":  "杜兰尼骑兵",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  5,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Muslim",
         "unitType":  "Cavalry",
         "techLevel":  28,
         "unitName":  "Durrani Swivel Cavalry",
+        "unitNameCn":  "杜兰尼回旋骑兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  4,
-        "shockDef":  5
+        "shockDef":  5,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "Indian Foot Soldier",
+        "unitNameCn":  "印度步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Indian Arquebusier",
+        "unitNameCn":  "印度火绳枪兵",
         "fireOff":  1,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Infantry",
         "techLevel":  9,
         "unitName":  "Poligar Infantry",
+        "unitNameCn":  "波利加尔步兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Infantry",
         "techLevel":  9,
         "unitName":  "Toofangchis",
+        "unitNameCn":  "图方奇火枪兵",
         "fireOff":  1,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  2,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Infantry",
         "techLevel":  12,
         "unitName":  "Akbarid Musketeers",
+        "unitNameCn":  "阿克巴火枪兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Infantry",
         "techLevel":  12,
         "unitName":  "South Indian Infantry",
+        "unitNameCn":  "南印度步兵",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Infantry",
         "techLevel":  18,
         "unitName":  "Deccani Musket Infantry",
+        "unitNameCn":  "德干火枪步兵",
         "fireOff":  3,
         "fireDef":  3,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Infantry",
         "techLevel":  18,
         "unitName":  "North Indian Musket Infantry",
+        "unitNameCn":  "北印度火枪步兵",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Infantry",
         "techLevel":  23,
         "unitName":  "Telingas",
+        "unitNameCn":  "特林加步兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "North Indian Sepoy",
+        "unitNameCn":  "北印度西帕依",
         "fireOff":  3,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Infantry",
         "techLevel":  30,
         "unitName":  "Indian Drill Infantry",
+        "unitNameCn":  "印度操练步兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Cavalry",
         "techLevel":  1,
         "unitName":  "Elephant Archers",
+        "unitNameCn":  "战象弓箭手",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Cavalry",
         "techLevel":  1,
         "unitName":  "Indian Cavalry",
+        "unitNameCn":  "印度骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  0,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Cavalry",
         "techLevel":  6,
         "unitName":  "Indian Cavalry Archers",
+        "unitNameCn":  "印度骑射手",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Cavalry",
         "techLevel":  10,
         "unitName":  "Mansabdar Cavalry",
+        "unitNameCn":  "曼萨卜达尔骑兵",
         "fireOff":  1,
         "fireDef":  0,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Cavalry",
         "techLevel":  14,
         "unitName":  "Dai-Phat Cavalry",
+        "unitNameCn":  "戴帕特骑兵",
         "fireOff":  2,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Cavalry",
         "techLevel":  17,
         "unitName":  "Maratha Raiders",
+        "unitNameCn":  "马拉塔突袭骑兵",
         "fireOff":  0,
         "fireDef":  2,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Cavalry",
         "techLevel":  23,
         "unitName":  "Deccani Light Cavalry",
+        "unitNameCn":  "德干轻骑兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Cavalry",
         "techLevel":  28,
         "unitName":  "Mysorean Light Cavalry",
+        "unitNameCn":  "迈索尔轻骑兵",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  4,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  3,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Indian",
         "unitType":  "Cavalry",
         "techLevel":  28,
         "unitName":  "Sowars",
+        "unitNameCn":  "索瓦尔骑兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  4,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "Asian Longbow",
+        "unitNameCn":  "亚洲长弓兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  0,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "Asian Longspear Infantry",
+        "unitNameCn":  "亚洲长矛步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  0,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  0,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "East Asian Spearmen",
+        "unitNameCn":  "东亚矛兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  0,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Defensive Asian Foot Soldier",
+        "unitNameCn":  "亚洲防御步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Offensive Asian Foot Soldier",
+        "unitNameCn":  "亚洲进攻步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  2,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Infantry",
         "techLevel":  9,
         "unitName":  "Asian Arquebusier",
+        "unitNameCn":  "亚洲火绳枪兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Infantry",
         "techLevel":  12,
         "unitName":  "Banner Infantry",
+        "unitNameCn":  "八旗步兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Infantry",
         "techLevel":  15,
         "unitName":  "Asian Mass Infantry",
+        "unitNameCn":  "亚洲大规模步兵",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Infantry",
         "techLevel":  19,
         "unitName":  "Asian Musketeer",
+        "unitNameCn":  "亚洲火枪兵",
         "fireOff":  3,
         "fireDef":  3,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Reformed Asian Musketeer",
+        "unitNameCn":  "改良亚洲火枪兵",
         "fireOff":  4,
         "fireDef":  4,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Cavalry",
         "techLevel":  1,
         "unitName":  "Archer Cavalry",
+        "unitNameCn":  "弓骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  0,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Cavalry",
         "techLevel":  1,
         "unitName":  "East Asian Archer Cavalry",
+        "unitNameCn":  "东亚弓骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Cavalry",
         "techLevel":  6,
         "unitName":  "Asian Steppe Cavalry",
+        "unitNameCn":  "亚洲草原骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Cavalry",
         "techLevel":  6,
         "unitName":  "Samurai Cavalry",
+        "unitNameCn":  "武士骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  2,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Cavalry",
         "techLevel":  10,
         "unitName":  "Reformed Asian Steppe Cavalry",
+        "unitNameCn":  "改良亚洲草原骑兵",
         "fireOff":  1,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Cavalry",
         "techLevel":  14,
         "unitName":  "Asian Charge Cavalry",
+        "unitNameCn":  "亚洲冲锋骑兵",
         "fireOff":  0,
         "fireDef":  1,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Cavalry",
         "techLevel":  17,
         "unitName":  "Banner Cavalry",
+        "unitNameCn":  "八旗骑兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Cavalry",
         "techLevel":  23,
         "unitName":  "Asian Dragoons",
+        "unitNameCn":  "亚洲龙骑兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Cavalry",
         "techLevel":  28,
         "unitName":  "Green Standard Cavalry",
+        "unitNameCn":  "绿营骑兵",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  4,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Chinese",
         "unitType":  "Cavalry",
         "techLevel":  28,
         "unitName":  "Reformed Asian Cavalry",
+        "unitNameCn":  "改良亚洲骑兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  5,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  3,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Nomadic",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "Eastern Archers",
+        "unitNameCn":  "东欧弓箭手",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Nomadic",
         "unitType":  "Infantry",
         "techLevel":  9,
         "unitName":  "Steppe Raiders",
+        "unitNameCn":  "草原突袭步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Nomadic",
         "unitType":  "Infantry",
         "techLevel":  12,
         "unitName":  "Steppe Footmen",
+        "unitNameCn":  "草原步兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Nomadic",
         "unitType":  "Infantry",
         "techLevel":  15,
         "unitName":  "Steppe Musketeers",
+        "unitNameCn":  "草原火枪兵",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Nomadic",
         "unitType":  "Infantry",
         "techLevel":  19,
         "unitName":  "Steppe Infantry",
+        "unitNameCn":  "草原步兵队",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Nomadic",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Steppe Rifles",
+        "unitNameCn":  "草原线膛枪兵",
         "fireOff":  2,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Nomadic",
         "unitType":  "Infantry",
         "techLevel":  30,
         "unitName":  "Reformed Steppe Rifles",
+        "unitNameCn":  "改良草原线膛枪兵",
         "fireOff":  3,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Nomadic",
         "unitType":  "Cavalry",
         "techLevel":  1,
         "unitName":  "Eastern Steppe Cavalry",
+        "unitNameCn":  "东部草原骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Nomadic",
         "unitType":  "Cavalry",
         "techLevel":  1,
         "unitName":  "Eastern Swarm Cavalry",
+        "unitNameCn":  "东部集群骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  2,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Nomadic",
         "unitType":  "Cavalry",
         "techLevel":  10,
         "unitName":  "Steppe Riders",
+        "unitNameCn":  "草原骑手",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Nomadic",
         "unitType":  "Cavalry",
         "techLevel":  14,
         "unitName":  "Steppe Lancers",
+        "unitNameCn":  "草原枪骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Nomadic",
         "unitType":  "Cavalry",
         "techLevel":  18,
         "unitName":  "Mounted Steppe Raiders",
+        "unitNameCn":  "草原骑乘突袭兵",
         "fireOff":  0,
         "fireDef":  1,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Nomadic",
         "unitType":  "Cavalry",
         "techLevel":  23,
         "unitName":  "Steppe Cavalry",
+        "unitNameCn":  "草原骑兵队",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Nomadic",
         "unitType":  "Cavalry",
         "techLevel":  28,
         "unitName":  "Steppe Uhlans",
+        "unitNameCn":  "草原乌兰骑兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  5,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "African Clubmen",
+        "unitNameCn":  "非洲棍棒兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "African Spearmen",
+        "unitNameCn":  "非洲矛兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  0,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Central African Warrior",
+        "unitNameCn":  "中非战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "North African Warrior",
+        "unitNameCn":  "北非战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "South African Warrior",
+        "unitNameCn":  "南非战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  2,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "West African Warrior",
+        "unitNameCn":  "西非战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  1,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  12,
         "unitName":  "African Forest Warriors",
+        "unitNameCn":  "非洲丛林战士",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  12,
         "unitName":  "African Hill Warriors",
+        "unitNameCn":  "非洲山地战士",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  12,
         "unitName":  "African Mountain Warriors",
+        "unitNameCn":  "非洲高山战士",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  1,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  12,
         "unitName":  "African Plains Warriors",
+        "unitNameCn":  "非洲平原战士",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  15,
         "unitName":  "Central African Musketeers",
+        "unitNameCn":  "中非火枪兵",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  15,
         "unitName":  "East African Musketeers",
+        "unitNameCn":  "东非火枪兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  15,
         "unitName":  "North African Musketeers",
+        "unitNameCn":  "北非火枪兵",
         "fireOff":  2,
         "fireDef":  3,
         "shockOff":  2,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  1,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  15,
         "unitName":  "South African Musketeers",
+        "unitNameCn":  "南非火枪兵",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  23,
         "unitName":  "Central African Guerrillas",
+        "unitNameCn":  "中非游击兵",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  23,
         "unitName":  "East African Guerrillas",
+        "unitNameCn":  "东非游击兵",
         "fireOff":  3,
         "fireDef":  3,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  23,
         "unitName":  "North African Guerrillas",
+        "unitNameCn":  "北非游击兵",
         "fireOff":  2,
         "fireDef":  3,
         "shockOff":  2,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  2,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Westernized Central African Inf.",
+        "unitNameCn":  "西化中非步兵",
         "fireOff":  3,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Westernized East African Inf.",
+        "unitNameCn":  "西化东非步兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Westernized North African Inf.",
+        "unitNameCn":  "西化北非步兵",
         "fireOff":  3,
         "fireDef":  4,
         "shockOff":  2,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Westernized South African Inf.",
+        "unitNameCn":  "西化南非步兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Infantry",
         "techLevel":  30,
         "unitName":  "African Western Franchise Infantry",
+        "unitNameCn":  "非洲西式特许步兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Cavalry",
         "techLevel":  1,
         "unitName":  "Abyssinian Light Cavalry",
+        "unitNameCn":  "阿比西尼亚轻骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  2,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Cavalry",
         "techLevel":  1,
         "unitName":  "Mandekalu Cavalry",
+        "unitNameCn":  "曼德卡鲁骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Cavalry",
         "techLevel":  6,
         "unitName":  "Somali Light Cavalry",
+        "unitNameCn":  "索马里轻骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Cavalry",
         "techLevel":  6,
         "unitName":  "Tuareg Cavalry",
+        "unitNameCn":  "图阿雷格骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  2,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Cavalry",
         "techLevel":  10,
         "unitName":  "Abyssinian Barded Cavalry",
+        "unitNameCn":  "阿比西尼亚披甲骑兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Cavalry",
         "techLevel":  10,
         "unitName":  "Mossi Horsemen",
+        "unitNameCn":  "莫西骑手",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Cavalry",
         "techLevel":  14,
         "unitName":  "African Hussar",
+        "unitNameCn":  "非洲骠骑兵",
         "fireOff":  1,
         "fireDef":  0,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Cavalry",
         "techLevel":  17,
         "unitName":  "African Swarm Cavalry",
+        "unitNameCn":  "非洲集群骑兵",
         "fireOff":  0,
         "fireDef":  1,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Cavalry",
         "techLevel":  23,
         "unitName":  "African Dragoon",
+        "unitNameCn":  "非洲龙骑兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "African Groups (Central / East / West African)",
         "unitType":  "Cavalry",
         "techLevel":  28,
         "unitName":  "African Cuirassier",
+        "unitNameCn":  "非洲胸甲骑兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  4,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Aboriginal",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "Aboriginal Spearman",
+        "unitNameCn":  "原住民矛兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "Aboriginal",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "Boomerang Hunter",
+        "unitNameCn":  "回旋镖猎手",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  0,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  0,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Aboriginal",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Aboriginal Ambusher",
+        "unitNameCn":  "原住民伏击兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Aboriginal",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Reformed Boomerang Warrior",
+        "unitNameCn":  "改良回旋镖战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Aboriginal",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Ritual Warrior",
+        "unitNameCn":  "仪式战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  1,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "Aboriginal",
         "unitType":  "Infantry",
         "techLevel":  10,
         "unitName":  "Outback Warriors",
+        "unitNameCn":  "内陆战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Aboriginal",
         "unitType":  "Infantry",
         "techLevel":  14,
         "unitName":  "Ambush Arquebusier",
+        "unitNameCn":  "伏击火绳枪兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  1,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  2,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Aboriginal",
         "unitType":  "Infantry",
         "techLevel":  14,
         "unitName":  "Offensive Arquebusier",
+        "unitNameCn":  "进攻火绳枪兵",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Aboriginal",
         "unitType":  "Infantry",
         "techLevel":  19,
         "unitName":  "Frontier Riflemen",
+        "unitNameCn":  "边疆线膛枪兵",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Aboriginal",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Black War Infantry",
+        "unitNameCn":  "黑色战争步兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Aboriginal",
         "unitType":  "Cavalry",
         "techLevel":  6,
         "unitName":  "Aboriginal Horsemen",
+        "unitNameCn":  "原住民骑手",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Aboriginal",
         "unitType":  "Cavalry",
         "techLevel":  10,
         "unitName":  "Aboriginal Cavalry",
+        "unitNameCn":  "原住民骑兵",
         "fireOff":  0,
         "fireDef":  1,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Aboriginal",
         "unitType":  "Cavalry",
         "techLevel":  14,
         "unitName":  "Aboriginal Hussar",
+        "unitNameCn":  "原住民骠骑兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Aboriginal",
         "unitType":  "Cavalry",
         "techLevel":  18,
         "unitName":  "Aboriginal Swarm Cavalry",
+        "unitNameCn":  "原住民集群骑兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Aboriginal",
         "unitType":  "Cavalry",
         "techLevel":  23,
         "unitName":  "Aboriginal Dragoon",
+        "unitNameCn":  "原住民龙骑兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "High American (Fantasy / Inca)",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "Xantican Warrior",
+        "unitNameCn":  "克桑蒂坎战士",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  0,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "High American (Fantasy / Inca)",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Reformed Xantican Warrior",
+        "unitNameCn":  "改良克桑蒂坎战士",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  2,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "High American (Fantasy / Inca)",
         "unitType":  "Infantry",
         "techLevel":  9,
         "unitName":  "Xiuhtecuhtli Soldier",
+        "unitNameCn":  "修特库特利士兵",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "High American (Fantasy / Inca)",
         "unitType":  "Infantry",
         "techLevel":  12,
         "unitName":  "Xiuhtecuhtlian Infantry",
+        "unitNameCn":  "修特库特利步兵",
         "fireOff":  3,
         "fireDef":  3,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "High American (Fantasy / Inca)",
         "unitType":  "Infantry",
         "techLevel":  18,
         "unitName":  "Xoloti",
+        "unitNameCn":  "索洛蒂战士",
         "fireOff":  3,
         "fireDef":  3,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "High American (Fantasy / Inca)",
         "unitType":  "Infantry",
         "techLevel":  23,
         "unitName":  "Foreign Influenced Infantry",
+        "unitNameCn":  "外来影响步兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "High American (Fantasy / Inca)",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Reformed Influenced Infantry",
+        "unitNameCn":  "改良外来影响步兵",
         "fireOff":  4,
         "fireDef":  4,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "High American (Fantasy / Inca)",
         "unitType":  "Infantry",
         "techLevel":  30,
         "unitName":  "Reformed Xoloti",
+        "unitNameCn":  "改良索洛蒂战士",
         "fireOff":  4,
         "fireDef":  4,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "High American (Fantasy / Inca)",
         "unitType":  "Cavalry",
         "techLevel":  6,
         "unitName":  "American Horsemen",
+        "unitNameCn":  "美洲骑手",
         "fireOff":  1,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "High American (Fantasy / Inca)",
         "unitType":  "Cavalry",
         "techLevel":  10,
         "unitName":  "Xiuhtecuhtli Cavalry",
+        "unitNameCn":  "修特库特利骑兵",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "High American (Fantasy / Inca)",
         "unitType":  "Cavalry",
         "techLevel":  14,
         "unitName":  "American Hussars",
+        "unitNameCn":  "美洲骠骑兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "High American (Fantasy / Inca)",
         "unitType":  "Cavalry",
         "techLevel":  19,
         "unitName":  "American Swarm Cavalry",
+        "unitNameCn":  "美洲集群骑兵",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "High American (Fantasy / Inca)",
         "unitType":  "Cavalry",
         "techLevel":  23,
         "unitName":  "American Dragoon",
+        "unitNameCn":  "美洲龙骑兵",
         "fireOff":  4,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Cavalry",
         "techLevel":  6,
         "unitName":  "North American Horsemen",
+        "unitNameCn":  "北美骑手",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Cavalry",
         "techLevel":  10,
         "unitName":  "North American Cavalry",
+        "unitNameCn":  "北美骑兵",
         "fireOff":  0,
         "fireDef":  1,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Cavalry",
         "techLevel":  14,
         "unitName":  "North American Hussar",
+        "unitNameCn":  "北美骠骑兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Cavalry",
         "techLevel":  19,
         "unitName":  "North American Swarm Cavalry",
+        "unitNameCn":  "北美集群骑兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Cavalry",
         "techLevel":  23,
         "unitName":  "North American Dragoon",
+        "unitNameCn":  "北美龙骑兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "Mesoamerican Spearmen",
+        "unitNameCn":  "中美洲矛兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "American Forest Warriors",
+        "unitNameCn":  "美洲丛林战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "American Hill Warriors",
+        "unitNameCn":  "美洲山地战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  0,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "American Plains Warriors",
+        "unitNameCn":  "美洲平原战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  10,
         "unitName":  "Reformed American Forest Warriors",
+        "unitNameCn":  "改良美洲丛林战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  10,
         "unitName":  "Reformed American Hill Warriors",
+        "unitNameCn":  "改良美洲山地战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  3,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  10,
         "unitName":  "Reformed American Plains Warriors",
+        "unitNameCn":  "改良美洲平原战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  14,
         "unitName":  "American Forest Musketeers",
+        "unitNameCn":  "美洲丛林火枪兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  14,
         "unitName":  "American Hill Musketeers",
+        "unitNameCn":  "美洲山地火枪兵",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  14,
         "unitName":  "Offensive American Musketeers",
+        "unitNameCn":  "美洲进攻火枪兵",
         "fireOff":  2,
         "fireDef":  1,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  19,
         "unitName":  "American Guerrilla Warfare",
+        "unitNameCn":  "美洲游击战步兵",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  19,
         "unitName":  "Central American Guerrillas",
+        "unitNameCn":  "中美洲游击兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Westernized American Hill Infantry",
+        "unitNameCn":  "西化美洲山地步兵",
         "fireOff":  3,
         "fireDef":  4,
         "shockOff":  2,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Westernized American Plains Infantry",
+        "unitNameCn":  "西化美洲平原步兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  30,
         "unitName":  "Westernized Central American infantry",
+        "unitNameCn":  "西化中美洲步兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "Clubmen",
+        "unitNameCn":  "棍棒兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "Native American Archer",
+        "unitNameCn":  "美洲原住民弓箭手",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  0,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Algonkin Tomahawk Warriors",
+        "unitNameCn":  "阿尔冈昆战斧战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  0,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  2,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Ambush Infantry",
+        "unitNameCn":  "伏击步兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  2,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "American Plains Warriors",
+        "unitNameCn":  "美洲平原战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  10,
         "unitName":  "Native American Mountain Warriors",
+        "unitNameCn":  "美洲原住民高山战士",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  14,
         "unitName":  "Creek Arquebusier",
+        "unitNameCn":  "克里克火绳枪兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  14,
         "unitName":  "Native American Arquebusier",
+        "unitNameCn":  "美洲原住民火绳枪兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  19,
         "unitName":  "Rifle Scout Infantry",
+        "unitNameCn":  "线膛枪侦察步兵",
         "fireOff":  3,
         "fireDef":  3,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "North American Guerrillas",
+        "unitNameCn":  "北美游击兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  2,
-        "shockDef":  4
+        "shockDef":  4,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  30,
         "unitName":  "American Westernized Infantry",
+        "unitNameCn":  "美洲西化步兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "American Mountain Warriors",
+        "unitNameCn":  "美洲高山战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  0,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "South American Spearmen",
+        "unitNameCn":  "南美矛兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Incan Axemen",
+        "unitNameCn":  "印加斧兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  0
+        "shockDef":  0,
+        "moraleOff":  2,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Incan Slingshots",
+        "unitNameCn":  "印加投石兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  0
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Reformed Mountain Warriors",
+        "unitNameCn":  "改良高山战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  0,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  0,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "South American Forest Warriors",
+        "unitNameCn":  "南美丛林战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  10,
         "unitName":  "Defensive American Musketeers",
+        "unitNameCn":  "美洲防御火枪兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  1,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  10,
         "unitName":  "South American Arquebusier",
+        "unitNameCn":  "南美火绳枪兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  2,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  14,
         "unitName":  "Reformed American Musketeers",
+        "unitNameCn":  "改良美洲火枪兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  19,
         "unitName":  "Incan Guerrilla",
+        "unitNameCn":  "印加游击兵",
         "fireOff":  2,
         "fireDef":  3,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  19,
         "unitName":  "South American Guerrilla",
+        "unitNameCn":  "南美游击兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Westernized Incan Infantry",
+        "unitNameCn":  "西化印加步兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Westernized South American Infantry",
+        "unitNameCn":  "西化南美步兵",
         "fireOff":  3,
         "fireDef":  4,
         "shockOff":  2,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  4
     },
-    {
+{
         "group":  "Native American Groups",
         "unitType":  "Infantry",
         "techLevel":  30,
         "unitName":  "Reformed Westernized Incan Infantry",
+        "unitNameCn":  "改良西化印加步兵",
         "fireOff":  4,
         "fireDef":  4,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Polynesian",
         "unitType":  "Infantry",
         "techLevel":  1,
         "unitName":  "Polynesian Spearmen",
+        "unitNameCn":  "波利尼西亚矛兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  0,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  0,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Polynesian",
         "unitType":  "Infantry",
         "techLevel":  5,
         "unitName":  "Polynesian Reformed Spearmen",
+        "unitNameCn":  "波利尼西亚改良矛兵",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Polynesian",
         "unitType":  "Infantry",
         "techLevel":  10,
         "unitName":  "Polynesian Island Warriors",
+        "unitNameCn":  "波利尼西亚岛屿战士",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  1,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Polynesian",
         "unitType":  "Infantry",
         "techLevel":  14,
         "unitName":  "Polynesian Arquebusiers",
+        "unitNameCn":  "波利尼西亚火绳枪兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  1,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  2,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Polynesian",
         "unitType":  "Infantry",
         "techLevel":  19,
         "unitName":  "Polynesian Riflemen",
+        "unitNameCn":  "波利尼西亚线膛枪兵",
         "fireOff":  3,
         "fireDef":  2,
         "shockOff":  2,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Polynesian",
         "unitType":  "Infantry",
         "techLevel":  26,
         "unitName":  "Polynesian Guerrillas",
+        "unitNameCn":  "波利尼西亚游击兵",
         "fireOff":  4,
         "fireDef":  3,
         "shockOff":  4,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  3
     },
-    {
+{
         "group":  "Polynesian",
         "unitType":  "Cavalry",
         "techLevel":  6,
         "unitName":  "Polynesian Horsemen",
+        "unitNameCn":  "波利尼西亚骑手",
         "fireOff":  0,
         "fireDef":  0,
         "shockOff":  2,
-        "shockDef":  1
+        "shockDef":  1,
+        "moraleOff":  1,
+        "moraleDef":  1
     },
-    {
+{
         "group":  "Polynesian",
         "unitType":  "Cavalry",
         "techLevel":  10,
         "unitName":  "Polynesian Cavalry",
+        "unitNameCn":  "波利尼西亚骑兵",
         "fireOff":  0,
         "fireDef":  1,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  2,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Polynesian",
         "unitType":  "Cavalry",
         "techLevel":  14,
         "unitName":  "Polynesian Hussars",
+        "unitNameCn":  "波利尼西亚骠骑兵",
         "fireOff":  1,
         "fireDef":  1,
         "shockOff":  3,
-        "shockDef":  2
+        "shockDef":  2,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Polynesian",
         "unitType":  "Cavalry",
         "techLevel":  18,
         "unitName":  "Polynesian Swarm Cavalry",
+        "unitNameCn":  "波利尼西亚集群骑兵",
         "fireOff":  1,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  3,
+        "moraleDef":  2
     },
-    {
+{
         "group":  "Polynesian",
         "unitType":  "Cavalry",
         "techLevel":  23,
         "unitName":  "Polynesian Dragoons",
+        "unitNameCn":  "波利尼西亚龙骑兵",
         "fireOff":  2,
         "fireDef":  2,
         "shockOff":  3,
-        "shockDef":  3
+        "shockDef":  3,
+        "moraleOff":  4,
+        "moraleDef":  4
     }
 ];
-

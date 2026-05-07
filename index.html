@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EU4 陆战双向兵员伤害计算器</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <h1>EU4 陆战双向兵员伤害计算器</h1>
+        <p>双栏独立配置进攻方与防守方，按兵种组、兵种、军科和阶段同时结算双方兵员损失。</p>
+      </div>
+      <div class="phase-box">
+        <label class="field compact">
+          <span>阶段</span>
+          <select id="phase"></select>
+        </label>
+        <label class="check">
+          <input type="checkbox" id="backrow-artillery">
+          <span>后排炮兵半伤</span>
+        </label>
+      </div>
+    </header>
+
+    <section class="mode-strip">
+      <span class="mode-label">计算模式</span>
+      <label class="radio-pill">
+        <input type="radio" name="calc-mode" id="mode-single" value="single" checked>
+        <span>单次计算</span>
+      </label>
+      <label class="radio-pill">
+        <input type="radio" name="calc-mode" id="mode-sim" value="simulation">
+        <span>多轮模拟</span>
+      </label>
+    </section>
+
+    <section class="shared-strip" id="single-strip">
+      <label class="field">
+        <span>骰子</span>
+        <input id="dice" type="number" min="0" max="9" step="1" value="5">
+      </label>
+      <label class="field">
+        <span>将领差额</span>
+        <input id="leader-diff" type="number" step="1" value="0">
+      </label>
+      <label class="field">
+        <span>进攻地形惩罚</span>
+        <input id="terrain-penalty" type="number" min="0" step="1" value="0">
+      </label>
+    </section>
+
+    <section class="shared-strip" id="sim-strip" style="display:none">
+      <label class="field">
+        <span>轮次数</span>
+        <input id="sim-rounds" type="number" min="1" max="20" step="1" value="5">
+      </label>
+      <label class="field">
+        <span>将领差额</span>
+        <input id="sim-leader-diff" type="number" step="1" value="0">
+      </label>
+      <label class="field">
+        <span>进攻地形惩罚</span>
+        <input id="sim-terrain-penalty" type="number" min="0" step="1" value="0">
+      </label>
+      <label class="field">
+        <span>阶段模式</span>
+        <select id="sim-phase-mode">
+          <option value="alternate">火力+冲击交替</option>
+          <option value="fire">仅火力</option>
+          <option value="shock">仅冲击</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>骰子方式</span>
+        <select id="sim-dice-mode">
+          <option value="random">全部随机</option>
+          <option value="manual">手动输入</option>
+          <option value="fixed" selected>固定骰子</option>
+        </select>
+      </label>
+    </section>
+
+    <section class="shared-strip" id="sim-dice-strip" style="display:none">
+      <label class="field">
+        <span>火力骰子序列（逗号分隔）</span>
+        <input id="sim-dice-fire" type="text" placeholder="5,3,7,4,6">
+      </label>
+      <label class="field">
+        <span>冲击骰子序列（逗号分隔）</span>
+        <input id="sim-dice-shock" type="text" placeholder="2,8,1,5,9">
+      </label>
+    </section>
+
+    <section class="shared-strip" id="sim-dice-fixed-strip" style="display:none">
+      <label class="field">
+        <span>固定骰子值（0-9）</span>
+        <input id="sim-dice-fixed-value" type="number" min="0" max="9" step="1" value="5">
+      </label>
+    </section>
+
+    <main class="battle-grid">
+      <section class="side-card attacker" id="attacker-card">
+        <div class="side-head">
+          <h2>进攻方</h2>
+          <p>地形惩罚只作用于这一侧。</p>
+        </div>
+        <div class="panel-grid" id="attacker-fields"></div>
+      </section>
+
+      <section class="side-card defender" id="defender-card">
+        <div class="side-head">
+          <h2>防守方</h2>
+          <p>兵种组、军科和兵种选择完全独立。</p>
+        </div>
+        <div class="panel-grid" id="defender-fields"></div>
+      </section>
+    </main>
+
+    <section class="actions">
+      <button id="calculate">计算双方损失</button>
+    </section>
+
+    <section class="results-grid">
+      <article class="result-card">
+        <span class="result-label">进攻方兵员损失</span>
+        <strong id="attacker-loss">0.00</strong>
+      </article>
+      <article class="result-card">
+        <span class="result-label">防守方兵员损失</span>
+        <strong id="defender-loss">0.00</strong>
+      </article>
+      <article class="result-card">
+        <span class="result-label">进攻方士气损失</span>
+        <strong id="attacker-morale-loss">0.00</strong>
+      </article>
+      <article class="result-card">
+        <span class="result-label">防守方士气损失</span>
+        <strong id="defender-morale-loss">0.00</strong>
+      </article>
+    </section>
+
+    <section class="sim-results" id="sim-results" style="display:none">
+      <div class="details-head">
+        <h3>模拟结果</h3>
+      </div>
+      <div class="sim-summary" id="sim-summary"></div>
+      <div class="sim-table-wrap">
+        <table class="sim-table" id="sim-table">
+          <thead>
+            <tr>
+              <th>轮次</th>
+              <th>火力骰</th>
+              <th>冲击骰</th>
+              <th>攻方<br>火力兵损</th>
+              <th>守方<br>火力兵损</th>
+              <th>攻方<br>冲击兵损</th>
+              <th>守方<br>冲击兵损</th>
+              <th>攻方<br>轮次兵损</th>
+              <th>守方<br>轮次兵损</th>
+              <th>攻方<br>士气损失</th>
+              <th>守方<br>士气损失</th>
+              <th>攻方<br>剩余兵力</th>
+              <th>守方<br>剩余兵力</th>
+              <th>攻方<br>当前士气</th>
+              <th>守方<br>当前士气</th>
+              <th>攻方<br>溃败团</th>
+              <th>守方<br>溃败团</th>
+            </tr>
+          </thead>
+          <tbody id="sim-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="details">
+      <div class="details-head">
+        <h3>结算详情</h3>
+        <p>这里会拆开显示双方的兵种点数、科技修正和战术值。</p>
+      </div>
+      <pre id="details-output"></pre>
+    </section>
+  </div>
+
+  <script src="./unit-data.js"></script>
+  <script src="./calc.js"></script>
+  <script src="./morale.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
