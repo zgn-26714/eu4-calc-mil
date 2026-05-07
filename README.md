@@ -1,72 +1,52 @@
 # EU4 陆战双向兵员伤害计算器
 
-这是一个简单的 Windows C++/Win32 小程序，用 EU4 Wiki 的陆战兵员伤害思路，计算同一轮交战中：
+现在这个项目有两个界面版本：
 
-- 进攻方对防守方造成的兵员损失
-- 防守方对进攻方造成的兵员损失
+- `Win32 / C++` 版本：原生桌面窗口
+- `前端静态页面` 版本：界面更好看，推荐优先使用
 
-## 当前界面
+## 推荐入口
 
-界面分成左右两栏：
+直接打开：
 
-- 左边是进攻方数据
-- 右边是防守方数据
+[ui/index.html](E:/ai_project/calc_mil/ui/index.html)
 
-双方现在可以各自独立选择：
+这个前端版本不需要启动后端服务，浏览器直接打开就能用。
 
-- 兵种组
-- 兵种类型
-- 具体兵种
-- 军事科技
-- 作战能力
-- 训练度/纪律
-- 额外军事战术
-- 造成伤害修正
-- 承受伤害修正
+## 前端版特点
 
-顶部公共区域用于填写：
-
-- 骰子
-- 将领差额
-- 进攻地形惩罚
-- 交战阶段（火力 / 冲击）
-- 是否按后排炮兵 50% 伤害处理
+- 左右双栏分别填写进攻方和防守方
+- 攻守双方可以选择不同兵种组
+- 自动根据：
+  - 兵种组
+  - 兵种类型
+  - 军事科技
+  - 具体兵种
+  
+  读取对应兵种点数
+- 同时计算：
+  - 进攻方兵员损失
+  - 防守方兵员损失
+- 页面样式比 Win32 原生控件更适合继续打磨
 
 ## 数据来源
 
-兵种数据读取自：
+兵种表来自：
 
 `E:\ai_project\docx_for_ai\eu4_unit_pips_complete.md`
 
-程序会根据：
+前端运行时使用的转换数据文件是：
 
-- 兵种组
-- 兵种类型
-- 当前军事科技
-- 具体兵种选择
+[ui/unit-data.js](E:/ai_project/calc_mil/ui/unit-data.js)
 
-自动带出攻防双方的兵种点数参与计算，不再手动输入兵种点数。
+## 其他文件
 
-## 编译
+前端界面文件：
 
-直接生成控制台版：
+- [ui/index.html](E:/ai_project/calc_mil/ui/index.html)
+- [ui/styles.css](E:/ai_project/calc_mil/ui/styles.css)
+- [ui/app.js](E:/ai_project/calc_mil/ui/app.js)
 
-```powershell
-g++ main.cpp -o main.exe
-```
+旧的 C++ 版本代码仍然保留在：
 
-运行：
-
-```powershell
-.\main.exe
-```
-
-生成无控制台窗口版本：
-
-```powershell
-g++ -std=c++17 -finput-charset=UTF-8 -municode -mwindows main.cpp -o eu4_damage_calculator.exe
-```
-
-## 说明
-
-这个程序目前重点是“兵员伤害”结算，不包含完整士气伤害系统，也没有实现完整战斗宽度、前后排轮转、侧翼、操练等全部 EU4 战斗细节。
+[main.cpp](E:/ai_project/calc_mil/main.cpp)
