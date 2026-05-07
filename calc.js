@@ -133,6 +133,20 @@ function computeMultipliers(strength, tech, tactics, combatAbility, discipline, 
 }
 
 /**
+ * 根据职业度返回线性的阶段伤害修正。
+ * 满职业度 100 时：
+ *   - 火力阶段 +10% land fire damage
+ *   - 冲击阶段 +10% shock damage
+ *
+ * @param {number} professionalism - 职业度 (0-100)
+ * @returns {number} 阶段伤害修正（百分比）
+ */
+function professionalismPhaseDamageBonus(professionalism) {
+  var clamped = Math.max(0, Math.min(100, professionalism || 0));
+  return clamped * 0.1;
+}
+
+/**
  * 计算单方向（攻击方 → 防守方）的兵员伤害。
  *
  * @param {Object} attacker - 攻击方配置
@@ -152,8 +166,10 @@ function computeOneWay(attacker, defender, phase, dice, leaderDiff, terrainPenal
   const attackerPips = phase === "fire" ? attackerUnit.fireOff : attackerUnit.shockOff;
   const defenderPips = phase === "fire" ? defenderUnit.fireDef : defenderUnit.shockDef;
   const baseCasualties = computeBaseCasualties(dice, leaderDiff, attackerPips, defenderPips, terrainPenalty);
-  const tech = techModifier(attacker.techLevel, attacker.unitType, phase) +
-    (phase === "fire" ? attacker.fireDamage : attacker.shockDamage);
+  const phaseDamage = phase === "fire" ? attacker.fireDamage : attacker.shockDamage;
+  const professionalismBonus = professionalismPhaseDamageBonus(attacker.professionalism);
+  const tech = techModifier(attacker.techLevel, attacker.unitType, phase) *
+    percentMultiplier(phaseDamage + professionalismBonus);
   const tactics = (baseTactics(defender.techLevel) + defender.extraMilitaryTactics) * percentMultiplier(defender.discipline);
 
   let multiplier = computeMultipliers(attacker.strength, tech, tactics, attacker.combatAbility, attacker.discipline, battleDay)
@@ -170,6 +186,7 @@ function computeOneWay(attacker, defender, phase, dice, leaderDiff, terrainPenal
     baseCasualties,
     tech,
     tactics,
+    professionalismBonus,
     damage: baseCasualties * multiplier
   };
 }

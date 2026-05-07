@@ -358,6 +358,12 @@ const UNIT_TRANSLATIONS = {
   "Polynesian Dragoons": "波利尼西亚龙骑兵"
 };
 
+const UNIT_TYPE_TRANSLATIONS = {
+  "Infantry": "步兵",
+  "Cavalry": "骑兵",
+  "Artillery": "炮兵"
+};
+
 const PHASES = [
   { value: "fire", label: "火力" },
   { value: "shock", label: "冲击" }
@@ -411,16 +417,20 @@ const sideSchemas = {
     { key: "professionalism", label: "职业度", type: "number", value: 0, min: 0, max: 100, step: 1 }
   ]
 };
+sideSchemas.template = sideSchemas.attacker.slice(3);
 
 const sideState = {
   attacker: {},
-  defender: {}
+  defender: {},
+  template: {}
 };
 
 // ---- DOM refs ----
 const phaseSelect = document.querySelector("#phase");
 const calculateButton = document.querySelector("#calculate");
+const backButton = document.querySelector("#back-button");
 const detailsOutput = document.querySelector("#details-output");
+const errorBanner = document.querySelector("#error-banner");
 const attackerLossEl = document.querySelector("#attacker-loss");
 const defenderLossEl = document.querySelector("#defender-loss");
 const attackerMoraleLossEl = document.querySelector("#attacker-morale-loss");
@@ -429,9 +439,11 @@ const defenderMoraleLossEl = document.querySelector("#defender-morale-loss");
 // Mode toggle
 const modeSingleRadio = document.querySelector("#mode-single");
 const modeSimRadio = document.querySelector("#mode-sim");
+const modeRankingRadio = document.querySelector("#mode-ranking");
 
 // Single-mode strips
 const singleStrip = document.querySelector("#single-strip");
+const phaseBox = document.querySelector(".phase-box");
 
 // Simulation-mode strips
 const simStrip = document.querySelector("#sim-strip");
@@ -448,8 +460,21 @@ const simDiceShock = document.querySelector("#sim-dice-shock");
 const simResults = document.querySelector("#sim-results");
 const simSummary = document.querySelector("#sim-summary");
 const simTbody = document.querySelector("#sim-tbody");
+const downloadRankingLogButton = document.querySelector("#download-ranking-log");
+const templateCard = document.querySelector("#template-card");
+const battleGrid = document.querySelector(".battle-grid");
+const resultsGrid = document.querySelector(".results-grid");
+const detailsSection = document.querySelector("#details-section");
+const rankingResults = document.querySelector("#ranking-results");
+const rankingSummary = document.querySelector("#ranking-summary");
+const rankingTbody = document.querySelector("#ranking-tbody");
+const rankingLogSection = document.querySelector("#ranking-log-section");
+const rankingLogOutput = document.querySelector("#ranking-log-output");
 
 const groupKeys = [...new Set(UNIT_DATA.filter(item => item.group !== "Shared").map(item => item.group))];
+var latestRankingLogText = "";
+var uiView = "settings";
+var resultMode = null;
 
 function translateGroup(name) {
   return GROUP_TRANSLATIONS[name] || name;
@@ -457,6 +482,10 @@ function translateGroup(name) {
 
 function translateUnit(name) {
   return UNIT_TRANSLATIONS[name] || name;
+}
+
+function translateUnitType(name) {
+  return UNIT_TYPE_TRANSLATIONS[name] || name;
 }
 
 function fillOptions(select, options, selectedValue) {
@@ -556,43 +585,78 @@ function initOptions() {
 
 function readSide(side) {
   const controls = sideState[side];
-  return {
-    group: controls.group.value,
-    unitType: controls.unitType.value,
-    unitName: controls.unit.value,
-    techLevel: Number(controls.techLevel.value),
-    strength: Number(controls.strength.value),
-    combatAbility: Number(controls.combatAbility.value),
-    discipline: Number(controls.discipline.value),
-    extraMilitaryTactics: Number(controls.extraMilitaryTactics.value),
-    fireDamage: Number(controls.fireDamage.value),
-    shockDamage: Number(controls.shockDamage.value),
-    damageDone: Number(controls.damageDone.value),
-    damageTaken: Number(controls.damageTaken.value),
-    moraleBonus: Number(controls.moraleBonus.value),
-    armyTradition: Number(controls.armyTradition.value),
-    prestige: Number(controls.prestige.value),
-    moraleDamageDone: Number(controls.moraleDamageDone.value),
-    moraleDamageTaken: Number(controls.moraleDamageTaken.value),
-    professionalism: Number(controls.professionalism.value)
-  };
+  const data = {};
+  if (controls.group) data.group = controls.group.value;
+  if (controls.unitType) data.unitType = controls.unitType.value;
+  if (controls.unit) data.unitName = controls.unit.value;
+  if (controls.techLevel) data.techLevel = Number(controls.techLevel.value);
+  if (controls.strength) data.strength = Number(controls.strength.value);
+  if (controls.combatAbility) data.combatAbility = Number(controls.combatAbility.value);
+  if (controls.discipline) data.discipline = Number(controls.discipline.value);
+  if (controls.extraMilitaryTactics) data.extraMilitaryTactics = Number(controls.extraMilitaryTactics.value);
+  if (controls.fireDamage) data.fireDamage = Number(controls.fireDamage.value);
+  if (controls.shockDamage) data.shockDamage = Number(controls.shockDamage.value);
+  if (controls.damageDone) data.damageDone = Number(controls.damageDone.value);
+  if (controls.damageTaken) data.damageTaken = Number(controls.damageTaken.value);
+  if (controls.moraleBonus) data.moraleBonus = Number(controls.moraleBonus.value);
+  if (controls.armyTradition) data.armyTradition = Number(controls.armyTradition.value);
+  if (controls.prestige) data.prestige = Number(controls.prestige.value);
+  if (controls.moraleDamageDone) data.moraleDamageDone = Number(controls.moraleDamageDone.value);
+  if (controls.moraleDamageTaken) data.moraleDamageTaken = Number(controls.moraleDamageTaken.value);
+  if (controls.professionalism) data.professionalism = Number(controls.professionalism.value);
+  return data;
 }
 
 // ---- Mode toggle ----
-function isSimMode() {
-  return modeSimRadio.checked;
+function getCalcMode() {
+  if (modeRankingRadio.checked) return "ranking";
+  if (modeSimRadio.checked) return "simulation";
+  return "single";
 }
 
 function updateModeUI() {
-  var sim = isSimMode();
-  singleStrip.style.display = sim ? "none" : "";
-  simStrip.style.display = sim ? "" : "none";
-  simResults.style.display = sim ? "" : "none";
+  var mode = getCalcMode();
+  var isSingle = mode === "single";
+  var isSim = mode === "simulation";
+  var isRanking = mode === "ranking";
+
+  calculateButton.textContent = isRanking ? "开始排行" : "计算双方损失";
+
+  if (uiView === "settings") {
+    singleStrip.style.display = isSingle ? "" : "none";
+    simStrip.style.display = isSim ? "" : "none";
+    templateCard.style.display = isRanking ? "" : "none";
+    phaseBox.style.display = isRanking ? "none" : "";
+    battleGrid.style.display = isRanking ? "none" : "";
+    resultsGrid.style.display = "none";
+    simResults.style.display = "none";
+    rankingResults.style.display = "none";
+    rankingLogSection.style.display = "none";
+    detailsSection.style.display = "none";
+    backButton.style.display = "none";
+    document.body.className = "settings-view";
+  } else {
+    singleStrip.style.display = "none";
+    simStrip.style.display = "none";
+    simDiceStrip.style.display = "none";
+    simDiceFixedStrip.style.display = "none";
+    templateCard.style.display = "none";
+    phaseBox.style.display = "none";
+    battleGrid.style.display = "none";
+    resultsGrid.style.display = resultMode === "single" || resultMode === "simulation" ? "" : "none";
+    simResults.style.display = resultMode === "simulation" ? "" : "none";
+    rankingResults.style.display = resultMode === "ranking" ? "" : "none";
+    rankingLogSection.style.display = resultMode === "ranking" ? "" : "none";
+    detailsSection.style.display = resultMode === "single" || resultMode === "simulation" ? "" : "none";
+    backButton.style.display = "";
+    document.body.className = "result-view";
+  }
+
   updateSimDiceVisibility();
 }
 
 function updateSimDiceVisibility() {
-  if (!isSimMode()) {
+  if (!modeSimRadio.checked) {
     simDiceStrip.style.display = "none";
     simDiceFixedStrip.style.display = "none";
     return;
@@ -663,20 +727,20 @@ function calculateSingle() {
     "进攻方 -> 防守方",
     "兵种组：" + translateGroup(attacker.group) + "；兵种：" + translateUnit(attacker.unitName),
     "基础伤亡 = max(15, 15 + 5 x (" + dice.toFixed(2) + " + " + leaderDiff.toFixed(2) + " + " + attackerToDefender.attackerPips.toFixed(2) + " - " + attackerToDefender.defenderPips.toFixed(2) + " - " + terrainPenalty.toFixed(2) + ")) = " + attackerToDefender.baseCasualties.toFixed(2),
-    "科技修正 = " + attackerToDefender.tech.toFixed(2) + "，守方战术 = " + attackerToDefender.tactics.toFixed(2),
+    "科技修正 = " + attackerToDefender.tech.toFixed(2) + "（含职业度阶段伤害 +" + attackerToDefender.professionalismBonus.toFixed(2) + "%），守方战术 = " + attackerToDefender.tactics.toFixed(2),
     "",
     "防守方 -> 进攻方",
     "兵种组：" + translateGroup(defender.group) + "；兵种：" + translateUnit(defender.unitName),
     "基础伤亡 = max(15, 15 + 5 x (" + dice.toFixed(2) + " + " + (-leaderDiff).toFixed(2) + " + " + defenderToAttacker.attackerPips.toFixed(2) + " - " + defenderToAttacker.defenderPips.toFixed(2) + " - 0.00)) = " + defenderToAttacker.baseCasualties.toFixed(2),
-    "科技修正 = " + defenderToAttacker.tech.toFixed(2) + "，守方战术 = " + defenderToAttacker.tactics.toFixed(2),
+    "科技修正 = " + defenderToAttacker.tech.toFixed(2) + "（含职业度阶段伤害 +" + defenderToAttacker.professionalismBonus.toFixed(2) + "%），守方战术 = " + defenderToAttacker.tactics.toFixed(2),
     "",
     "--- 士气损失明细 ---",
     "最大士气 = 科技基础士气 x (1 + 额外士气加成 + 陆军传统加成 + 威望加成)",
     "士气损失 = 基础伤亡 x 基础乘数 x (1+士气损失修正) x (1+士气承受伤害修正) x (己方最大士气/540)",
     "进攻方 -> 防守方：基础伤亡=" + attackerToDefender.baseCasualties.toFixed(2) + "  己方士气=" + attFinalMorale.toFixed(2) + "  -> 士气损失=" + attToDefMorale.moraleDamage.toFixed(2),
     "防守方 -> 进攻方：基础伤亡=" + defenderToAttacker.baseCasualties.toFixed(2) + "  己方士气=" + defFinalMorale.toFixed(2) + "  -> 士气损失=" + defToAttMorale.moraleDamage.toFixed(2),
-    "防守方后备被动士气损耗/天：" + attToDefMorale.passiveMoraleLoss.toFixed(4) + "（仅后备部队承受）",
-    "进攻方后备被动士气损耗/天：" + defToAttMorale.passiveMoraleLoss.toFixed(4) + "（仅后备部队承受）"
+    "防守方后备被动士气损耗/天：" + attToDefMorale.passiveMoraleLoss.toFixed(4) + "（职业度 100 时减半）",
+    "进攻方后备被动士气损耗/天：" + defToAttMorale.passiveMoraleLoss.toFixed(4) + "（职业度 100 时减半）"
   ].join("\n");
 }
 
@@ -695,32 +759,15 @@ function parseDiceArray(text, fieldName) {
   return arr;
 }
 
-function calculateSimulation() {
-  var rounds = parseInt(simRounds.value, 10);
-  if (isNaN(rounds) || rounds < 1 || rounds > 20) {
-    throw new Error("轮次数应在 1 到 20 之间。");
-  }
-
+function readSimulationBattleOptions(rounds, forOpenEnded) {
   var leaderDiff = parseFloat(simLeaderDiff.value) || 0;
   var terrainPenalty = parseFloat(simTerrainPenalty.value) || 0;
   if (terrainPenalty < 0) throw new Error("进攻地形惩罚不能为负数。");
 
   var phaseModeRaw = simPhaseMode.value;
   var phaseOnly = (phaseModeRaw === "alternate") ? null : phaseModeRaw;
-
   var backrowArtillery = document.querySelector("#backrow-artillery").checked;
 
-  var attacker = readSide("attacker");
-  var defender = readSide("defender");
-
-  for (var si = 0; si < 2; si++) {
-    var side = si === 0 ? attacker : defender;
-    if (!Number.isInteger(side.techLevel) || side.techLevel < 0 || side.techLevel > 32) {
-      throw new Error("双方军事科技都应为 0 到 32 的整数。");
-    }
-  }
-
-  // Dice config
   var diceConfig = {};
   if (simDiceMode.value === "manual") {
     var fireArr = parseDiceArray(simDiceFire.value, "火力骰子序列");
@@ -732,20 +779,65 @@ function calculateSimulation() {
     if (isNaN(fixedVal) || fixedVal < 0 || fixedVal > 9) {
       throw new Error("固定骰子值应在 0 到 9 之间。");
     }
-    diceConfig.fire = Array(rounds).fill(fixedVal);
-    diceConfig.shock = Array(rounds).fill(fixedVal);
+    if (forOpenEnded) {
+      diceConfig.mode = "fixed";
+      diceConfig.value = fixedVal;
+    } else {
+      diceConfig.fire = Array(rounds).fill(fixedVal);
+      diceConfig.shock = Array(rounds).fill(fixedVal);
+    }
+  } else if (forOpenEnded) {
+    diceConfig.mode = "random";
   }
-  // else: random — diceConfig stays empty
 
-  var result = simulateBattleWithMorale(attacker, defender, rounds, diceConfig, leaderDiff, terrainPenalty, backrowArtillery, phaseOnly);
+  return {
+    leaderDiff: leaderDiff,
+    terrainPenalty: terrainPenalty,
+    phaseOnly: phaseOnly,
+    backrowArtillery: backrowArtillery,
+    diceConfig: diceConfig,
+    diceMode: simDiceMode.value
+  };
+}
 
-  renderSimResults(result, attacker, defender, phaseOnly);
+function calculateSimulation() {
+  var rounds = parseInt(simRounds.value, 10);
+  if (isNaN(rounds) || rounds < 1 || rounds > 20) {
+    throw new Error("轮次数应在 1 到 20 之间。");
+  }
+  var battleOptions = readSimulationBattleOptions(rounds, false);
+
+  var attacker = readSide("attacker");
+  var defender = readSide("defender");
+
+  for (var si = 0; si < 2; si++) {
+    var side = si === 0 ? attacker : defender;
+    if (!Number.isInteger(side.techLevel) || side.techLevel < 0 || side.techLevel > 32) {
+      throw new Error("双方军事科技都应为 0 到 32 的整数。");
+    }
+  }
+
+  var result = simulateBattleWithMorale(
+    attacker,
+    defender,
+    rounds,
+    battleOptions.diceConfig,
+    battleOptions.leaderDiff,
+    battleOptions.terrainPenalty,
+    battleOptions.backrowArtillery,
+    battleOptions.phaseOnly
+  );
+
+  renderSimResults(result, attacker, defender, battleOptions.phaseOnly);
 
   // Also show single-phase style result cards for total losses
   attackerLossEl.textContent = result.totalAttackerStrengthLoss.toFixed(2);
   defenderLossEl.textContent = result.totalDefenderStrengthLoss.toFixed(2);
   attackerMoraleLossEl.textContent = result.totalAttackerMoraleLoss.toFixed(2);
   defenderMoraleLossEl.textContent = result.totalDefenderMoraleLoss.toFixed(2);
+  uiView = "results";
+  resultMode = "simulation";
+  updateModeUI();
 
   // Build detailed breakdown
   var lines = [];
@@ -782,14 +874,14 @@ function calculateSimulation() {
       lines.push("  火力阶段（骰子=" + rr.fire.dice + "）：攻方兵损=" + rr.fire.attackerStrengthLoss.toFixed(2) + " 守方兵损=" + rr.fire.defenderStrengthLoss.toFixed(2) + " 攻方士气损=" + rr.fire.attackerMoraleLoss.toFixed(2) + " 守方士气损=" + rr.fire.defenderMoraleLoss.toFixed(2));
       for (var di = 0; di < rr.fire.days.length; di++) {
         var day = rr.fire.days[di];
-        lines.push("    第" + day.day + "天  攻方兵伤=" + day.attackerStrengthDmg.toFixed(2) + " 守方兵伤=" + day.defenderStrengthDmg.toFixed(2) + "  攻方剩=" + day.attackerStrengthRemaining.toFixed(2) + " 守方剩=" + day.defenderStrengthRemaining.toFixed(2) + "  攻方士气=" + day.attackerCurrentMorale.toFixed(2) + " 守方士气=" + day.defenderCurrentMorale.toFixed(2) + "  攻溃败=" + day.attackerBrokenRegiments + " 守溃败=" + day.defenderBrokenRegiments);
+        lines.push("    第" + day.day + "天  攻方兵伤=" + day.attackerStrengthDmg.toFixed(2) + " 守方兵伤=" + day.defenderStrengthDmg.toFixed(2) + "  攻方剩=" + day.attackerStrengthRemaining.toFixed(2) + " 守方剩=" + day.defenderStrengthRemaining.toFixed(2) + "  攻方士气=" + day.attackerCurrentMorale.toFixed(2) + " 守方士气=" + day.defenderCurrentMorale.toFixed(2) + "  攻方后备士气损耗/天=" + day.attackerPassiveMoraleLoss.toFixed(4) + " 守方后备士气损耗/天=" + day.defenderPassiveMoraleLoss.toFixed(4) + "  攻溃败=" + day.attackerBrokenRegiments + " 守溃败=" + day.defenderBrokenRegiments);
       }
     }
     if (rr.shock) {
       lines.push("  冲击阶段（骰子=" + rr.shock.dice + "）：攻方兵损=" + rr.shock.attackerStrengthLoss.toFixed(2) + " 守方兵损=" + rr.shock.defenderStrengthLoss.toFixed(2) + " 攻方士气损=" + rr.shock.attackerMoraleLoss.toFixed(2) + " 守方士气损=" + rr.shock.defenderMoraleLoss.toFixed(2));
       for (di = 0; di < rr.shock.days.length; di++) {
         var day2 = rr.shock.days[di];
-        lines.push("    第" + day2.day + "天  攻方兵伤=" + day2.attackerStrengthDmg.toFixed(2) + " 守方兵伤=" + day2.defenderStrengthDmg.toFixed(2) + "  攻方剩=" + day2.attackerStrengthRemaining.toFixed(2) + " 守方剩=" + day2.defenderStrengthRemaining.toFixed(2) + "  攻方士气=" + day2.attackerCurrentMorale.toFixed(2) + " 守方士气=" + day2.defenderCurrentMorale.toFixed(2) + "  攻溃败=" + day2.attackerBrokenRegiments + " 守溃败=" + day2.defenderBrokenRegiments);
+        lines.push("    第" + day2.day + "天  攻方兵伤=" + day2.attackerStrengthDmg.toFixed(2) + " 守方兵伤=" + day2.defenderStrengthDmg.toFixed(2) + "  攻方剩=" + day2.attackerStrengthRemaining.toFixed(2) + " 守方剩=" + day2.defenderStrengthRemaining.toFixed(2) + "  攻方士气=" + day2.attackerCurrentMorale.toFixed(2) + " 守方士气=" + day2.defenderCurrentMorale.toFixed(2) + "  攻方后备士气损耗/天=" + day2.attackerPassiveMoraleLoss.toFixed(4) + " 守方后备士气损耗/天=" + day2.defenderPassiveMoraleLoss.toFixed(4) + "  攻溃败=" + day2.attackerBrokenRegiments + " 守溃败=" + day2.defenderBrokenRegiments);
       }
     }
   }
@@ -953,12 +1045,204 @@ function renderSimResults(result, attacker, defender, phaseOnly) {
   simTbody.innerHTML = rows;
 }
 
+function formatTournamentCandidate(candidate) {
+  return translateGroup(candidate.group) + " / " + translateUnitType(candidate.unitType) + " / " + translateUnit(candidate.unitName);
+}
+
+function buildRankingLogText(result, template, battleOptions) {
+  var lines = [];
+  lines.push("=== 全兵种排行日志 ===");
+  lines.push("模板来源：当前模板");
+  lines.push(
+    "科技=" + template.techLevel +
+    "  兵力=" + template.strength +
+    "  作战能力=" + template.combatAbility +
+    "%  训练度=" + template.discipline +
+    "%  额外战术=" + template.extraMilitaryTactics.toFixed(2)
+  );
+  lines.push(
+    "火力伤害=" + template.fireDamage +
+    "%  冲击伤害=" + template.shockDamage +
+    "%  造成伤害=" + template.damageDone +
+    "%  承受伤害=" + template.damageTaken +
+    "%"
+  );
+  lines.push(
+    "额外士气=" + template.moraleBonus +
+    "%  陆军传统=" + template.armyTradition +
+    "  威望=" + template.prestige +
+    "  造成士气伤害=" + template.moraleDamageDone +
+    "%  承受士气伤害=" + template.moraleDamageTaken +
+    "%  职业度=" + template.professionalism
+  );
+  lines.push(
+    "阶段模式=" + (battleOptions.phaseOnly === null ? "火力+冲击交替" : (battleOptions.phaseOnly === "fire" ? "仅火力" : "仅冲击")) +
+    "  骰子模式=" + (battleOptions.diceMode === "fixed" ? "固定骰子 5" : (battleOptions.diceMode === "manual" ? "手动序列循环" : "全部随机")) +
+    "  将领差额=" + battleOptions.leaderDiff +
+    "  进攻地形惩罚=" + battleOptions.terrainPenalty +
+    "  后排炮兵半伤=" + (battleOptions.backrowArtillery ? "是" : "否")
+  );
+  lines.push("候选兵种数：" + result.candidates.length + "  配对组合数：" + result.totalPairs + "  实际对战场次：" + result.totalMatches);
+  lines.push("");
+  lines.push("--- 排行 ---");
+  for (var i = 0; i < result.rankings.length; i++) {
+    var entry = result.rankings[i];
+    lines.push(
+      (i + 1) + ". " + formatTournamentCandidate(entry.candidate) +
+      "  积分=" + entry.points +
+      "  胜/平/负=" + entry.wins + "/" + entry.draws + "/" + entry.losses +
+      "  兵损(造/承)=" + entry.totalStrengthInflicted.toFixed(2) + "/" + entry.totalStrengthTaken.toFixed(2) +
+      "  士气(造/承)=" + entry.totalMoraleInflicted.toFixed(2) + "/" + entry.totalMoraleTaken.toFixed(2)
+    );
+  }
+  lines.push("");
+  lines.push("--- 配对日志 ---");
+  for (i = 0; i < result.matchLogs.length; i++) {
+    var log = result.matchLogs[i];
+    var matchResult = log.result;
+    var winnerLabel = matchResult.winner === "attacker" ? formatTournamentCandidate(log.attacker) :
+      (matchResult.winner === "defender" ? formatTournamentCandidate(log.defender) : "平局");
+    lines.push(
+      "[" + log.id + "] 配对#" + log.pairId + " 第" + log.leg + "场  " +
+      formatTournamentCandidate(log.attacker) + " 攻  vs  " +
+      formatTournamentCandidate(log.defender) + " 守"
+    );
+    lines.push(
+      "    结果：" + winnerLabel + "  " + matchResult.winReason +
+      "  结束方式=" + matchResult.endedBy +
+      "  总天数=" + matchResult.totalDays
+    );
+    lines.push(
+      "    攻方兵损=" + matchResult.totalAttackerStrengthLoss.toFixed(2) +
+      "  守方兵损=" + matchResult.totalDefenderStrengthLoss.toFixed(2) +
+      "  攻方士气损=" + matchResult.totalAttackerMoraleLoss.toFixed(2) +
+      "  守方士气损=" + matchResult.totalDefenderMoraleLoss.toFixed(2)
+    );
+    lines.push(
+      "    攻方剩余兵力/士气=" + matchResult.finalAttackerStrength.toFixed(2) + "/" + matchResult.finalAttackerMorale.toFixed(2) +
+      "  守方剩余兵力/士气=" + matchResult.finalDefenderStrength.toFixed(2) + "/" + matchResult.finalDefenderMorale.toFixed(2)
+    );
+  }
+  return lines.join("\n");
+}
+
+function renderRankingResults(result, battleOptions) {
+  var topEntry = result.rankings[0];
+  rankingSummary.innerHTML =
+    '<div class="sim-summary-item">' +
+      '<span class="label">模板来源</span>' +
+      '<span class="value">当前模板</span>' +
+    '</div>' +
+    '<div class="sim-summary-item">' +
+      '<span class="label">候选兵种数</span>' +
+      '<span class="value">' + result.candidates.length + '</span>' +
+    '</div>' +
+    '<div class="sim-summary-item">' +
+      '<span class="label">配对组合数</span>' +
+      '<span class="value">' + result.totalPairs + '</span>' +
+    '</div>' +
+    '<div class="sim-summary-item">' +
+      '<span class="label">总对战场次</span>' +
+      '<span class="value">' + result.totalMatches + '</span>' +
+    '</div>' +
+    '<div class="sim-summary-item">' +
+      '<span class="label">阶段模式</span>' +
+      '<span class="value">' + (battleOptions.phaseOnly === null ? "火力+冲击交替" : (battleOptions.phaseOnly === "fire" ? "仅火力" : "仅冲击")) + '</span>' +
+    '</div>' +
+    '<div class="sim-summary-item">' +
+      '<span class="label">骰子模式</span>' +
+      '<span class="value">固定骰子 5</span>' +
+    '</div>' +
+    '<div class="sim-summary-item">' +
+      '<span class="label">排名第一</span>' +
+      '<span class="value win">' + formatTournamentCandidate(topEntry.candidate) + '</span>' +
+    '</div>';
+
+  var rows = "";
+  for (var i = 0; i < result.rankings.length; i++) {
+    var entry = result.rankings[i];
+    rows +=
+      '<tr>' +
+        '<td>' + (i + 1) + '</td>' +
+        '<td class="text-left">' + translateUnitType(entry.candidate.unitType) + '</td>' +
+        '<td class="text-left">' + translateGroup(entry.candidate.group) + '</td>' +
+        '<td class="text-left">' + translateUnit(entry.candidate.unitName) + '</td>' +
+        '<td>' + entry.points + '</td>' +
+        '<td>' + entry.wins + '</td>' +
+        '<td>' + entry.draws + '</td>' +
+        '<td>' + entry.losses + '</td>' +
+        '<td>' + entry.totalStrengthInflicted.toFixed(2) + '</td>' +
+        '<td>' + entry.totalStrengthTaken.toFixed(2) + '</td>' +
+        '<td>' + entry.totalMoraleInflicted.toFixed(2) + '</td>' +
+        '<td>' + entry.totalMoraleTaken.toFixed(2) + '</td>' +
+      '</tr>';
+  }
+  rankingTbody.innerHTML = rows;
+}
+
+function renderRankingLogPreview(logText) {
+  var lines = logText.split("\n");
+  var previewLimit = 120;
+  if (lines.length <= previewLimit) {
+    rankingLogOutput.textContent = logText;
+  } else {
+    rankingLogOutput.textContent = lines.slice(0, previewLimit).join("\n") + "\n\n... 已截断，其余 " + (lines.length - previewLimit) + " 行请下载完整日志查看。";
+  }
+  rankingLogSection.style.display = "";
+}
+
+function downloadRankingLog() {
+  if (!latestRankingLogText) return;
+  var stamp = new Date().toISOString().replace(/[:.]/g, "-");
+  var link = document.createElement("a");
+  link.href = URL.createObjectURL(new Blob([latestRankingLogText], { type: "text/plain;charset=utf-8" }));
+  link.download = "calc_mil_ranking_log_" + stamp + ".txt";
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(function() {
+    URL.revokeObjectURL(link.href);
+  }, 0);
+}
+
+function calculateRanking() {
+  var template = readSide("template");
+  if (!Number.isInteger(template.techLevel) || template.techLevel < 0 || template.techLevel > 32) {
+    throw new Error("排行基准军事科技应为 0 到 32 的整数。");
+  }
+
+  var battleOptions = {
+    leaderDiff: 0,
+    terrainPenalty: 0,
+    phaseOnly: null,
+    backrowArtillery: false,
+    diceConfig: { mode: "fixed", value: 5 },
+    diceMode: "fixed"
+  };
+
+  var result = runUnitTournament(template, battleOptions);
+  renderRankingResults(result, battleOptions);
+
+  latestRankingLogText = buildRankingLogText(result, template, battleOptions);
+  renderRankingLogPreview(latestRankingLogText);
+  downloadRankingLogButton.disabled = false;
+  uiView = "results";
+  resultMode = "ranking";
+  updateModeUI();
+}
+
 // ---- Main orchestrator ----
 function calculate() {
-  if (isSimMode()) {
+  var mode = getCalcMode();
+  if (mode === "ranking") {
+    calculateRanking();
+  } else if (mode === "simulation") {
     calculateSimulation();
   } else {
     calculateSingle();
+    uiView = "results";
+    resultMode = "single";
+    updateModeUI();
   }
 }
 
@@ -972,25 +1256,47 @@ function bindEvents() {
 
   calculateButton.addEventListener("click", function() {
     try {
+      errorBanner.style.display = "none";
+      errorBanner.textContent = "";
       calculate();
     } catch (error) {
-      detailsOutput.textContent = error.message;
+      errorBanner.textContent = error.message;
+      errorBanner.style.display = "";
+      uiView = "settings";
+      resultMode = null;
+      updateModeUI();
       attackerLossEl.textContent = "0.00";
       defenderLossEl.textContent = "0.00";
       attackerMoraleLossEl.textContent = "0.00";
       defenderMoraleLossEl.textContent = "0.00";
+      latestRankingLogText = "";
+      downloadRankingLogButton.disabled = true;
     }
+  });
+
+  downloadRankingLogButton.addEventListener("click", function() {
+    downloadRankingLog();
+  });
+
+  backButton.addEventListener("click", function() {
+    errorBanner.style.display = "none";
+    errorBanner.textContent = "";
+    uiView = "settings";
+    resultMode = null;
+    updateModeUI();
   });
 
   // Mode toggle
   modeSingleRadio.addEventListener("change", updateModeUI);
   modeSimRadio.addEventListener("change", updateModeUI);
+  modeRankingRadio.addEventListener("change", updateModeUI);
   simDiceMode.addEventListener("change", updateSimDiceVisibility);
 }
 
 buildPanel("attacker");
 buildPanel("defender");
+buildPanel("template");
 initOptions();
 bindEvents();
+document.body.className = "settings-view";
 updateModeUI();
-calculate();

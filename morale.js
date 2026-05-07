@@ -35,14 +35,14 @@ function computeMaxMorale(techLevel, extraMorale, armyTradition, prestige, power
 /**
  * 计算被动士气损耗（后备部队每天承受）。
  * 公式：(敌方平均最大士气 / 540) × 2% × (1 - 职业度减免)
- * 职业度 >= 80 时减免 50%。
+ * 职业度 >= 100 时减免 50%。
  *
  * @param {number} enemyAvgMorale   - 敌方平均最大士气
  * @param {number} professionalism  - 己方职业度 (0-100)
  * @returns {number} 每日被动士气损耗（绝对士气值）
  */
 function computePassiveMoraleLoss(enemyAvgMorale, professionalism) {
-  var reduction = (professionalism || 0) >= 80 ? 0.5 : 0.0;
+  var reduction = (professionalism || 0) >= 100 ? 0.5 : 0.0;
   return (enemyAvgMorale / 540) * 0.02 * (1 - reduction);
 }
 
@@ -74,8 +74,10 @@ function computeMoraleDamage(attacker, defender, phase, dice, leaderDiff, terrai
 
   var baseCas = computeBaseCasualties(dice, leaderDiff, attackerPips, defenderPips, terrainPenalty);
 
-  var tech = techModifier(attacker.techLevel, attacker.unitType, phase) +
-    (phase === "fire" ? (attacker.fireDamage || 0) : (attacker.shockDamage || 0));
+  var phaseDamage = phase === "fire" ? (attacker.fireDamage || 0) : (attacker.shockDamage || 0);
+  var professionalismBonus = professionalismPhaseDamageBonus(attacker.professionalism || 0);
+  var tech = techModifier(attacker.techLevel, attacker.unitType, phase) *
+    percentMultiplier(phaseDamage + professionalismBonus);
   var tactics = (baseTactics(defender.techLevel) + (defender.extraMilitaryTactics || 0)) *
     percentMultiplier(defender.discipline || 0);
 
@@ -148,7 +150,7 @@ function randomDiceMorale() {
  *   - 使用 moraleOff + fireOff / moraleDef + fireDef（而非纯 fire/shock pips）
  *   - 有 (maxMorale / 540) 因子
  *   - 后排炮兵士气损失为 40%（vs 兵员伤害的 50%）
- *   - 有被动士气损耗（仅影响后备部队）
+ *   - 有被动士气损耗（当前仅计算并展示，不计入总士气）
  *   - 士气降到 0 的团会溃败/撤退
  *
  * @param {Object}  attacker         - 攻击方配置（需含士气字段）
