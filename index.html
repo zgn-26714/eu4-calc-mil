@@ -7,8 +7,12 @@
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <button id="back-button" class="back-button" style="display:none">返回</button>
   <div class="app-shell">
+    <section class="result-topbar results-only">
+      <h1>EU4 陆战双向兵员伤害计算器</h1>
+      <button id="back-button" class="back-button" style="display:none" type="button">返回</button>
+    </section>
+
     <header class="topbar settings-only">
       <div>
         <h1>EU4 陆战双向兵员伤害计算器</h1>
@@ -18,10 +22,6 @@
         <label class="field compact">
           <span>阶段</span>
           <select id="phase"></select>
-        </label>
-        <label class="check">
-          <input type="checkbox" id="backrow-artillery">
-          <span>后排炮兵半伤</span>
         </label>
       </div>
     </header>
@@ -40,6 +40,7 @@
         <input type="radio" name="calc-mode" id="mode-ranking" value="ranking">
         <span>全兵种排行</span>
       </label>
+      <button id="calculate" class="mode-calculate">计算双方损失</button>
     </section>
 
     <section class="shared-strip settings-only" id="single-strip">
@@ -132,10 +133,6 @@
       </section>
     </main>
 
-    <section class="actions settings-only">
-      <button id="calculate">计算双方损失</button>
-    </section>
-
     <section id="error-banner" class="error-banner" style="display:none"></section>
 
     <section class="results-grid results-only">
@@ -188,6 +185,35 @@
           <tbody id="sim-tbody"></tbody>
         </table>
       </div>
+      <details class="daily-log" id="daily-log" style="margin-top:12px;">
+        <summary class="daily-log-summary">每日损伤日志</summary>
+        <div class="sim-table-wrap">
+          <table class="sim-table" id="daily-log-table">
+            <thead>
+              <tr>
+                <th>天数</th>
+                <th>阶段</th>
+                <th>骰子</th>
+                <th>攻方<br>兵员伤害</th>
+                <th>守方<br>兵员伤害</th>
+                <th>攻方<br>兵员损失</th>
+                <th>守方<br>兵员损失</th>
+                <th>攻方<br>剩余兵力</th>
+                <th>守方<br>剩余兵力</th>
+                <th>攻方<br>主动士气损</th>
+                <th>守方<br>主动士气损</th>
+                <th>攻方<br>被动士气损</th>
+                <th>守方<br>被动士气损</th>
+                <th>攻方<br>当前士气</th>
+                <th>守方<br>当前士气</th>
+                <th>攻方<br>溃败团</th>
+                <th>守方<br>溃败团</th>
+              </tr>
+            </thead>
+            <tbody id="daily-log-tbody"></tbody>
+          </table>
+        </div>
+      </details>
     </section>
 
     <section class="sim-results results-only" id="ranking-results" style="display:none">
@@ -197,6 +223,7 @@
       </div>
       <div class="ranking-actions">
         <button id="download-ranking-log" class="secondary" disabled>下载配对日志</button>
+        <button id="cross-tech-ranking-btn" class="secondary">遍历科技排行</button>
       </div>
       <div class="sim-summary" id="ranking-summary"></div>
       <div class="sim-table-wrap">
@@ -230,6 +257,67 @@
       <pre id="ranking-log-output"></pre>
     </section>
 
+    <section class="sim-results results-only" id="cross-tech-section" style="display:none">
+      <div class="details-head">
+        <h3>全科技排行总览</h3>
+      </div>
+      <div class="cross-tech-head-row">
+        <p>这里先显示逐科技兵种组排名表；兵种组成长图收在下方折叠区里，需要时再展开查看。</p>
+        <button id="toggle-cross-tech-charts" class="secondary" type="button" disabled>展开兵种组成长图</button>
+      </div>
+      <div class="cross-tech-table-toolbar">
+        <div class="cross-tech-table-legend" id="cross-tech-table-legend">
+          <span class="cross-tech-table-legend-item"><span class="cross-tech-table-legend-swatch infantry"></span>步兵</span>
+          <span class="cross-tech-table-legend-item"><span class="cross-tech-table-legend-swatch cavalry"></span>骑兵</span>
+          <span class="cross-tech-table-legend-item"><span class="cross-tech-table-legend-swatch artillery"></span>炮兵</span>
+          <span class="cross-tech-table-meta" id="cross-tech-tech-range"></span>
+          <button id="show-cross-tech-template" class="cross-tech-meta-link" type="button" disabled>查看模板参数</button>
+        </div>
+        <button id="toggle-cross-tech-table-mode" class="secondary cross-tech-switch-btn" type="button" disabled>⇄ 转换成兵种显示</button>
+      </div>
+      <div class="sim-table-wrap">
+        <table class="sim-table cross-tech-ranking-table" id="cross-tech-table">
+          <thead id="cross-tech-thead"></thead>
+          <tbody id="cross-tech-tbody"></tbody>
+        </table>
+      </div>
+      <div class="cross-tech-charts-panel" id="cross-tech-charts-panel" style="display:none;">
+        <div class="daily-log" style="margin-top:12px;">
+        <div class="cross-tech-charts">
+          <section class="cross-tech-chart-card">
+            <div class="details-head">
+              <h4>步兵组最佳排名</h4>
+              <p>每条线表示该兵种组在对应科技下，任一可用步兵能打到的最高名次。炮兵会同时出现在两张图里。排名越小越强。</p>
+            </div>
+            <div id="cross-tech-infantry-chart"></div>
+          </section>
+          <section class="cross-tech-chart-card">
+            <div class="details-head">
+              <h4>骑兵组最佳排名</h4>
+              <p>每条线表示该兵种组在对应科技下，任一可用骑兵能打到的最高名次。炮兵会同时出现在两张图里。排名越小越强。</p>
+            </div>
+            <div id="cross-tech-cavalry-chart"></div>
+          </section>
+          <section class="cross-tech-chart-card">
+            <div class="details-head">
+              <h4>纯步兵最佳排名</h4>
+              <p>只统计步兵兵种组，不混入通用炮兵。排名越小越强。</p>
+            </div>
+            <div id="cross-tech-infantry-only-chart"></div>
+          </section>
+          <section class="cross-tech-chart-card">
+            <div class="details-head">
+              <h4>纯骑兵最佳排名</h4>
+              <p>只统计骑兵兵种组，不混入通用炮兵。排名越小越强。</p>
+            </div>
+            <div id="cross-tech-cavalry-only-chart"></div>
+          </section>
+        </div>
+        </div>
+      </div>
+      <button id="download-cross-tech" class="secondary" style="margin-top:12px;" disabled>下载 CSV</button>
+    </section>
+
     <section class="details results-only" id="details-section">
       <div class="details-head">
         <h3>结算详情</h3>
@@ -237,6 +325,51 @@
       </div>
       <pre id="details-output"></pre>
     </section>
+  </div>
+
+  <div class="chart-lightbox" id="chart-lightbox" style="display:none;" aria-hidden="true">
+    <div class="chart-lightbox-backdrop" id="chart-lightbox-backdrop"></div>
+    <div class="chart-lightbox-dialog" role="dialog" aria-modal="true" aria-labelledby="chart-lightbox-title">
+      <div class="chart-lightbox-head">
+        <h3 id="chart-lightbox-title">图表放大预览</h3>
+        <button id="chart-lightbox-close" class="secondary" type="button">关闭</button>
+      </div>
+      <div class="chart-lightbox-body" id="chart-lightbox-body"></div>
+    </div>
+  </div>
+
+  <div class="chart-lightbox" id="cross-tech-template-dialog" style="display:none;" aria-hidden="true">
+    <div class="chart-lightbox-backdrop" id="cross-tech-template-backdrop"></div>
+    <div class="chart-lightbox-dialog cross-tech-template-dialog" role="dialog" aria-modal="true" aria-labelledby="cross-tech-template-title">
+      <div class="chart-lightbox-head">
+        <h3 id="cross-tech-template-title">模板参数</h3>
+        <button id="cross-tech-template-close" class="secondary" type="button">关闭</button>
+      </div>
+      <div class="chart-lightbox-body">
+        <div class="cross-tech-template-grid" id="cross-tech-template-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="confirm-dialog" id="cross-tech-confirm-dialog" style="display:none;" aria-hidden="true">
+    <div class="confirm-dialog-backdrop" id="cross-tech-confirm-backdrop"></div>
+    <div class="confirm-dialog-panel" role="dialog" aria-modal="true" aria-labelledby="cross-tech-confirm-title">
+      <h3 id="cross-tech-confirm-title">遍历科技排行</h3>
+      <p id="cross-tech-confirm-text">这个计算可能需要一些时间。3 秒后将自动开始，你也可以立即开始或取消。</p>
+      <div class="confirm-progress" id="cross-tech-confirm-progress" style="display:none;">
+        <div class="confirm-progress-bar">
+          <div class="confirm-progress-fill" id="cross-tech-confirm-progress-fill"></div>
+        </div>
+        <div class="confirm-progress-meta">
+          <span id="cross-tech-confirm-progress-label">正在准备…</span>
+          <span id="cross-tech-confirm-progress-percent">0%</span>
+        </div>
+      </div>
+      <div class="confirm-dialog-actions">
+        <button id="cross-tech-confirm-start" type="button">立即开始</button>
+        <button id="cross-tech-confirm-cancel" class="secondary" type="button">取消</button>
+      </div>
+    </div>
   </div>
 
   <script src="./unit-data.js"></script>

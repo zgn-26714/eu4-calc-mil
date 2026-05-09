@@ -381,7 +381,7 @@ const sideSchemas = {
     { key: "unitType", label: "兵种类型", type: "select" },
     { key: "unit", label: "具体兵种", type: "select", wide: true },
     { key: "techLevel", label: "军事科技", type: "number", value: 3, min: 0, max: 32, step: 1 },
-    { key: "strength", label: "参战兵力", type: "number", value: 1000, step: 100 },
+    { key: "strength", label: "参战兵力（默认 1000，固定前排）", type: "number", value: 1000, step: 100 },
     { key: "combatAbility", label: "作战能力", type: "number", value: 0, step: 1 },
     { key: "discipline", label: "训练度", type: "number", value: 0, step: 1 },
     { key: "extraMilitaryTactics", label: "额外军事战术", type: "number", value: 0, step: 0.1 },
@@ -401,7 +401,7 @@ const sideSchemas = {
     { key: "unitType", label: "兵种类型", type: "select" },
     { key: "unit", label: "具体兵种", type: "select", wide: true },
     { key: "techLevel", label: "军事科技", type: "number", value: 3, min: 0, max: 32, step: 1 },
-    { key: "strength", label: "参战兵力", type: "number", value: 1000, step: 100 },
+    { key: "strength", label: "参战兵力（默认 1000，固定前排）", type: "number", value: 1000, step: 100 },
     { key: "combatAbility", label: "作战能力", type: "number", value: 0, step: 1 },
     { key: "discipline", label: "训练度", type: "number", value: 0, step: 1 },
     { key: "extraMilitaryTactics", label: "额外军事战术", type: "number", value: 0, step: 0.1 },
@@ -470,11 +470,66 @@ const rankingSummary = document.querySelector("#ranking-summary");
 const rankingTbody = document.querySelector("#ranking-tbody");
 const rankingLogSection = document.querySelector("#ranking-log-section");
 const rankingLogOutput = document.querySelector("#ranking-log-output");
+const crossTechSection = document.querySelector("#cross-tech-section");
+const crossTechThead = document.querySelector("#cross-tech-thead");
+const crossTechTbody = document.querySelector("#cross-tech-tbody");
+const crossTechTechRange = document.querySelector("#cross-tech-tech-range");
+const showCrossTechTemplateBtn = document.querySelector("#show-cross-tech-template");
+const crossTechChartsPanel = document.querySelector("#cross-tech-charts-panel");
+const toggleCrossTechChartsBtn = document.querySelector("#toggle-cross-tech-charts");
+const toggleCrossTechTableModeBtn = document.querySelector("#toggle-cross-tech-table-mode");
+const crossTechRankingBtn = document.querySelector("#cross-tech-ranking-btn");
+const downloadCrossTechBtn = document.querySelector("#download-cross-tech");
+const crossTechInfantryChart = document.querySelector("#cross-tech-infantry-chart");
+const crossTechCavalryChart = document.querySelector("#cross-tech-cavalry-chart");
+const crossTechInfantryOnlyChart = document.querySelector("#cross-tech-infantry-only-chart");
+const crossTechCavalryOnlyChart = document.querySelector("#cross-tech-cavalry-only-chart");
+const chartLightbox = document.querySelector("#chart-lightbox");
+const chartLightboxBackdrop = document.querySelector("#chart-lightbox-backdrop");
+const chartLightboxClose = document.querySelector("#chart-lightbox-close");
+const chartLightboxTitle = document.querySelector("#chart-lightbox-title");
+const chartLightboxBody = document.querySelector("#chart-lightbox-body");
+const crossTechTemplateDialog = document.querySelector("#cross-tech-template-dialog");
+const crossTechTemplateBackdrop = document.querySelector("#cross-tech-template-backdrop");
+const crossTechTemplateClose = document.querySelector("#cross-tech-template-close");
+const crossTechTemplateGrid = document.querySelector("#cross-tech-template-grid");
+const crossTechConfirmDialog = document.querySelector("#cross-tech-confirm-dialog");
+const crossTechConfirmBackdrop = document.querySelector("#cross-tech-confirm-backdrop");
+const crossTechConfirmText = document.querySelector("#cross-tech-confirm-text");
+const crossTechConfirmStart = document.querySelector("#cross-tech-confirm-start");
+const crossTechConfirmCancel = document.querySelector("#cross-tech-confirm-cancel");
+const crossTechConfirmProgress = document.querySelector("#cross-tech-confirm-progress");
+const crossTechConfirmProgressFill = document.querySelector("#cross-tech-confirm-progress-fill");
+const crossTechConfirmProgressLabel = document.querySelector("#cross-tech-confirm-progress-label");
+const crossTechConfirmProgressPercent = document.querySelector("#cross-tech-confirm-progress-percent");
 
 const groupKeys = [...new Set(UNIT_DATA.filter(item => item.group !== "Shared").map(item => item.group))];
 var latestRankingLogText = "";
 var uiView = "settings";
 var resultMode = null;
+var crossTechData = null;
+var latestCrossTechTemplateKey = "";
+var crossTechTableMode = "group";
+var crossTechChartsExpanded = false;
+var crossTechConfirmTimer = null;
+var crossTechConfirmCountdown = null;
+var crossTechRunToken = 0;
+
+const CROSS_TECH_COLORS = [
+  "#0072B2",
+  "#D55E00",
+  "#009E73",
+  "#CC79A7",
+  "#E69F00",
+  "#56B4E9",
+  "#882255",
+  "#117733",
+  "#332288",
+  "#AA4499",
+  "#44AA99",
+  "#999933",
+  "#661100"
+];
 
 function translateGroup(name) {
   return GROUP_TRANSLATIONS[name] || name;
@@ -486,6 +541,247 @@ function translateUnit(name) {
 
 function translateUnitType(name) {
   return UNIT_TYPE_TRANSLATIONS[name] || name;
+}
+
+function translateTableGroup(name) {
+  return name === "Shared" ? "炮兵" : translateGroup(name);
+}
+
+function stripParenthetical(text) {
+  return String(text || "")
+    .replace(/（[^）]*）/g, "")
+    .replace(/\([^)]*\)/g, "")
+    .trim();
+}
+
+function cloneDataShallow(source) {
+  var copy = {};
+  var keys = Object.keys(source);
+  for (var i = 0; i < keys.length; i++) {
+    copy[keys[i]] = source[keys[i]];
+  }
+  return copy;
+}
+
+function buildCrossTechTemplateKey(template, battleOptions) {
+  return JSON.stringify({
+    template: template,
+    battleOptions: battleOptions
+  });
+}
+
+function resetCrossTechResults() {
+  crossTechData = null;
+  latestCrossTechTemplateKey = "";
+  crossTechTableMode = "group";
+  crossTechChartsExpanded = false;
+  crossTechSection.style.display = "none";
+  crossTechTechRange.textContent = "";
+  crossTechThead.innerHTML = "";
+  crossTechTbody.innerHTML = "";
+  crossTechInfantryChart.innerHTML = "";
+  crossTechCavalryChart.innerHTML = "";
+  crossTechInfantryOnlyChart.innerHTML = "";
+  crossTechCavalryOnlyChart.innerHTML = "";
+  downloadCrossTechBtn.disabled = true;
+  toggleCrossTechChartsBtn.disabled = true;
+  toggleCrossTechChartsBtn.textContent = "展开兵种组成长图";
+  toggleCrossTechTableModeBtn.disabled = true;
+  toggleCrossTechTableModeBtn.textContent = "⇄ 转换成兵种显示";
+  showCrossTechTemplateBtn.disabled = true;
+  crossTechChartsPanel.style.display = "none";
+  closeChartLightbox();
+  closeCrossTechTemplateDialog();
+}
+
+function maybeWarnStrengthLimit(control) {
+  if (!control) return;
+  var value = Number(control.value);
+  if (!Number.isFinite(value) || value <= 1000) {
+    control.dataset.warnedStrengthValue = "";
+    return;
+  }
+  if (control.dataset.warnedStrengthValue === control.value) return;
+  control.dataset.warnedStrengthValue = control.value;
+  window.alert("当前模型只按 1000 兵且固定前排计算；当初始兵力超过 1000 时，计算结果目前是不正确的。");
+}
+
+function openChartLightbox(title, contentHtml) {
+  chartLightboxTitle.textContent = title;
+  chartLightboxBody.innerHTML = contentHtml;
+  chartLightbox.style.display = "";
+  chartLightbox.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeChartLightbox() {
+  chartLightbox.style.display = "none";
+  chartLightbox.setAttribute("aria-hidden", "true");
+  chartLightboxBody.innerHTML = "";
+  document.body.style.overflow = "";
+}
+
+function formatTemplateValue(value, schema) {
+  if (!Number.isFinite(value)) return "-";
+  if (schema && (
+    schema.key === "discipline" ||
+    schema.key === "combatAbility" ||
+    schema.key === "fireDamage" ||
+    schema.key === "shockDamage" ||
+    schema.key === "damageDone" ||
+    schema.key === "damageTaken" ||
+    schema.key === "moraleBonus" ||
+    schema.key === "moraleDamageDone" ||
+    schema.key === "moraleDamageTaken"
+  )) {
+    return value + "%";
+  }
+  if (schema && schema.step && String(schema.step).indexOf(".") >= 0) {
+    return value.toFixed(2).replace(/\.?0+$/, "");
+  }
+  return String(value);
+}
+
+function renderCrossTechTemplateDialog() {
+  var template = readSide("template");
+  var html = "";
+  for (var i = 0; i < sideSchemas.template.length; i++) {
+    var schema = sideSchemas.template[i];
+    html +=
+      '<div class="cross-tech-template-item">' +
+        '<div class="cross-tech-template-label">' + schema.label + '</div>' +
+        '<div class="cross-tech-template-value">' + formatTemplateValue(template[schema.key], schema) + '</div>' +
+      '</div>';
+  }
+  crossTechTemplateGrid.innerHTML = html;
+}
+
+function openCrossTechTemplateDialog() {
+  renderCrossTechTemplateDialog();
+  crossTechTemplateDialog.style.display = "";
+  crossTechTemplateDialog.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeCrossTechTemplateDialog() {
+  crossTechTemplateDialog.style.display = "none";
+  crossTechTemplateDialog.setAttribute("aria-hidden", "true");
+  crossTechTemplateGrid.innerHTML = "";
+  document.body.style.overflow = "";
+}
+
+function updateCrossTechView() {
+  crossTechChartsPanel.style.display = crossTechChartsExpanded ? "" : "none";
+  toggleCrossTechChartsBtn.textContent = crossTechChartsExpanded ? "收起兵种组成长图" : "展开兵种组成长图";
+}
+
+function clearCrossTechConfirmTimers() {
+  if (crossTechConfirmTimer) {
+    clearTimeout(crossTechConfirmTimer);
+    crossTechConfirmTimer = null;
+  }
+  if (crossTechConfirmCountdown) {
+    clearInterval(crossTechConfirmCountdown);
+    crossTechConfirmCountdown = null;
+  }
+}
+
+function closeCrossTechConfirmDialog() {
+  clearCrossTechConfirmTimers();
+  crossTechConfirmDialog.style.display = "none";
+  crossTechConfirmDialog.setAttribute("aria-hidden", "true");
+  crossTechConfirmProgress.style.display = "none";
+  crossTechConfirmStart.disabled = false;
+  crossTechConfirmCancel.disabled = false;
+  crossTechConfirmProgressFill.style.width = "0%";
+  crossTechConfirmProgressLabel.textContent = "正在准备…";
+  crossTechConfirmProgressPercent.textContent = "0%";
+}
+
+function startCrossTechRankingFlow() {
+  try {
+    errorBanner.style.display = "none";
+    errorBanner.textContent = "";
+    clearCrossTechConfirmTimers();
+    crossTechConfirmText.textContent = "正在遍历科技排行，请稍候。";
+    crossTechConfirmProgress.style.display = "";
+    crossTechConfirmStart.disabled = true;
+    crossTechConfirmCancel.disabled = true;
+    updateCrossTechProgress(2, "正在启动计算…");
+    window.requestAnimationFrame(function() {
+      window.requestAnimationFrame(function() {
+        setTimeout(function() {
+          try {
+            calculateCrossTechRanking();
+          } catch (error) {
+            closeCrossTechConfirmDialog();
+            errorBanner.textContent = error.message;
+            errorBanner.style.display = "";
+          }
+        }, 24);
+      });
+    });
+  } catch (error) {
+    closeCrossTechConfirmDialog();
+    errorBanner.textContent = error.message;
+    errorBanner.style.display = "";
+  }
+}
+
+function updateCrossTechProgress(value, labelText) {
+  var progressValue = Math.max(0, Math.min(100, value));
+  crossTechConfirmProgressFill.style.width = progressValue + "%";
+  crossTechConfirmProgressPercent.textContent = Math.round(progressValue) + "%";
+  if (labelText) {
+    crossTechConfirmProgressLabel.textContent = labelText;
+  }
+}
+
+function openCrossTechConfirmDialog() {
+  clearCrossTechConfirmTimers();
+  var remainingSeconds = 3;
+  crossTechConfirmText.textContent = "这个计算可能需要一些时间。" + remainingSeconds + " 秒后将自动开始，你也可以立即开始或取消。";
+  crossTechConfirmDialog.style.display = "";
+  crossTechConfirmDialog.setAttribute("aria-hidden", "false");
+  crossTechConfirmProgress.style.display = "none";
+  crossTechConfirmStart.disabled = false;
+  crossTechConfirmCancel.disabled = false;
+
+  crossTechConfirmCountdown = setInterval(function() {
+    remainingSeconds -= 1;
+    if (remainingSeconds <= 0) {
+      clearCrossTechConfirmTimers();
+      startCrossTechRankingFlow();
+      return;
+    }
+    crossTechConfirmText.textContent = "这个计算可能需要一些时间。" + remainingSeconds + " 秒后将自动开始，你也可以立即开始或取消。";
+  }, 1000);
+
+  crossTechConfirmTimer = setTimeout(function() {
+    clearCrossTechConfirmTimers();
+    startCrossTechRankingFlow();
+  }, 3000);
+}
+
+function bindChartPreview(container, titleText) {
+  var shell = container.querySelector(".cross-tech-chart-shell");
+  if (!shell) return;
+  shell.classList.add("clickable");
+  shell.setAttribute("tabindex", "0");
+  shell.setAttribute("role", "button");
+  shell.setAttribute("aria-label", titleText + "，点击放大查看");
+
+  function openPreview() {
+    openChartLightbox(titleText, shell.outerHTML.replace(" clickable", ""));
+  }
+
+  shell.addEventListener("click", openPreview);
+  shell.addEventListener("keydown", function(event) {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openPreview();
+    }
+  });
 }
 
 function fillOptions(select, options, selectedValue) {
@@ -626,12 +922,13 @@ function updateModeUI() {
     singleStrip.style.display = isSingle ? "" : "none";
     simStrip.style.display = isSim ? "" : "none";
     templateCard.style.display = isRanking ? "" : "none";
-    phaseBox.style.display = isRanking ? "none" : "";
+    phaseBox.style.display = isSingle ? "" : "none";
     battleGrid.style.display = isRanking ? "none" : "";
     resultsGrid.style.display = "none";
     simResults.style.display = "none";
     rankingResults.style.display = "none";
     rankingLogSection.style.display = "none";
+    crossTechSection.style.display = "none";
     detailsSection.style.display = "none";
     backButton.style.display = "none";
     document.body.className = "settings-view";
@@ -647,6 +944,10 @@ function updateModeUI() {
     simResults.style.display = resultMode === "simulation" ? "" : "none";
     rankingResults.style.display = resultMode === "ranking" ? "" : "none";
     rankingLogSection.style.display = resultMode === "ranking" ? "" : "none";
+    crossTechSection.style.display = resultMode === "cross-tech" ? "" : "none";
+    if (resultMode === "cross-tech" && crossTechData) {
+      updateCrossTechView();
+    }
     detailsSection.style.display = resultMode === "single" || resultMode === "simulation" ? "" : "none";
     backButton.style.display = "";
     document.body.className = "result-view";
@@ -671,7 +972,6 @@ function calculateSingle() {
   const leaderDiff = Number(document.querySelector("#leader-diff").value);
   const terrainPenalty = Number(document.querySelector("#terrain-penalty").value);
   const phase = phaseSelect.value;
-  const backrowArtillery = document.querySelector("#backrow-artillery").checked;
 
   [ ["骰子", dice], ["将领差额", leaderDiff], ["进攻地形惩罚", terrainPenalty] ].forEach(([name, value]) => validateNumber(name, value));
   if (dice < 0 || dice > 9) throw new Error("骰子应在 0 到 9 之间。");
@@ -686,8 +986,8 @@ function calculateSingle() {
     }
   }
 
-  const attackerToDefender = computeOneWay(attacker, defender, phase, dice, leaderDiff, terrainPenalty, backrowArtillery);
-  const defenderToAttacker = computeOneWay(defender, attacker, phase, dice, -leaderDiff, 0, backrowArtillery);
+  const attackerToDefender = computeOneWay(attacker, defender, phase, dice, leaderDiff, terrainPenalty, false);
+  const defenderToAttacker = computeOneWay(defender, attacker, phase, dice, -leaderDiff, 0, false);
 
   attackerLossEl.textContent = defenderToAttacker.damage.toFixed(2);
   defenderLossEl.textContent = attackerToDefender.damage.toFixed(2);
@@ -701,12 +1001,12 @@ function calculateSingle() {
   const attToDefMorale = computeMoraleDamage(
     Object.assign({}, attacker, { maxMorale: attFinalMorale }),
     Object.assign({}, defender, { maxMorale: defFinalMorale }),
-    phase, dice, leaderDiff, terrainPenalty, backrowArtillery, 0, defender.professionalism || 0
+    phase, dice, leaderDiff, terrainPenalty, false, 0, defender.professionalism || 0
   );
   const defToAttMorale = computeMoraleDamage(
     Object.assign({}, defender, { maxMorale: defFinalMorale }),
     Object.assign({}, attacker, { maxMorale: attFinalMorale }),
-    phase, dice, -leaderDiff, 0, backrowArtillery, 0, attacker.professionalism || 0
+    phase, dice, -leaderDiff, 0, false, 0, attacker.professionalism || 0
   );
 
   attackerMoraleLossEl.textContent = defToAttMorale.moraleDamage.toFixed(2);
@@ -739,8 +1039,8 @@ function calculateSingle() {
     "士气损失 = 基础伤亡 x 基础乘数 x (1+士气损失修正) x (1+士气承受伤害修正) x (己方最大士气/540)",
     "进攻方 -> 防守方：基础伤亡=" + attackerToDefender.baseCasualties.toFixed(2) + "  己方士气=" + attFinalMorale.toFixed(2) + "  -> 士气损失=" + attToDefMorale.moraleDamage.toFixed(2),
     "防守方 -> 进攻方：基础伤亡=" + defenderToAttacker.baseCasualties.toFixed(2) + "  己方士气=" + defFinalMorale.toFixed(2) + "  -> 士气损失=" + defToAttMorale.moraleDamage.toFixed(2),
-    "防守方后备被动士气损耗/天：" + attToDefMorale.passiveMoraleLoss.toFixed(4) + "（职业度 100 时减半）",
-    "进攻方后备被动士气损耗/天：" + defToAttMorale.passiveMoraleLoss.toFixed(4) + "（职业度 100 时减半）"
+    "防守方被动士气损耗/天：" + attToDefMorale.passiveMoraleLoss.toFixed(4) + "（职业度 100 时减半）",
+    "进攻方被动士气损耗/天：" + defToAttMorale.passiveMoraleLoss.toFixed(4) + "（职业度 100 时减半）"
   ].join("\n");
 }
 
@@ -766,7 +1066,6 @@ function readSimulationBattleOptions(rounds, forOpenEnded) {
 
   var phaseModeRaw = simPhaseMode.value;
   var phaseOnly = (phaseModeRaw === "alternate") ? null : phaseModeRaw;
-  var backrowArtillery = document.querySelector("#backrow-artillery").checked;
 
   var diceConfig = {};
   if (simDiceMode.value === "manual") {
@@ -794,7 +1093,6 @@ function readSimulationBattleOptions(rounds, forOpenEnded) {
     leaderDiff: leaderDiff,
     terrainPenalty: terrainPenalty,
     phaseOnly: phaseOnly,
-    backrowArtillery: backrowArtillery,
     diceConfig: diceConfig,
     diceMode: simDiceMode.value
   };
@@ -824,7 +1122,7 @@ function calculateSimulation() {
     battleOptions.diceConfig,
     battleOptions.leaderDiff,
     battleOptions.terrainPenalty,
-    battleOptions.backrowArtillery,
+    false,
     battleOptions.phaseOnly
   );
 
@@ -843,6 +1141,7 @@ function calculateSimulation() {
   var lines = [];
   lines.push("=== 多轮模拟结果（含士气） ===");
   lines.push("总天数：" + result.totalDays + "  轮数：" + result.rounds.length);
+  lines.push("说明：当前模型按每个兵种初始 1000 兵且固定前排计算。");
   lines.push("");
   lines.push("--- 兵员 ---");
   lines.push("进攻方初始兵力：" + result.initialAttackerStrength + "  →  剩余：" + result.finalAttackerStrength.toFixed(2) + "  （损失 " + result.totalAttackerStrengthLoss.toFixed(2) + "）");
@@ -874,7 +1173,7 @@ function calculateSimulation() {
       lines.push("  火力阶段（骰子=" + rr.fire.dice + "）：攻方兵损=" + rr.fire.attackerStrengthLoss.toFixed(2) + " 守方兵损=" + rr.fire.defenderStrengthLoss.toFixed(2) + " 攻方士气损=" + rr.fire.attackerMoraleLoss.toFixed(2) + " 守方士气损=" + rr.fire.defenderMoraleLoss.toFixed(2));
       for (var di = 0; di < rr.fire.days.length; di++) {
         var day = rr.fire.days[di];
-        lines.push("    第" + day.day + "天  攻方兵伤=" + day.attackerStrengthDmg.toFixed(2) + " 守方兵伤=" + day.defenderStrengthDmg.toFixed(2) + "  攻方剩=" + day.attackerStrengthRemaining.toFixed(2) + " 守方剩=" + day.defenderStrengthRemaining.toFixed(2) + "  攻方士气=" + day.attackerCurrentMorale.toFixed(2) + " 守方士气=" + day.defenderCurrentMorale.toFixed(2) + "  攻方后备士气损耗/天=" + day.attackerPassiveMoraleLoss.toFixed(4) + " 守方后备士气损耗/天=" + day.defenderPassiveMoraleLoss.toFixed(4) + "  攻溃败=" + day.attackerBrokenRegiments + " 守溃败=" + day.defenderBrokenRegiments);
+        lines.push("    第" + day.day + "天  攻方兵伤=" + day.attackerStrengthDmg.toFixed(2) + " 守方兵伤=" + day.defenderStrengthDmg.toFixed(2) + "  攻方剩=" + day.attackerStrengthRemaining.toFixed(2) + " 守方剩=" + day.defenderStrengthRemaining.toFixed(2) + "  攻方士气(主动=" + day.attackerMoraleLoss.toFixed(2) + "+被动=" + day.attackerPassiveMoraleLoss.toFixed(2) + ")=" + day.attackerCurrentMorale.toFixed(2) + " 守方士气(主动=" + day.defenderMoraleLoss.toFixed(2) + "+被动=" + day.defenderPassiveMoraleLoss.toFixed(2) + ")=" + day.defenderCurrentMorale.toFixed(2) + "  攻溃败=" + day.attackerBrokenRegiments + " 守溃败=" + day.defenderBrokenRegiments);
       }
     }
     if (rr.shock) {
@@ -1043,6 +1342,70 @@ function renderSimResults(result, attacker, defender, phaseOnly) {
     '</tr>';
 
   simTbody.innerHTML = rows;
+
+  renderDailyLog(result);
+}
+
+function renderDailyLog(result) {
+  var tbody = document.querySelector("#daily-log-tbody");
+  var rows = "";
+  var phaseLabel = { fire: "火力", shock: "冲击" };
+
+  for (var r = 0; r < result.rounds.length; r++) {
+    var rr = result.rounds[r];
+    if (rr.fire) {
+      for (var di = 0; di < rr.fire.days.length; di++) {
+        var day = rr.fire.days[di];
+        rows +=
+          '<tr>' +
+            '<td>' + day.day + '</td>' +
+            '<td>' + phaseLabel.fire + '</td>' +
+            '<td>' + rr.fire.dice + '</td>' +
+            '<td>' + day.attackerStrengthDmg.toFixed(2) + '</td>' +
+            '<td>' + day.defenderStrengthDmg.toFixed(2) + '</td>' +
+            '<td>' + day.attackerStrengthLoss.toFixed(2) + '</td>' +
+            '<td>' + day.defenderStrengthLoss.toFixed(2) + '</td>' +
+            '<td>' + Math.max(0, day.attackerStrengthRemaining).toFixed(2) + '</td>' +
+            '<td>' + Math.max(0, day.defenderStrengthRemaining).toFixed(2) + '</td>' +
+            '<td>' + day.attackerMoraleLoss.toFixed(2) + '</td>' +
+            '<td>' + day.defenderMoraleLoss.toFixed(2) + '</td>' +
+            '<td>' + day.attackerPassiveMoraleLoss.toFixed(2) + '</td>' +
+            '<td>' + day.defenderPassiveMoraleLoss.toFixed(2) + '</td>' +
+            '<td>' + Math.max(0, day.attackerCurrentMorale).toFixed(2) + '</td>' +
+            '<td>' + Math.max(0, day.defenderCurrentMorale).toFixed(2) + '</td>' +
+            '<td>' + day.attackerBrokenRegiments + '/' + result.attRegiments + '</td>' +
+            '<td>' + day.defenderBrokenRegiments + '/' + result.defRegiments + '</td>' +
+          '</tr>';
+      }
+    }
+    if (rr.shock) {
+      for (di = 0; di < rr.shock.days.length; di++) {
+        var day2 = rr.shock.days[di];
+        rows +=
+          '<tr>' +
+            '<td>' + day2.day + '</td>' +
+            '<td>' + phaseLabel.shock + '</td>' +
+            '<td>' + rr.shock.dice + '</td>' +
+            '<td>' + day2.attackerStrengthDmg.toFixed(2) + '</td>' +
+            '<td>' + day2.defenderStrengthDmg.toFixed(2) + '</td>' +
+            '<td>' + day2.attackerStrengthLoss.toFixed(2) + '</td>' +
+            '<td>' + day2.defenderStrengthLoss.toFixed(2) + '</td>' +
+            '<td>' + Math.max(0, day2.attackerStrengthRemaining).toFixed(2) + '</td>' +
+            '<td>' + Math.max(0, day2.defenderStrengthRemaining).toFixed(2) + '</td>' +
+            '<td>' + day2.attackerMoraleLoss.toFixed(2) + '</td>' +
+            '<td>' + day2.defenderMoraleLoss.toFixed(2) + '</td>' +
+            '<td>' + day2.attackerPassiveMoraleLoss.toFixed(2) + '</td>' +
+            '<td>' + day2.defenderPassiveMoraleLoss.toFixed(2) + '</td>' +
+            '<td>' + Math.max(0, day2.attackerCurrentMorale).toFixed(2) + '</td>' +
+            '<td>' + Math.max(0, day2.defenderCurrentMorale).toFixed(2) + '</td>' +
+            '<td>' + day2.attackerBrokenRegiments + '/' + result.attRegiments + '</td>' +
+            '<td>' + day2.defenderBrokenRegiments + '/' + result.defRegiments + '</td>' +
+          '</tr>';
+      }
+    }
+  }
+
+  tbody.innerHTML = rows;
 }
 
 function formatTournamentCandidate(candidate) {
@@ -1079,8 +1442,7 @@ function buildRankingLogText(result, template, battleOptions) {
     "阶段模式=" + (battleOptions.phaseOnly === null ? "火力+冲击交替" : (battleOptions.phaseOnly === "fire" ? "仅火力" : "仅冲击")) +
     "  骰子模式=" + (battleOptions.diceMode === "fixed" ? "固定骰子 5" : (battleOptions.diceMode === "manual" ? "手动序列循环" : "全部随机")) +
     "  将领差额=" + battleOptions.leaderDiff +
-    "  进攻地形惩罚=" + battleOptions.terrainPenalty +
-    "  后排炮兵半伤=" + (battleOptions.backrowArtillery ? "是" : "否")
+    "  进攻地形惩罚=" + battleOptions.terrainPenalty
   );
   lines.push("候选兵种数：" + result.candidates.length + "  配对组合数：" + result.totalPairs + "  实际对战场次：" + result.totalMatches);
   lines.push("");
@@ -1215,7 +1577,6 @@ function calculateRanking() {
     leaderDiff: 0,
     terrainPenalty: 0,
     phaseOnly: null,
-    backrowArtillery: false,
     diceConfig: { mode: "fixed", value: 5 },
     diceMode: "fixed"
   };
@@ -1231,10 +1592,469 @@ function calculateRanking() {
   updateModeUI();
 }
 
+// ---- Cross-tech ranking ----
+
+function runCrossTechRanking(template, battleOptions, onProgress, onComplete) {
+  var templateKey = buildCrossTechTemplateKey(template, battleOptions);
+  if (crossTechData && latestCrossTechTemplateKey === templateKey) {
+    if (onComplete) onComplete(crossTechData);
+    return;
+  }
+
+  var workingTemplate = cloneDataShallow(template);
+  var results = [];
+  var maxCols = 0;
+
+  function processNext(index) {
+    try {
+      if (index >= 33) {
+        crossTechData = { results: results, maxCols: maxCols, templateKey: templateKey };
+        latestCrossTechTemplateKey = templateKey;
+        if (onComplete) onComplete(crossTechData);
+        return;
+      }
+
+      workingTemplate.techLevel = index;
+      var candidates = listTournamentCandidates(index);
+      if (candidates.length >= 2) {
+        var result = runUnitTournament(workingTemplate, battleOptions);
+        results.push({ techLevel: index, rankings: result.rankings });
+        if (result.rankings.length > maxCols) maxCols = result.rankings.length;
+      }
+      if (onProgress) onProgress(index + 1, candidates.length);
+    } catch (e) {
+      // skip tech levels that fail
+      if (onProgress) onProgress(index + 1, 0);
+    }
+
+    if (index % 4 === 3) {
+      setTimeout(function() { processNext(index + 1); }, 0);
+    } else {
+      processNext(index + 1);
+    }
+  }
+
+  processNext(0);
+}
+
+function calculateCrossTechRanking() {
+  var runToken = ++crossTechRunToken;
+  var totalTechCount = 33;
+  var template = readSide("template");
+  var battleOptions = {
+    leaderDiff: 0,
+    terrainPenalty: 0,
+    phaseOnly: null,
+    diceConfig: { mode: "fixed", value: 5 },
+    diceMode: "fixed"
+  };
+
+  crossTechRankingBtn.disabled = true;
+  updateCrossTechProgress(4, "正在准备遍历科技排行…");
+
+  runCrossTechRanking(
+    template,
+    battleOptions,
+    function(processedCount, candidateCount) {
+      if (runToken !== crossTechRunToken) return;
+      var ratio = Math.max(0, Math.min(1, processedCount / totalTechCount));
+      var progressValue = ratio * 80;
+      updateCrossTechProgress(progressValue, "正在计算科技 " + (processedCount - 1) + "/32（候选兵种 " + candidateCount + " 个）…");
+    },
+    function(data) {
+      if (runToken !== crossTechRunToken) return;
+      crossTechRankingBtn.disabled = false;
+      renderCrossTechResultsWithProgress(data.results, data.maxCols, runToken);
+    }
+  );
+}
+
+function buildGroupPeakSeries(results, primaryUnitType, includeArtillery, recomputeFilteredRanks) {
+  var groupRanks = {};
+  var groupOrder = [];
+  includeArtillery = includeArtillery !== false;
+  recomputeFilteredRanks = !!recomputeFilteredRanks;
+
+  for (var i = 0; i < results.length; i++) {
+    var row = results[i];
+    var techRanks = {};
+    var filteredEntries = [];
+
+    for (var j = 0; j < row.rankings.length; j++) {
+      var entry = row.rankings[j];
+      var candidate = entry.candidate;
+      if (candidate.unitType !== primaryUnitType && !(includeArtillery && candidate.unitType === "Artillery")) continue;
+      filteredEntries.push(entry);
+    }
+
+    for (j = 0; j < filteredEntries.length; j++) {
+      entry = filteredEntries[j];
+      candidate = entry.candidate;
+      var groupKey = candidate.unitType === "Artillery" ? "Shared" : candidate.group;
+      var rankValue = recomputeFilteredRanks ? (j + 1) : (row.rankings.indexOf(entry) + 1);
+      if (!techRanks[groupKey] || techRanks[groupKey] > rankValue) {
+        techRanks[groupKey] = rankValue;
+      }
+    }
+
+    var keys = Object.keys(techRanks);
+    for (var k = 0; k < keys.length; k++) {
+      var groupKey = keys[k];
+      if (!groupRanks[groupKey]) {
+        groupRanks[groupKey] = [];
+        groupOrder.push(groupKey);
+      }
+      groupRanks[groupKey].push({ techLevel: row.techLevel, rank: techRanks[groupKey] });
+    }
+  }
+
+  groupOrder.sort(function(left, right) {
+    if (left === "Shared") return 1;
+    if (right === "Shared") return -1;
+    return translateGroup(left).localeCompare(translateGroup(right));
+  });
+
+  return {
+    groups: groupOrder.map(function(groupKey, index) {
+      return {
+        key: groupKey,
+        label: groupKey === "Shared" ? "通用炮兵" : translateGroup(groupKey),
+        color: CROSS_TECH_COLORS[index % CROSS_TECH_COLORS.length],
+        points: groupRanks[groupKey]
+      };
+    })
+  };
+}
+
+function renderCrossTechLineChart(container, seriesData, titleText) {
+  if (!seriesData.groups.length) {
+    container.innerHTML = '<div class="cross-tech-chart-shell"><div class="cross-tech-chart-empty">没有可绘制的数据</div></div>';
+    return;
+  }
+
+  var width = 920;
+  var height = 420;
+  var paddingLeft = 54;
+  var paddingRight = 18;
+  var paddingTop = 18;
+  var paddingBottom = 42;
+  var plotWidth = width - paddingLeft - paddingRight;
+  var plotHeight = height - paddingTop - paddingBottom;
+  var maxRank = 0;
+  var techLevels = [];
+  var styles = getComputedStyle(document.documentElement);
+  var chartBg = styles.getPropertyValue("--chart-bg").trim() || "#fbfdff";
+  var chartGrid = styles.getPropertyValue("--chart-grid").trim() || "#d8e0ed";
+  var chartAxis = styles.getPropertyValue("--chart-axis").trim() || "#94a3b8";
+  var textColor = styles.getPropertyValue("--muted").trim() || "#627089";
+  var i;
+
+  for (i = 0; i < seriesData.groups.length; i++) {
+    for (var j = 0; j < seriesData.groups[i].points.length; j++) {
+      var point = seriesData.groups[i].points[j];
+      if (point.rank > maxRank) maxRank = point.rank;
+      if (techLevels.indexOf(point.techLevel) === -1) techLevels.push(point.techLevel);
+    }
+  }
+
+  techLevels.sort(function(a, b) { return a - b; });
+  maxRank = Math.max(maxRank, 1);
+
+  function xForTech(techLevel) {
+    if (techLevels.length <= 1) return paddingLeft + plotWidth / 2;
+    return paddingLeft + (techLevel - techLevels[0]) / (techLevels[techLevels.length - 1] - techLevels[0]) * plotWidth;
+  }
+
+  function yForRank(rank) {
+    if (maxRank <= 1) return paddingTop + plotHeight / 2;
+    return paddingTop + (rank - 1) / (maxRank - 1) * plotHeight;
+  }
+
+  var svg = '';
+  svg += '<svg class="cross-tech-chart-svg" viewBox="0 0 ' + width + ' ' + height + '" role="img" aria-label="' + titleText + '兵种组最佳排名折线图">';
+  svg += '<rect x="0" y="0" width="' + width + '" height="' + height + '" fill="' + chartBg + '"></rect>';
+
+  var yTicks = [];
+  var desiredTicks = 8;
+  var tickStep = Math.max(1, Math.ceil(maxRank / desiredTicks));
+  for (i = 1; i <= maxRank; i += tickStep) {
+    yTicks.push(i);
+  }
+  if (yTicks[yTicks.length - 1] !== maxRank) yTicks.push(maxRank);
+
+  for (i = 0; i < yTicks.length; i++) {
+    var rankValue = yTicks[i];
+    var y = yForRank(rankValue);
+    svg += '<line x1="' + paddingLeft + '" y1="' + y + '" x2="' + (paddingLeft + plotWidth) + '" y2="' + y + '" stroke="' + chartGrid + '" stroke-width="1"></line>';
+    svg += '<text x="' + (paddingLeft - 10) + '" y="' + (y + 4) + '" fill="' + textColor + '" font-size="12" text-anchor="end">' + rankValue + '</text>';
+  }
+
+  for (i = 0; i < techLevels.length; i++) {
+    var tech = techLevels[i];
+    var x = xForTech(tech);
+    svg += '<line x1="' + x + '" y1="' + paddingTop + '" x2="' + x + '" y2="' + (paddingTop + plotHeight) + '" stroke="' + chartGrid + '" stroke-width="1"></line>';
+    if (i === 0 || i === techLevels.length - 1 || tech % 4 === 0) {
+      svg += '<text x="' + x + '" y="' + (paddingTop + plotHeight + 22) + '" fill="' + textColor + '" font-size="12" text-anchor="middle">' + tech + '</text>';
+    }
+  }
+
+  svg += '<line x1="' + paddingLeft + '" y1="' + paddingTop + '" x2="' + paddingLeft + '" y2="' + (paddingTop + plotHeight) + '" stroke="' + chartAxis + '" stroke-width="1.2"></line>';
+  svg += '<line x1="' + paddingLeft + '" y1="' + (paddingTop + plotHeight) + '" x2="' + (paddingLeft + plotWidth) + '" y2="' + (paddingTop + plotHeight) + '" stroke="' + chartAxis + '" stroke-width="1.2"></line>';
+  svg += '<text x="' + (paddingLeft + plotWidth / 2) + '" y="' + (height - 8) + '" fill="' + textColor + '" font-size="12" text-anchor="middle">军事科技</text>';
+  svg += '<text x="18" y="' + (paddingTop + plotHeight / 2) + '" fill="' + textColor + '" font-size="12" text-anchor="middle" transform="rotate(-90 18 ' + (paddingTop + plotHeight / 2) + ')">最佳排名（越低越强）</text>';
+
+  for (i = 0; i < seriesData.groups.length; i++) {
+    var group = seriesData.groups[i];
+    var path = [];
+    for (var p = 0; p < group.points.length; p++) {
+      var pt = group.points[p];
+      path.push((p === 0 ? "M" : "L") + xForTech(pt.techLevel).toFixed(2) + " " + yForRank(pt.rank).toFixed(2));
+    }
+    svg += '<path d="' + path.join(" ") + '" fill="none" stroke="' + group.color + '" stroke-width="' + (group.key === "Shared" ? "3" : "2.2") + '" stroke-linecap="round" stroke-linejoin="round"></path>';
+    for (p = 0; p < group.points.length; p++) {
+      pt = group.points[p];
+      svg += '<circle cx="' + xForTech(pt.techLevel).toFixed(2) + '" cy="' + yForRank(pt.rank).toFixed(2) + '" r="' + (group.key === "Shared" ? "3.4" : "2.6") + '" fill="' + group.color + '"><title>' + group.label + ' | 科技 ' + pt.techLevel + ' | 第 ' + pt.rank + ' 名</title></circle>';
+    }
+  }
+
+  svg += '</svg>';
+
+  var legend = '<div class="cross-tech-chart-legend">';
+  for (i = 0; i < seriesData.groups.length; i++) {
+    group = seriesData.groups[i];
+    legend += '<span class="cross-tech-chart-legend-item"><span class="cross-tech-chart-legend-swatch" style="background:' + group.color + ';"></span>' + group.label + '</span>';
+  }
+  legend += '</div>';
+
+  container.innerHTML = '<div class="cross-tech-chart-shell">' + svg + legend + '</div>';
+}
+
+function renderCrossTechSummary(results) {
+  if (!results.length) {
+    crossTechTechRange.textContent = "";
+    showCrossTechTemplateBtn.disabled = true;
+    return;
+  }
+  crossTechTechRange.textContent = "科技 " + results[0].techLevel + " – " + results[results.length - 1].techLevel;
+  showCrossTechTemplateBtn.disabled = false;
+}
+
+function renderCrossTechCharts(results) {
+  renderCrossTechLineChart(crossTechInfantryChart, buildGroupPeakSeries(results, "Infantry", true, false), "步兵");
+  renderCrossTechLineChart(crossTechCavalryChart, buildGroupPeakSeries(results, "Cavalry", true, false), "骑兵");
+  renderCrossTechLineChart(crossTechInfantryOnlyChart, buildGroupPeakSeries(results, "Infantry", false, true), "纯步兵");
+  renderCrossTechLineChart(crossTechCavalryOnlyChart, buildGroupPeakSeries(results, "Cavalry", false, true), "纯骑兵");
+  bindChartPreview(crossTechInfantryChart, "步兵组最佳排名");
+  bindChartPreview(crossTechCavalryChart, "骑兵组最佳排名");
+  bindChartPreview(crossTechInfantryOnlyChart, "纯步兵最佳排名");
+  bindChartPreview(crossTechCavalryOnlyChart, "纯骑兵最佳排名");
+}
+
+function renderCrossTechResultsWithProgress(results, maxCols, runToken) {
+  updateCrossTechProgress(84, "正在渲染摘要…");
+  setTimeout(function() {
+    if (runToken !== crossTechRunToken) return;
+    renderCrossTechSummary(results);
+
+    updateCrossTechProgress(88, "正在渲染综合成长图…");
+    setTimeout(function() {
+      if (runToken !== crossTechRunToken) return;
+      renderCrossTechLineChart(crossTechInfantryChart, buildGroupPeakSeries(results, "Infantry", true, false), "步兵");
+      renderCrossTechLineChart(crossTechCavalryChart, buildGroupPeakSeries(results, "Cavalry", true, false), "骑兵");
+      bindChartPreview(crossTechInfantryChart, "步兵组最佳排名");
+      bindChartPreview(crossTechCavalryChart, "骑兵组最佳排名");
+
+      updateCrossTechProgress(93, "正在渲染纯兵种成长图…");
+      setTimeout(function() {
+        if (runToken !== crossTechRunToken) return;
+        renderCrossTechLineChart(crossTechInfantryOnlyChart, buildGroupPeakSeries(results, "Infantry", false, true), "纯步兵");
+        renderCrossTechLineChart(crossTechCavalryOnlyChart, buildGroupPeakSeries(results, "Cavalry", false, true), "纯骑兵");
+        bindChartPreview(crossTechInfantryOnlyChart, "纯步兵最佳排名");
+        bindChartPreview(crossTechCavalryOnlyChart, "纯骑兵最佳排名");
+
+        updateCrossTechProgress(97, "正在渲染排行表格…");
+        setTimeout(function() {
+          if (runToken !== crossTechRunToken) return;
+          renderCrossTechTable(results);
+          downloadCrossTechBtn.disabled = false;
+          toggleCrossTechChartsBtn.disabled = false;
+          updateCrossTechView();
+
+          updateCrossTechProgress(100, "正在完成跳转…");
+          setTimeout(function() {
+            if (runToken !== crossTechRunToken) return;
+            uiView = "results";
+            resultMode = "cross-tech";
+            updateModeUI();
+            crossTechSection.style.display = "";
+            updateCrossTechView();
+            closeCrossTechConfirmDialog();
+          }, 120);
+        }, 0);
+      }, 0);
+    }, 0);
+  }, 0);
+}
+
+function crossTechCellClassForUnitType(unitType) {
+  if (unitType === "Infantry") return "cross-tech-cell-infantry";
+  if (unitType === "Cavalry") return "cross-tech-cell-cavalry";
+  return "cross-tech-cell-artillery";
+}
+
+function buildCrossTechGroupTableRows(results) {
+  var tableRows = [];
+  var maxCols = 0;
+
+  for (var i = 0; i < results.length; i++) {
+    var rankingRow = results[i];
+    var seenEntries = {};
+    var rankedGroups = [];
+
+    for (var j = 0; j < rankingRow.rankings.length; j++) {
+      var entry = rankingRow.rankings[j];
+      var candidate = entry.candidate;
+      var entryKey;
+      if (candidate.unitType === "Artillery") {
+        entryKey = "Artillery|Shared";
+      } else {
+        entryKey = candidate.unitType + "|" + candidate.group;
+      }
+      if (seenEntries[entryKey]) continue;
+      seenEntries[entryKey] = true;
+      rankedGroups.push({
+        label: candidate.unitType === "Artillery" ? "炮兵" : stripParenthetical(translateGroup(candidate.group)),
+        sublabel: stripParenthetical(translateUnit(candidate.unitName)),
+        unitType: candidate.unitType
+      });
+    }
+
+    if (rankedGroups.length > maxCols) maxCols = rankedGroups.length;
+    tableRows.push({
+      techLevel: rankingRow.techLevel,
+      entries: rankedGroups
+    });
+  }
+
+  return {
+    rows: tableRows,
+    maxCols: maxCols
+  };
+}
+
+function buildCrossTechUnitTableRows(results) {
+  var tableRows = [];
+  var maxCols = 0;
+
+  for (var i = 0; i < results.length; i++) {
+    var rankingRow = results[i];
+    var rankedUnits = [];
+
+    for (var j = 0; j < rankingRow.rankings.length; j++) {
+      var entry = rankingRow.rankings[j];
+      var candidate = entry.candidate;
+      rankedUnits.push({
+        label: stripParenthetical(translateUnit(candidate.unitName)),
+        sublabel: candidate.unitType === "Artillery" ? "炮兵" : stripParenthetical(translateGroup(candidate.group)),
+        unitType: candidate.unitType
+      });
+    }
+
+    if (rankedUnits.length > maxCols) maxCols = rankedUnits.length;
+    tableRows.push({
+      techLevel: rankingRow.techLevel,
+      entries: rankedUnits
+    });
+  }
+
+  return {
+    rows: tableRows,
+    maxCols: maxCols
+  };
+}
+
+function buildCrossTechTableRows(results) {
+  return crossTechTableMode === "unit" ? buildCrossTechUnitTableRows(results) : buildCrossTechGroupTableRows(results);
+}
+
+function updateCrossTechTableModeButton() {
+  toggleCrossTechTableModeBtn.disabled = !crossTechData;
+  toggleCrossTechTableModeBtn.textContent = crossTechTableMode === "unit" ? "⇄ 转换成兵种组显示" : "⇄ 转换成兵种显示";
+}
+
+function buildCrossTechCellHtml(item) {
+  var sublabel = item.sublabel ? '<div class="cross-tech-cell-sub">' + item.sublabel + '</div>' : '';
+  return '<div class="cross-tech-cell-main">' + item.label + '</div>' + sublabel;
+}
+
+function renderCrossTechTable(results) {
+  var tableData = buildCrossTechTableRows(results);
+  var headerHtml = '<tr><th>科技</th>';
+  for (var c = 1; c <= tableData.maxCols; c++) {
+    headerHtml += '<th>#' + c + '</th>';
+  }
+  headerHtml += '</tr>';
+  crossTechThead.innerHTML = headerHtml;
+
+  var bodyHtml = "";
+  for (var i = 0; i < tableData.rows.length; i++) {
+    var row = tableData.rows[i];
+    bodyHtml += '<tr><td>' + row.techLevel + '</td>';
+    for (var c = 0; c < tableData.maxCols; c++) {
+      if (c < row.entries.length) {
+        var item = row.entries[c];
+        bodyHtml += '<td class="text-left ' + crossTechCellClassForUnitType(item.unitType) + '">' + buildCrossTechCellHtml(item) + '</td>';
+      } else {
+        bodyHtml += '<td class="text-left" style="color:var(--muted);">-</td>';
+      }
+    }
+    bodyHtml += '</tr>';
+  }
+  crossTechTbody.innerHTML = bodyHtml;
+  downloadCrossTechBtn.disabled = false;
+  updateCrossTechTableModeButton();
+}
+
+function renderCrossTechResults(results, maxCols) {
+  renderCrossTechSummary(results);
+  renderCrossTechCharts(results);
+  renderCrossTechTable(results);
+  downloadCrossTechBtn.disabled = false;
+  toggleCrossTechChartsBtn.disabled = false;
+  updateCrossTechView();
+}
+
+function downloadCrossTechCSV() {
+  if (!crossTechData) return;
+  var tableData = buildCrossTechTableRows(crossTechData.results);
+  var lines = [];
+  lines.push("科技等级," + Array(tableData.maxCols).fill(0).map(function(_, i) {
+    return crossTechTableMode === "unit" ? ("第" + (i + 1) + "名兵种") : ("第" + (i + 1) + "名兵种组");
+  }).join(","));
+  for (var i = 0; i < tableData.rows.length; i++) {
+    var tableRow = tableData.rows[i];
+    var row = [tableRow.techLevel];
+    for (var c = 0; c < tableData.maxCols; c++) {
+      row.push(c < tableRow.entries.length ? (tableRow.entries[c].label + (tableRow.entries[c].sublabel ? " | " + tableRow.entries[c].sublabel : "")) : "");
+    }
+    lines.push(row.join(","));
+  }
+  var csv = lines.join("\n");
+  var stamp = new Date().toISOString().replace(/[:.]/g, "-");
+  var link = document.createElement("a");
+  link.href = URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" }));
+  link.download = "calc_mil_cross_tech_" + stamp + ".csv";
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(function() { URL.revokeObjectURL(link.href); }, 0);
+}
+
 // ---- Main orchestrator ----
 function calculate() {
   var mode = getCalcMode();
   if (mode === "ranking") {
+    resetCrossTechResults();
     calculateRanking();
   } else if (mode === "simulation") {
     calculateSimulation();
@@ -1252,7 +2072,16 @@ function bindEvents() {
     sideState[side].group.addEventListener("change", function() { syncUnitOptions(side); });
     sideState[side].unitType.addEventListener("change", function() { syncUnitOptions(side); });
     sideState[side].techLevel.addEventListener("change", function() { syncUnitOptions(side); });
+    sideState[side].strength.addEventListener("change", function() { maybeWarnStrengthLimit(sideState[side].strength); });
   });
+
+  Object.keys(sideState.template).forEach(function(key) {
+    sideState.template[key].addEventListener("change", resetCrossTechResults);
+    if (sideState.template[key].tagName === "INPUT") {
+      sideState.template[key].addEventListener("input", resetCrossTechResults);
+    }
+  });
+  sideState.template.strength.addEventListener("change", function() { maybeWarnStrengthLimit(sideState.template.strength); });
 
   calculateButton.addEventListener("click", function() {
     try {
@@ -1278,9 +2107,62 @@ function bindEvents() {
     downloadRankingLog();
   });
 
+  crossTechRankingBtn.addEventListener("click", openCrossTechConfirmDialog);
+
+  showCrossTechTemplateBtn.addEventListener("click", function() {
+    if (!crossTechData) return;
+    openCrossTechTemplateDialog();
+  });
+
+  toggleCrossTechTableModeBtn.addEventListener("click", function() {
+    if (!crossTechData) return;
+    crossTechTableMode = crossTechTableMode === "unit" ? "group" : "unit";
+    renderCrossTechTable(crossTechData.results);
+  });
+
+  downloadCrossTechBtn.addEventListener("click", function() {
+    downloadCrossTechCSV();
+  });
+
+  toggleCrossTechChartsBtn.addEventListener("click", function() {
+    crossTechChartsExpanded = !crossTechChartsExpanded;
+    updateCrossTechView();
+    if (crossTechChartsExpanded) {
+      window.requestAnimationFrame(function() {
+        window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
+      });
+    }
+  });
+
+  crossTechConfirmStart.addEventListener("click", startCrossTechRankingFlow);
+  crossTechConfirmCancel.addEventListener("click", closeCrossTechConfirmDialog);
+  crossTechConfirmBackdrop.addEventListener("click", closeCrossTechConfirmDialog);
+  crossTechTemplateBackdrop.addEventListener("click", closeCrossTechTemplateDialog);
+  crossTechTemplateClose.addEventListener("click", closeCrossTechTemplateDialog);
+
+  chartLightboxBackdrop.addEventListener("click", closeChartLightbox);
+  chartLightboxClose.addEventListener("click", closeChartLightbox);
+  document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape" && chartLightbox.style.display !== "none") {
+      closeChartLightbox();
+      return;
+    }
+    if (event.key === "Escape" && crossTechTemplateDialog.style.display !== "none") {
+      closeCrossTechTemplateDialog();
+      return;
+    }
+    if (event.key === "Escape" && crossTechConfirmDialog.style.display !== "none") {
+      closeCrossTechConfirmDialog();
+    }
+  });
+
   backButton.addEventListener("click", function() {
     errorBanner.style.display = "none";
     errorBanner.textContent = "";
+    closeChartLightbox();
+    closeCrossTechTemplateDialog();
+    closeCrossTechConfirmDialog();
+    crossTechRunToken += 1;
     uiView = "settings";
     resultMode = null;
     updateModeUI();

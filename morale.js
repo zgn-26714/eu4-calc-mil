@@ -33,9 +33,9 @@ function computeMaxMorale(techLevel, extraMorale, armyTradition, prestige, power
 }
 
 /**
- * 计算被动士气损耗（后备部队每天承受）。
- * 公式：(敌方平均最大士气 / 540) × 2% × (1 - 职业度减免)
- * 职业度 >= 100 时减免 50%。
+ * 计算被动士气损耗（所有参战团每天承受）。
+ * 公式：1% × 敌方平均最大士气
+ * 职业度 >= 100 时减免 50%（仅后备部队，当前模型所有团都视为已部署，统一用 1%）。
  *
  * @param {number} enemyAvgMorale   - 敌方平均最大士气
  * @param {number} professionalism  - 己方职业度 (0-100)
@@ -43,7 +43,7 @@ function computeMaxMorale(techLevel, extraMorale, armyTradition, prestige, power
  */
 function computePassiveMoraleLoss(enemyAvgMorale, professionalism) {
   var reduction = (professionalism || 0) >= 100 ? 0.5 : 0.0;
-  return (enemyAvgMorale / 540) * 0.02 * (1 - reduction);
+  return 0.01 * enemyAvgMorale * (1 - reduction);
 }
 
 /**
@@ -282,10 +282,16 @@ function simulateBattleWithMorale(attacker, defender, rounds, diceConfig, leader
         attCurrentMorale -= aMorLoss;
         defCurrentMorale -= dMorLoss;
 
+        // ---- 被动士气损耗（所有参战团每天 1% 敌方平均最大士气）----
+        var attPassiveLoss = d2aMorale.passiveMoraleLoss;
+        var defPassiveLoss = a2dMorale.passiveMoraleLoss;
+        attCurrentMorale = Math.max(0, attCurrentMorale - attPassiveLoss);
+        defCurrentMorale = Math.max(0, defCurrentMorale - defPassiveLoss);
+
         fireAttStrLoss += aStrLoss;
         fireDefStrLoss += dStrLoss;
-        fireAttMorLoss += aMorLoss;
-        fireDefMorLoss += dMorLoss;
+        fireAttMorLoss += aMorLoss + attPassiveLoss;
+        fireDefMorLoss += dMorLoss + defPassiveLoss;
 
         // 溃败团数
         var attBroken = Math.min(Math.floor(Math.max(0, initialAttMorale - attCurrentMorale) / attMaxMoralePerReg), attRegiments);
@@ -307,8 +313,8 @@ function simulateBattleWithMorale(attacker, defender, rounds, diceConfig, leader
           defenderCurrentMorale: defCurrentMorale,
           attackerBrokenRegiments: attBroken,
           defenderBrokenRegiments: defBroken,
-          attackerPassiveMoraleLoss: d2aMorale.passiveMoraleLoss,
-          defenderPassiveMoraleLoss: a2dMorale.passiveMoraleLoss
+          attackerPassiveMoraleLoss: attPassiveLoss,
+          defenderPassiveMoraleLoss: defPassiveLoss
         });
 
         var currentDay = battleDay;
@@ -360,10 +366,16 @@ function simulateBattleWithMorale(attacker, defender, rounds, diceConfig, leader
         attCurrentMorale -= aMorLoss;
         defCurrentMorale -= dMorLoss;
 
+        // ---- 被动士气损耗（所有参战团每天 1% 敌方平均最大士气）----
+        var attPassiveLoss = d2aMorale.passiveMoraleLoss;
+        var defPassiveLoss = a2dMorale.passiveMoraleLoss;
+        attCurrentMorale = Math.max(0, attCurrentMorale - attPassiveLoss);
+        defCurrentMorale = Math.max(0, defCurrentMorale - defPassiveLoss);
+
         shockAttStrLoss += aStrLoss;
         shockDefStrLoss += dStrLoss;
-        shockAttMorLoss += aMorLoss;
-        shockDefMorLoss += dMorLoss;
+        shockAttMorLoss += aMorLoss + attPassiveLoss;
+        shockDefMorLoss += dMorLoss + defPassiveLoss;
 
         var attBroken = Math.min(Math.floor(Math.max(0, initialAttMorale - attCurrentMorale) / attMaxMoralePerReg), attRegiments);
         var defBroken = Math.min(Math.floor(Math.max(0, initialDefMorale - defCurrentMorale) / defMaxMoralePerReg), defRegiments);
@@ -384,8 +396,8 @@ function simulateBattleWithMorale(attacker, defender, rounds, diceConfig, leader
           defenderCurrentMorale: defCurrentMorale,
           attackerBrokenRegiments: attBroken,
           defenderBrokenRegiments: defBroken,
-          attackerPassiveMoraleLoss: d2aMorale.passiveMoraleLoss,
-          defenderPassiveMoraleLoss: a2dMorale.passiveMoraleLoss
+          attackerPassiveMoraleLoss: attPassiveLoss,
+          defenderPassiveMoraleLoss: defPassiveLoss
         });
 
         var currentDay = battleDay;
