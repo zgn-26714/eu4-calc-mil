@@ -417,7 +417,29 @@ const sideSchemas = {
     { key: "professionalism", label: "职业度", type: "number", value: 0, min: 0, max: 100, step: 1 }
   ]
 };
-sideSchemas.template = sideSchemas.attacker.slice(3);
+sideSchemas.template = [
+  { key: "techLevel", label: "军事科技", type: "number", value: 3, min: 0, max: 32, step: 1 },
+  { key: "strength", label: "参战兵力（默认 1000，固定前排）", type: "number", value: 1000, step: 100 },
+  { key: "combatAbility", label: "作战能力", type: "number", value: 0, step: 1 },
+  { key: "discipline", label: "训练度", type: "number", value: 0, step: 1 },
+  { key: "extraMilitaryTactics", label: "额外军事战术", type: "number", value: 0, step: 0.1 },
+  { key: "fireDamageInfantry", label: "步兵火力修正", type: "number", value: 0, step: 1 },
+  { key: "fireDamageCavalry", label: "骑兵火力修正", type: "number", value: 0, step: 1 },
+  { key: "fireDamageArtillery", label: "炮兵火力修正", type: "number", value: 0, step: 1 },
+  { key: "shockDamageInfantry", label: "步兵冲击修正", type: "number", value: 0, step: 1 },
+  { key: "shockDamageCavalry", label: "骑兵冲击修正", type: "number", value: 0, step: 1 },
+  { key: "shockDamageArtillery", label: "炮兵冲击修正", type: "number", value: 0, step: 1 },
+  { key: "damageDoneFire", label: "造成火力伤害修正", type: "number", value: 0, step: 1 },
+  { key: "damageDoneShock", label: "造成冲击伤害修正", type: "number", value: 0, step: 1 },
+  { key: "damageTakenFire", label: "承受火力伤害修正", type: "number", value: 0, step: 1 },
+  { key: "damageTakenShock", label: "承受冲击伤害修正", type: "number", value: 0, step: 1 },
+  { key: "moraleBonus", label: "额外士气加成(%)", type: "number", value: 0, step: 1 },
+  { key: "armyTradition", label: "陆军传统", type: "number", value: 0, min: 0, max: 100, step: 1 },
+  { key: "prestige", label: "威望", type: "number", value: 0, min: -100, max: 100, step: 1 },
+  { key: "moraleDamageDone", label: "造成士气伤害修正", type: "number", value: 0, step: 1 },
+  { key: "moraleDamageTaken", label: "承受士气伤害修正", type: "number", value: 0, step: 1 },
+  { key: "professionalism", label: "职业度", type: "number", value: 0, min: 0, max: 100, step: 1 }
+];
 
 const sideState = {
   attacker: {},
@@ -626,10 +648,10 @@ function formatTemplateValue(value, schema) {
   if (schema && (
     schema.key === "discipline" ||
     schema.key === "combatAbility" ||
-    schema.key === "fireDamage" ||
-    schema.key === "shockDamage" ||
-    schema.key === "damageDone" ||
-    schema.key === "damageTaken" ||
+    schema.key === "damageDoneFire" ||
+    schema.key === "damageDoneShock" ||
+    schema.key === "damageTakenFire" ||
+    schema.key === "damageTakenShock" ||
     schema.key === "moraleBonus" ||
     schema.key === "moraleDamageDone" ||
     schema.key === "moraleDamageTaken"
@@ -892,7 +914,17 @@ function readSide(side) {
   if (controls.extraMilitaryTactics) data.extraMilitaryTactics = Number(controls.extraMilitaryTactics.value);
   if (controls.fireDamage) data.fireDamage = Number(controls.fireDamage.value);
   if (controls.shockDamage) data.shockDamage = Number(controls.shockDamage.value);
+  if (controls.fireDamageInfantry) data.fireDamageInfantry = Number(controls.fireDamageInfantry.value);
+  if (controls.fireDamageCavalry) data.fireDamageCavalry = Number(controls.fireDamageCavalry.value);
+  if (controls.fireDamageArtillery) data.fireDamageArtillery = Number(controls.fireDamageArtillery.value);
+  if (controls.shockDamageInfantry) data.shockDamageInfantry = Number(controls.shockDamageInfantry.value);
+  if (controls.shockDamageCavalry) data.shockDamageCavalry = Number(controls.shockDamageCavalry.value);
+  if (controls.shockDamageArtillery) data.shockDamageArtillery = Number(controls.shockDamageArtillery.value);
+  if (controls.damageDoneFire) data.damageDoneFire = Number(controls.damageDoneFire.value);
+  if (controls.damageDoneShock) data.damageDoneShock = Number(controls.damageDoneShock.value);
   if (controls.damageDone) data.damageDone = Number(controls.damageDone.value);
+  if (controls.damageTakenFire) data.damageTakenFire = Number(controls.damageTakenFire.value);
+  if (controls.damageTakenShock) data.damageTakenShock = Number(controls.damageTakenShock.value);
   if (controls.damageTaken) data.damageTaken = Number(controls.damageTaken.value);
   if (controls.moraleBonus) data.moraleBonus = Number(controls.moraleBonus.value);
   if (controls.armyTradition) data.armyTradition = Number(controls.armyTradition.value);
@@ -1424,14 +1456,17 @@ function buildRankingLogText(result, template, battleOptions) {
     "%  额外战术=" + template.extraMilitaryTactics.toFixed(2)
   );
   lines.push(
-    "火力伤害=" + template.fireDamage +
-    "%  冲击伤害=" + template.shockDamage +
-    "%  造成伤害=" + template.damageDone +
-    "%  承受伤害=" + template.damageTaken +
-    "%"
+    "步兵火力=" + template.fireDamageInfantry +
+    "  骑兵火力=" + template.fireDamageCavalry +
+    "  炮兵火力=" + template.fireDamageArtillery +
+    "  步/骑/炮冲击=" + template.shockDamageInfantry + "/" + template.shockDamageCavalry + "/" + template.shockDamageArtillery
   );
   lines.push(
-    "额外士气=" + template.moraleBonus +
+    "造成火力伤害=" + template.damageDoneFire +
+    "%  造成冲击伤害=" + template.damageDoneShock +
+    "%  承受火力伤害=" + template.damageTakenFire +
+    "%  承受冲击伤害=" + template.damageTakenShock +
+    "%  额外士气=" + template.moraleBonus +
     "%  陆军传统=" + template.armyTradition +
     "  威望=" + template.prestige +
     "  造成士气伤害=" + template.moraleDamageDone +

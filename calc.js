@@ -169,15 +169,25 @@ function computeOneWay(attacker, defender, phase, dice, leaderDiff, terrainPenal
   const attackerPips = phase === "fire" ? attackerUnit.fireOff : attackerUnit.shockOff;
   const defenderPips = phase === "fire" ? defenderUnit.fireDef : defenderUnit.shockDef;
   const baseCasualties = computeBaseCasualties(dice, leaderDiff, attackerPips, defenderPips, terrainPenalty);
-  const phaseDamage = phase === "fire" ? attacker.fireDamage : attacker.shockDamage;
+  var phaseDamage = 0;
+  if (phase === "fire") {
+    if (attacker.unitType === "Infantry") phaseDamage = attacker.fireDamageInfantry || attacker.fireDamage || 0;
+    else if (attacker.unitType === "Cavalry") phaseDamage = attacker.fireDamageCavalry || attacker.fireDamage || 0;
+    else if (attacker.unitType === "Artillery") phaseDamage = attacker.fireDamageArtillery || attacker.fireDamage || 0;
+  } else {
+    if (attacker.unitType === "Infantry") phaseDamage = attacker.shockDamageInfantry || attacker.shockDamage || 0;
+    else if (attacker.unitType === "Cavalry") phaseDamage = attacker.shockDamageCavalry || attacker.shockDamage || 0;
+    else if (attacker.unitType === "Artillery") phaseDamage = attacker.shockDamageArtillery || attacker.shockDamage || 0;
+  }
   const professionalismBonus = professionalismPhaseDamageBonus(attacker.professionalism);
-  const tech = techModifier(attacker.techLevel, attacker.unitType, phase) *
-    percentMultiplier(phaseDamage + professionalismBonus);
+  const tech = (techModifier(attacker.techLevel, attacker.unitType, phase) + phaseDamage) * percentMultiplier(professionalismBonus);
   const tactics = (baseTactics(defender.techLevel) + defender.extraMilitaryTactics) * percentMultiplier(defender.discipline);
 
+  var damageDonePhase = phase === "fire" ? (attacker.damageDoneFire || attacker.damageDone || 0) : (attacker.damageDoneShock || attacker.damageDone || 0);
+  var damageTakenPhase = phase === "fire" ? (defender.damageTakenFire || defender.damageTaken || 0) : (defender.damageTakenShock || defender.damageTaken || 0);
   let multiplier = computeMultipliers(attacker.strength, tech, tactics, attacker.combatAbility, attacker.discipline, battleDay)
-    * percentMultiplier(attacker.damageDone)
-    * percentMultiplier(defender.damageTaken);
+    * percentMultiplier(damageDonePhase)
+    * percentMultiplier(damageTakenPhase);
 
   if (backrowArtillery && attacker.unitType === "Artillery") {
     multiplier *= 0.5;

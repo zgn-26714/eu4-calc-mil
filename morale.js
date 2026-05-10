@@ -74,10 +74,18 @@ function computeMoraleDamage(attacker, defender, phase, dice, leaderDiff, terrai
 
   var baseCas = computeBaseCasualties(dice, leaderDiff, attackerPips, defenderPips, terrainPenalty);
 
-  var phaseDamage = phase === "fire" ? (attacker.fireDamage || 0) : (attacker.shockDamage || 0);
+  var phaseDamage = 0;
+  if (phase === "fire") {
+    if (attacker.unitType === "Infantry") phaseDamage = (attacker.fireDamageInfantry || attacker.fireDamage || 0);
+    else if (attacker.unitType === "Cavalry") phaseDamage = (attacker.fireDamageCavalry || attacker.fireDamage || 0);
+    else if (attacker.unitType === "Artillery") phaseDamage = (attacker.fireDamageArtillery || attacker.fireDamage || 0);
+  } else {
+    if (attacker.unitType === "Infantry") phaseDamage = (attacker.shockDamageInfantry || attacker.shockDamage || 0);
+    else if (attacker.unitType === "Cavalry") phaseDamage = (attacker.shockDamageCavalry || attacker.shockDamage || 0);
+    else if (attacker.unitType === "Artillery") phaseDamage = (attacker.shockDamageArtillery || attacker.shockDamage || 0);
+  }
   var professionalismBonus = professionalismPhaseDamageBonus(attacker.professionalism || 0);
-  var tech = techModifier(attacker.techLevel, attacker.unitType, phase) *
-    percentMultiplier(phaseDamage + professionalismBonus);
+  var tech = (techModifier(attacker.techLevel, attacker.unitType, phase) + phaseDamage) * percentMultiplier(professionalismBonus);
   var tactics = (baseTactics(defender.techLevel) + (defender.extraMilitaryTactics || 0)) *
     percentMultiplier(defender.discipline || 0);
 
