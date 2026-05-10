@@ -1,0 +1,42 @@
+:root {
+  --bg: #f7f8fb;
+  --panel: #ffffff;
+  --panel-soft: #f2f5f9;
+  --border: #d7deea;
+  --text: #162033;
+  --muted: #627089;
+  --accent: #a96b11;
+  --accent-soft: rgba(169, 107, 17, 0.12);
+  --attack: #2359d1;
+  --defend: #177a57;
+  --danger: #c63b3b;
+  --shadow: 0 18px 40px rgba(30, 46, 76, 0.10);
+  --code-bg: #edf3fb;
+  --chart-bg: #fbfdff;
+  --chart-grid: #d8e0ed;
+  --chart-axis: #94a3b8;
+  --radius: 8px;
+  --font: "Segoe UI", "Microsoft YaHei UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  background:
+    radial-gradient(circle at top left, rgba(35, 89, 209, 0.10), transparent 28%),
+    radial-gradient(circle at top right, rgba(23, 122, 87, 0.09), transparent 24%),
+    linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+  color: var(--text);
+}
+
+body.result-view .settings-only {
+  display: none !important;
+}
+
+body.settings-view .results-only {
+  display: none !important;
+}

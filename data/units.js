@@ -1,4 +1,5 @@
-const UNIT_DATA = [
+(function(M) {
+var UNIT_DATA = [
 
     {
         "group":  "Shared",
@@ -3810,3 +3811,5 @@ const UNIT_DATA = [
         "moraleDef":  4
     }
 ];
+M['data/units'] = { UNIT_DATA: UNIT_DATA };
+})(window._M = window._M || {});

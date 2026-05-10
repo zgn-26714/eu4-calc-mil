@@ -4,7 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>EU4 陆战双向兵员伤害计算器</title>
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles/base.css">
+  <link rel="stylesheet" href="./styles/layout.css">
+  <link rel="stylesheet" href="./styles/components.css">
+  <link rel="stylesheet" href="./styles/single.css">
+  <link rel="stylesheet" href="./styles/simulation.css">
+  <link rel="stylesheet" href="./styles/ranking.css">
 </head>
 <body>
   <div class="app-shell">
@@ -386,10 +391,25 @@
     </div>
   </div>
 
-  <script src="./unit-data.js"></script>
-  <script src="./calc.js"></script>
-  <script src="./morale.js"></script>
-  <script src="./ranking.js"></script>
-  <script src="./app.js"></script>
+  <script src="./data/constants.js"></script>
+  <script src="./data/units.js"></script>
+  <script src="./data/translations.js"></script>
+  <script src="./data/tech-stats.js"></script>
+  <script src="./shared/calc-engine.js"></script>
+  <script src="./shared/morale-engine.js"></script>
+  <script src="./shared/ui-helpers.js"></script>
+  <script src="./shared/dialog.js"></script>
+  <script src="./shared/state.js"></script>
+  <script src="./shared/battle-sim.js"></script>
+  <script src="./single/logic.js"></script>
+  <script src="./single/view.js"></script>
+  <script src="./simulation/logic.js"></script>
+  <script src="./simulation/view.js"></script>
+  <script src="./ranking/logic.js"></script>
+  <script src="./ranking/view.js"></script>
+  <script src="./ranking/cross-tech-logic.js"></script>
+  <script src="./ranking/charts-view.js"></script>
+  <script src="./ranking/cross-tech-view.js"></script>
+  <script src="./main.js"></script>
 </body>
 </html>

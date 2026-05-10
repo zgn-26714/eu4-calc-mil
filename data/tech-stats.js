@@ -1,0 +1,38 @@
+(function(M) {
+var TECH_STATS = [
+  { infantryFire: 0.25, cavalryFire: 0.0, artilleryFire: 0.0, infantryShock: 0.20, cavalryShock: 0.8, artilleryShock: 0.00, militaryTactics: 0.50 },
+  { infantryFire: 0.35, cavalryFire: 0.0, artilleryFire: 0.0, infantryShock: 0.30, cavalryShock: 0.8, artilleryShock: 0.00, militaryTactics: 0.50 },
+  { infantryFire: 0.35, cavalryFire: 0.0, artilleryFire: 0.0, infantryShock: 0.50, cavalryShock: 1.0, artilleryShock: 0.00, militaryTactics: 0.50 },
+  { infantryFire: 0.35, cavalryFire: 0.0, artilleryFire: 0.0, infantryShock: 0.50, cavalryShock: 1.0, artilleryShock: 0.00, militaryTactics: 0.50 },
+  { infantryFire: 0.35, cavalryFire: 0.0, artilleryFire: 0.0, infantryShock: 0.50, cavalryShock: 1.0, artilleryShock: 0.00, militaryTactics: 0.75 },
+  { infantryFire: 0.35, cavalryFire: 0.0, artilleryFire: 0.0, infantryShock: 0.65, cavalryShock: 1.2, artilleryShock: 0.00, militaryTactics: 0.75 },
+  { infantryFire: 0.55, cavalryFire: 0.0, artilleryFire: 0.0, infantryShock: 0.95, cavalryShock: 1.2, artilleryShock: 0.00, militaryTactics: 1.00 },
+  { infantryFire: 0.55, cavalryFire: 0.0, artilleryFire: 1.0, infantryShock: 0.95, cavalryShock: 1.2, artilleryShock: 0.05, militaryTactics: 1.25 },
+  { infantryFire: 0.80, cavalryFire: 0.0, artilleryFire: 1.0, infantryShock: 0.95, cavalryShock: 2.0, artilleryShock: 0.05, militaryTactics: 1.25 },
+  { infantryFire: 0.80, cavalryFire: 0.0, artilleryFire: 1.0, infantryShock: 0.95, cavalryShock: 2.0, artilleryShock: 0.05, militaryTactics: 1.50 },
+  { infantryFire: 0.80, cavalryFire: 0.0, artilleryFire: 1.0, infantryShock: 0.95, cavalryShock: 2.0, artilleryShock: 0.05, militaryTactics: 1.50 },
+  { infantryFire: 0.80, cavalryFire: 0.5, artilleryFire: 1.0, infantryShock: 1.15, cavalryShock: 2.0, artilleryShock: 0.05, militaryTactics: 1.50 },
+  { infantryFire: 0.80, cavalryFire: 0.5, artilleryFire: 1.0, infantryShock: 1.15, cavalryShock: 2.0, artilleryShock: 0.05, militaryTactics: 1.75 },
+  { infantryFire: 0.80, cavalryFire: 0.5, artilleryFire: 1.4, infantryShock: 1.15, cavalryShock: 2.0, artilleryShock: 0.15, militaryTactics: 1.75 },
+  { infantryFire: 1.10, cavalryFire: 0.5, artilleryFire: 1.4, infantryShock: 1.15, cavalryShock: 2.0, artilleryShock: 0.15, militaryTactics: 1.75 },
+  { infantryFire: 1.10, cavalryFire: 0.5, artilleryFire: 1.4, infantryShock: 1.15, cavalryShock: 2.0, artilleryShock: 0.15, militaryTactics: 2.00 },
+  { infantryFire: 1.10, cavalryFire: 0.5, artilleryFire: 2.4, infantryShock: 1.15, cavalryShock: 2.0, artilleryShock: 0.25, militaryTactics: 2.00 },
+  { infantryFire: 1.10, cavalryFire: 0.5, artilleryFire: 2.4, infantryShock: 1.15, cavalryShock: 3.0, artilleryShock: 0.25, militaryTactics: 2.00 },
+  { infantryFire: 1.10, cavalryFire: 0.5, artilleryFire: 2.4, infantryShock: 1.15, cavalryShock: 3.0, artilleryShock: 0.25, militaryTactics: 2.00 },
+  { infantryFire: 1.10, cavalryFire: 0.5, artilleryFire: 2.4, infantryShock: 1.15, cavalryShock: 3.0, artilleryShock: 0.25, militaryTactics: 2.25 },
+  { infantryFire: 1.60, cavalryFire: 0.5, artilleryFire: 2.4, infantryShock: 1.15, cavalryShock: 3.0, artilleryShock: 0.25, militaryTactics: 2.25 },
+  { infantryFire: 1.60, cavalryFire: 0.5, artilleryFire: 2.4, infantryShock: 1.65, cavalryShock: 3.0, artilleryShock: 0.25, militaryTactics: 2.50 },
+  { infantryFire: 1.60, cavalryFire: 1.0, artilleryFire: 4.4, infantryShock: 1.65, cavalryShock: 3.0, artilleryShock: 0.35, militaryTactics: 2.50 },
+  { infantryFire: 1.60, cavalryFire: 1.0, artilleryFire: 4.4, infantryShock: 1.65, cavalryShock: 4.0, artilleryShock: 0.35, militaryTactics: 2.75 },
+  { infantryFire: 1.60, cavalryFire: 1.0, artilleryFire: 4.4, infantryShock: 1.65, cavalryShock: 4.0, artilleryShock: 0.35, militaryTactics: 3.00 },
+  { infantryFire: 1.60, cavalryFire: 1.0, artilleryFire: 6.4, infantryShock: 1.65, cavalryShock: 4.0, artilleryShock: 0.45, militaryTactics: 3.00 },
+  { infantryFire: 1.60, cavalryFire: 1.0, artilleryFire: 6.4, infantryShock: 1.65, cavalryShock: 4.0, artilleryShock: 0.45, militaryTactics: 3.00 },
+  { infantryFire: 2.10, cavalryFire: 1.0, artilleryFire: 6.4, infantryShock: 1.65, cavalryShock: 4.0, artilleryShock: 0.45, militaryTactics: 3.00 },
+  { infantryFire: 2.10, cavalryFire: 1.0, artilleryFire: 6.4, infantryShock: 2.15, cavalryShock: 4.0, artilleryShock: 0.45, militaryTactics: 3.00 },
+  { infantryFire: 2.10, cavalryFire: 1.0, artilleryFire: 6.4, infantryShock: 2.15, cavalryShock: 4.0, artilleryShock: 0.45, militaryTactics: 3.00 },
+  { infantryFire: 2.10, cavalryFire: 1.0, artilleryFire: 6.4, infantryShock: 2.15, cavalryShock: 4.0, artilleryShock: 0.45, militaryTactics: 3.25 },
+  { infantryFire: 3.10, cavalryFire: 1.0, artilleryFire: 6.4, infantryShock: 2.15, cavalryShock: 5.0, artilleryShock: 0.45, militaryTactics: 3.25 },
+  { infantryFire: 3.10, cavalryFire: 1.0, artilleryFire: 8.4, infantryShock: 2.15, cavalryShock: 5.0, artilleryShock: 0.55, militaryTactics: 3.25 }
+];
+M['data/tech-stats'] = { TECH_STATS: TECH_STATS };
+})(window._M = window._M || {});

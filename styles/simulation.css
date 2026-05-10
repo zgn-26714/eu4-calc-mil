@@ -1,0 +1,144 @@
+.sim-results {
+  margin-top: 18px;
+  padding: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(247,249,252,0.92)), var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.sim-summary {
+  margin-bottom: 16px;
+  padding: 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--panel-soft);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.sim-summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sim-summary-item .label {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.sim-summary-item .value {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.sim-summary-item .value.win {
+  color: var(--defend);
+}
+
+.sim-summary-item .value.lose {
+  color: var(--danger);
+}
+
+.sim-summary-item .value.draw {
+  color: var(--accent);
+}
+
+.sim-table-wrap {
+  overflow-x: auto;
+}
+
+.sim-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.sim-table th,
+.sim-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.sim-table th {
+  color: var(--muted);
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  background: var(--panel);
+}
+
+.sim-table td:first-child,
+.sim-table th:first-child {
+  text-align: center;
+}
+
+.sim-table td.text-left,
+.sim-table th.text-left {
+  text-align: left;
+}
+
+.sim-table tbody tr:hover {
+  background: rgba(35, 89, 209, 0.05);
+}
+
+.sim-table .total-row {
+  font-weight: 800;
+  background: rgba(169, 107, 17, 0.08);
+}
+
+.sim-table .total-row td {
+  border-top: 2px solid var(--accent);
+}
+
+.daily-log {
+  background: var(--panel-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+}
+
+.daily-log-summary {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--accent);
+  padding: 4px 0;
+  user-select: none;
+}
+
+.daily-log-summary:hover {
+  opacity: 0.85;
+}
+
+.daily-log[open] .daily-log-summary {
+  margin-bottom: 12px;
+}
+
+.ranking-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+#ranking-log-output {
+  margin: 0;
+  min-height: 220px;
+  max-height: 540px;
+  overflow: auto;
+  padding: 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+  color: #1f2937;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: "Consolas", "SFMono-Regular", monospace;
+  line-height: 1.5;
+}
