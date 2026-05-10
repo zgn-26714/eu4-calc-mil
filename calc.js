@@ -185,7 +185,11 @@ function computeOneWay(attacker, defender, phase, dice, leaderDiff, terrainPenal
 
   var damageDonePhase = phase === "fire" ? (attacker.damageDoneFire || attacker.damageDone || 0) : (attacker.damageDoneShock || attacker.damageDone || 0);
   var damageTakenPhase = phase === "fire" ? (defender.damageTakenFire || defender.damageTaken || 0) : (defender.damageTakenShock || defender.damageTaken || 0);
-  let multiplier = computeMultipliers(attacker.strength, tech, tactics, attacker.combatAbility, attacker.discipline, battleDay)
+  var combatAbility = attacker.combatAbility || 0;
+  if (attacker.unitType === "Infantry") combatAbility = attacker.combatAbilityInfantry || combatAbility;
+  else if (attacker.unitType === "Cavalry") combatAbility = attacker.combatAbilityCavalry || combatAbility;
+  else if (attacker.unitType === "Artillery") combatAbility = attacker.combatAbilityArtillery || combatAbility;
+  let multiplier = computeMultipliers(attacker.strength, tech, tactics, combatAbility, attacker.discipline, battleDay)
     * percentMultiplier(damageDonePhase)
     * percentMultiplier(damageTakenPhase);
 
@@ -222,8 +226,11 @@ function randomDice() {
  * @param {Object}  defender         - 防守方配置
  * @param {number}  rounds           - 模拟轮数
  * @param {Object}  diceConfig       - 骰子配置
- *   diceConfig.fire:  number[]|null - 每轮火力阶段骰子(长度>=rounds)，null/undefined 则随机
- *   diceConfig.shock: number[]|null - 每轮冲击阶段骰子，null/undefined 则随机
+ *   diceConfig.fireAtt:  number[]|null - 攻方每轮火力骰子，null 则随机
+ *   diceConfig.fireDef:  number[]|null - 守方每轮火力骰子，null 则随机
+ *   diceConfig.shockAtt: number[]|null - 攻方每轮冲击骰子，null 则随机
+ *   diceConfig.shockDef: number[]|null - 守方每轮冲击骰子，null 则随机
+ *   diceConfig.fire/shock: number[]|null - 兼容旧格式，双方共用
  * @param {number}  leaderDiff       - 将领差额
  * @param {number}  terrainPenalty   - 地形惩罚
  * @param {boolean} backrowArtillery - 后排炮兵半伤
@@ -252,14 +259,43 @@ function simulateBattle(attacker, defender, rounds, diceConfig, leaderDiff, terr
     return s;
   }
 
+  function phaseLeaderDiff(phase) {
+    if ((attacker.leaderFire !== undefined || defender.leaderFire !== undefined) && phase === "fire") {
+      return Math.max(0, (attacker.leaderFire || 0) - (defender.leaderFire || 0));
+    }
+    if ((attacker.leaderShock !== undefined || defender.leaderShock !== undefined) && phase === "shock") {
+      return Math.max(0, (attacker.leaderShock || 0) - (defender.leaderShock || 0));
+    }
+    return Math.max(0, leaderDiff);
+  }
+
   for (var r = 0; r < rounds && !annihilated; r++) {
-    var fireDiceArr = diceConfig.fire;
-    var shockDiceArr = diceConfig.shock;
+    var fireDiceArrAtt = diceConfig.fireAtt || diceConfig.fire;
+    var fireDiceArrDef = diceConfig.fireDef || diceConfig.fire;
+    var shockDiceArrAtt = diceConfig.shockAtt || diceConfig.shock;
+    var shockDiceArrDef = diceConfig.shockDef || diceConfig.shock;
     var isFixed = diceConfig.mode === 'fixed';
-    var fd = (phaseOnly === 'shock') ? null :
-      (isFixed ? diceConfig.value : (fireDiceArr && fireDiceArr[r] !== undefined ? fireDiceArr[r] : randomDice()));
-    var sd = (phaseOnly === 'fire') ? null :
-      (isFixed ? diceConfig.value : (shockDiceArr && shockDiceArr[r] !== undefined ? shockDiceArr[r] : randomDice()));
+    var attFd, defFd, attSd, defSd;
+    if (phaseOnly === 'shock') {
+      attFd = null; defFd = null;
+    } else if (isFixed) {
+      attFd = diceConfig.value; defFd = diceConfig.value;
+    } else if (fireDiceArrAtt && fireDiceArrAtt[r] !== undefined) {
+      attFd = fireDiceArrAtt[r];
+      defFd = (fireDiceArrDef && fireDiceArrDef[r] !== undefined) ? fireDiceArrDef[r] : attFd;
+    } else {
+      attFd = randomDice(); defFd = randomDice();
+    }
+    if (phaseOnly === 'fire') {
+      attSd = null; defSd = null;
+    } else if (isFixed) {
+      attSd = diceConfig.value; defSd = diceConfig.value;
+    } else if (shockDiceArrAtt && shockDiceArrAtt[r] !== undefined) {
+      attSd = shockDiceArrAtt[r];
+      defSd = (shockDiceArrDef && shockDiceArrDef[r] !== undefined) ? shockDiceArrDef[r] : attSd;
+    } else {
+      attSd = randomDice(); defSd = randomDice();
+    }
 
     var roundResult = {
       round: r + 1,
@@ -268,7 +304,7 @@ function simulateBattle(attacker, defender, rounds, diceConfig, leaderDiff, terr
     };
 
     // ---- 火力阶段 (3 天) ----
-    if (fd !== null) {
+    if (attFd !== null) {
       var fireDays = [];
       var fireAttLoss = 0;
       var fireDefLoss = 0;
@@ -276,9 +312,14 @@ function simulateBattle(attacker, defender, rounds, diceConfig, leaderDiff, terr
       for (var d = 0; d < 3 && !annihilated; d++) {
         var attState = makeState(attacker, attStr);
         var defState = makeState(defender, defStr);
+        var fireLeaderDiff = phaseLeaderDiff('fire');
+        var defenderFireLeaderDiff = Math.max(0, -leaderDiff);
+        if (attacker.leaderFire !== undefined || defender.leaderFire !== undefined) {
+          defenderFireLeaderDiff = Math.max(0, (defender.leaderFire || 0) - (attacker.leaderFire || 0));
+        }
 
-        var a2d = computeOneWay(attState, defState, 'fire', fd, leaderDiff, terrainPenalty, backrowArtillery, battleDay);
-        var d2a = computeOneWay(defState, attState, 'fire', fd, -leaderDiff, 0, backrowArtillery, battleDay);
+        var a2d = computeOneWay(attState, defState, 'fire', attFd, fireLeaderDiff, terrainPenalty, backrowArtillery, battleDay);
+        var d2a = computeOneWay(defState, attState, 'fire', defFd, defenderFireLeaderDiff, 0, backrowArtillery, battleDay);
 
         var aLoss = Math.min(attStr, d2a.damage);
         var dLoss = Math.min(defStr, a2d.damage);
@@ -305,7 +346,9 @@ function simulateBattle(attacker, defender, rounds, diceConfig, leaderDiff, terr
       }
 
       roundResult.fire = {
-        dice: fd,
+        dice: attFd,
+        attackerDice: attFd,
+        defenderDice: defFd,
         attackerLoss: fireAttLoss,
         defenderLoss: fireDefLoss,
         days: fireDays
@@ -313,7 +356,7 @@ function simulateBattle(attacker, defender, rounds, diceConfig, leaderDiff, terr
     }
 
     // ---- 冲击阶段 (3 天) ----
-    if (sd !== null && !annihilated) {
+    if (attSd !== null && !annihilated) {
       var shockDays = [];
       var shockAttLoss = 0;
       var shockDefLoss = 0;
@@ -321,9 +364,14 @@ function simulateBattle(attacker, defender, rounds, diceConfig, leaderDiff, terr
       for (d = 0; d < 3 && !annihilated; d++) {
         var attState = makeState(attacker, attStr);
         var defState = makeState(defender, defStr);
+        var shockLeaderDiff = phaseLeaderDiff('shock');
+        var defenderShockLeaderDiff = Math.max(0, -leaderDiff);
+        if (attacker.leaderShock !== undefined || defender.leaderShock !== undefined) {
+          defenderShockLeaderDiff = Math.max(0, (defender.leaderShock || 0) - (attacker.leaderShock || 0));
+        }
 
-        var a2d = computeOneWay(attState, defState, 'shock', sd, leaderDiff, terrainPenalty, backrowArtillery, battleDay);
-        var d2a = computeOneWay(defState, attState, 'shock', sd, -leaderDiff, 0, backrowArtillery, battleDay);
+        var a2d = computeOneWay(attState, defState, 'shock', attSd, shockLeaderDiff, terrainPenalty, backrowArtillery, battleDay);
+        var d2a = computeOneWay(defState, attState, 'shock', defSd, defenderShockLeaderDiff, 0, backrowArtillery, battleDay);
 
         var aLoss = Math.min(attStr, d2a.damage);
         var dLoss = Math.min(defStr, a2d.damage);
@@ -350,7 +398,9 @@ function simulateBattle(attacker, defender, rounds, diceConfig, leaderDiff, terr
       }
 
       roundResult.shock = {
-        dice: sd,
+        dice: attSd,
+        attackerDice: attSd,
+        defenderDice: defSd,
         attackerLoss: shockAttLoss,
         defenderLoss: shockDefLoss,
         days: shockDays

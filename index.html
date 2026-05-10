@@ -30,7 +30,7 @@
       <span class="mode-label">计算模式</span>
       <label class="radio-pill">
         <input type="radio" name="calc-mode" id="mode-single" value="single" checked>
-        <span>单次计算</span>
+        <span>单日伤害</span>
       </label>
       <label class="radio-pill">
         <input type="radio" name="calc-mode" id="mode-sim" value="simulation">
@@ -45,16 +45,23 @@
 
     <section class="shared-strip settings-only" id="single-strip">
       <label class="field">
-        <span>骰子</span>
-        <input id="dice" type="number" min="0" max="9" step="1" value="5">
+        <span>进攻方骰子</span>
+        <input id="attacker-dice" type="number" min="0" max="9" step="1" value="5">
       </label>
       <label class="field">
-        <span>将领差额</span>
-        <input id="leader-diff" type="number" step="1" value="0">
+        <span>防守方骰子</span>
+        <input id="defender-dice" type="number" min="0" max="9" step="1" value="5">
       </label>
       <label class="field">
         <span>进攻地形惩罚</span>
         <input id="terrain-penalty" type="number" min="0" step="1" value="0">
+      </label>
+      <label class="field">
+        <span>跨河惩罚</span>
+        <select id="river-crossing">
+          <option value="0">无</option>
+          <option value="1">有（-1 攻击骰）</option>
+        </select>
       </label>
     </section>
 
@@ -64,19 +71,14 @@
         <input id="sim-rounds" type="number" min="1" max="20" step="1" value="5">
       </label>
       <label class="field">
-        <span>将领差额</span>
-        <input id="sim-leader-diff" type="number" step="1" value="0">
-      </label>
-      <label class="field">
         <span>进攻地形惩罚</span>
         <input id="sim-terrain-penalty" type="number" min="0" step="1" value="0">
       </label>
       <label class="field">
-        <span>阶段模式</span>
-        <select id="sim-phase-mode">
-          <option value="alternate">火力+冲击交替</option>
-          <option value="fire">仅火力</option>
-          <option value="shock">仅冲击</option>
+        <span>跨河惩罚</span>
+        <select id="sim-river-crossing">
+          <option value="0">无</option>
+          <option value="1">有（-1 攻击骰）</option>
         </select>
       </label>
       <label class="field">
@@ -87,23 +89,28 @@
           <option value="fixed" selected>固定骰子</option>
         </select>
       </label>
+      <label class="field" id="sim-dice-fixed-field" style="display:none">
+        <span>固定骰子值（0-9）</span>
+        <input id="sim-dice-fixed-value" type="number" min="0" max="9" step="1" value="5">
+      </label>
     </section>
 
     <section class="shared-strip settings-only" id="sim-dice-strip" style="display:none">
       <label class="field">
-        <span>火力骰子序列（逗号分隔）</span>
-        <input id="sim-dice-fire" type="text" placeholder="5,3,7,4,6">
+        <span>攻方火力骰子序列（逗号分隔）</span>
+        <input id="sim-dice-fire-att" type="text" placeholder="5,3,7,4,6">
       </label>
       <label class="field">
-        <span>冲击骰子序列（逗号分隔）</span>
-        <input id="sim-dice-shock" type="text" placeholder="2,8,1,5,9">
+        <span>守方火力骰子序列（逗号分隔）</span>
+        <input id="sim-dice-fire-def" type="text" placeholder="2,8,1,5,9">
       </label>
-    </section>
-
-    <section class="shared-strip settings-only" id="sim-dice-fixed-strip" style="display:none">
       <label class="field">
-        <span>固定骰子值（0-9）</span>
-        <input id="sim-dice-fixed-value" type="number" min="0" max="9" step="1" value="5">
+        <span>攻方冲击骰子序列（逗号分隔）</span>
+        <input id="sim-dice-shock-att" type="text" placeholder="4,6,2,8,3">
+      </label>
+      <label class="field">
+        <span>守方冲击骰子序列（逗号分隔）</span>
+        <input id="sim-dice-shock-def" type="text" placeholder="1,9,5,3,7">
       </label>
     </section>
 
@@ -112,28 +119,24 @@
         <h2>模板</h2>
         <p>全兵种排行只使用这一套模板参数，不再区分进攻方和防守方。</p>
       </div>
-      <div class="panel-grid" id="template-fields"></div>
+      <div id="template-fields"></div>
     </section>
 
     <main class="battle-grid settings-only">
       <section class="side-card attacker" id="attacker-card">
         <div class="side-head">
           <h2>进攻方</h2>
-          <p>地形惩罚只作用于这一侧。</p>
         </div>
-        <div class="panel-grid" id="attacker-fields"></div>
+        <div id="attacker-fields"></div>
       </section>
 
       <section class="side-card defender" id="defender-card">
         <div class="side-head">
           <h2>防守方</h2>
-          <p>兵种组、军科和兵种选择完全独立。</p>
         </div>
-        <div class="panel-grid" id="defender-fields"></div>
+        <div id="defender-fields"></div>
       </section>
     </main>
-
-    <section id="error-banner" class="error-banner" style="display:none"></section>
 
     <section class="results-grid results-only">
       <article class="result-card">
@@ -368,6 +371,17 @@
       <div class="confirm-dialog-actions">
         <button id="cross-tech-confirm-start" type="button">立即开始</button>
         <button id="cross-tech-confirm-cancel" class="secondary" type="button">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="confirm-dialog" id="error-dialog" style="display:none;" aria-hidden="true">
+    <div class="confirm-dialog-backdrop" id="error-dialog-backdrop"></div>
+    <div class="confirm-dialog-panel error-dialog-panel" role="alertdialog" aria-modal="true" aria-labelledby="error-dialog-title" aria-describedby="error-dialog-message">
+      <h3 id="error-dialog-title">输入有误</h3>
+      <p id="error-dialog-message">请检查输入内容。</p>
+      <div class="confirm-dialog-actions">
+        <button id="error-dialog-close" type="button">我知道了</button>
       </div>
     </div>
   </div>

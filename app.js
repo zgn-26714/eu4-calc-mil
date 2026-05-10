@@ -375,70 +375,88 @@ const UNIT_TYPES = [
   { value: "Artillery", label: "炮兵" }
 ];
 
-const sideSchemas = {
+var sideSchemas = {
   attacker: [
+    { key: "leaderFire", label: "火力", type: "number", value: 0, min: 0, max: 6, step: 1 },
+    { key: "leaderShock", label: "冲击", type: "number", value: 0, min: 0, max: 6, step: 1 },
+    { key: "leaderManeuver", label: "机动", type: "number", value: 0, min: 0, max: 6, step: 1 },
+    { key: "leaderSiege", label: "围城", type: "number", value: 0, min: 0, max: 0, step: 1, lockedReason: "围城在当前战斗计算中没有作用，已固定为 0。" },
     { key: "group", label: "兵种组", type: "select" },
     { key: "unitType", label: "兵种类型", type: "select" },
-    { key: "unit", label: "具体兵种", type: "select", wide: true },
     { key: "techLevel", label: "军事科技", type: "number", value: 3, min: 0, max: 32, step: 1 },
-    { key: "strength", label: "参战兵力（默认 1000，固定前排）", type: "number", value: 1000, step: 100 },
-    { key: "combatAbility", label: "作战能力", type: "number", value: 0, step: 1 },
-    { key: "discipline", label: "训练度", type: "number", value: 0, step: 1 },
-    { key: "extraMilitaryTactics", label: "额外军事战术", type: "number", value: 0, step: 0.1 },
-    { key: "fireDamage", label: "火力伤害修正", type: "number", value: 0, step: 1 },
-    { key: "shockDamage", label: "冲击伤害修正", type: "number", value: 0, step: 1 },
-    { key: "damageDone", label: "造成伤害修正", type: "number", value: 0, step: 1 },
-    { key: "damageTaken", label: "承受伤害修正", type: "number", value: 0, step: 1 },
-    { key: "moraleBonus", label: "额外士气加成(%)", type: "number", value: 0, step: 1 },
-    { key: "armyTradition", label: "陆军传统", type: "number", value: 0, min: 0, max: 100, step: 1 },
-    { key: "prestige", label: "威望", type: "number", value: 0, min: -100, max: 100, step: 1 },
-    { key: "moraleDamageDone", label: "造成士气伤害修正", type: "number", value: 0, step: 1 },
-    { key: "moraleDamageTaken", label: "承受士气伤害修正", type: "number", value: 0, step: 1 },
-    { key: "professionalism", label: "职业度", type: "number", value: 0, min: 0, max: 100, step: 1 }
+    { key: "strength", label: "参战人数", type: "number", value: 1000, step: 100 },
+    { key: "combatAbility", label: "作战能力（%）", type: "number", value: 0, step: 1 },
+    { key: "discipline", label: "训练度（%）", type: "number", value: 0, step: 1 },
+    { key: "extraMilitaryTactics", label: "额外军事战术（+x）", type: "number", value: 0, step: 0.1 },
+    { key: "fireDamage", label: "火力伤害修正（+x）", type: "number", value: 0, step: 1 },
+    { key: "shockDamage", label: "冲击伤害修正（+x）", type: "number", value: 0, step: 1 },
+    { key: "damageDone", label: "造成伤害修正（%）", type: "number", value: 0, step: 1 },
+    { key: "damageTaken", label: "承受伤害修正（%）", type: "number", value: 0, step: 1 },
+    { key: "moraleBonus", label: "额外士气加成（%）", type: "number", value: 0, step: 1 },
+    { key: "armyTradition", label: "陆军传统（0-100）", type: "number", value: 0, min: 0, max: 100, step: 1 },
+    { key: "prestige", label: "威望（-100~100）", type: "number", value: 0, min: -100, max: 100, step: 1 },
+    { key: "moraleDamageDone", label: "士气打击（%）", type: "number", value: 0, step: 1 },
+    { key: "moraleDamageTaken", label: "士气防御（%）", type: "number", value: 0, step: 1 },
+    { key: "professionalism", label: "职业度（0-100）", type: "number", value: 0, min: 0, max: 100, step: 1 }
   ],
   defender: [
+    { key: "leaderFire", label: "火力", type: "number", value: 0, min: 0, max: 6, step: 1 },
+    { key: "leaderShock", label: "冲击", type: "number", value: 0, min: 0, max: 6, step: 1 },
+    { key: "leaderManeuver", label: "机动", type: "number", value: 0, min: 0, max: 6, step: 1 },
+    { key: "leaderSiege", label: "围城", type: "number", value: 0, min: 0, max: 0, step: 1, lockedReason: "围城在当前战斗计算中没有作用，已固定为 0。" },
     { key: "group", label: "兵种组", type: "select" },
     { key: "unitType", label: "兵种类型", type: "select" },
-    { key: "unit", label: "具体兵种", type: "select", wide: true },
     { key: "techLevel", label: "军事科技", type: "number", value: 3, min: 0, max: 32, step: 1 },
-    { key: "strength", label: "参战兵力（默认 1000，固定前排）", type: "number", value: 1000, step: 100 },
-    { key: "combatAbility", label: "作战能力", type: "number", value: 0, step: 1 },
-    { key: "discipline", label: "训练度", type: "number", value: 0, step: 1 },
-    { key: "extraMilitaryTactics", label: "额外军事战术", type: "number", value: 0, step: 0.1 },
-    { key: "fireDamage", label: "火力伤害修正", type: "number", value: 0, step: 1 },
-    { key: "shockDamage", label: "冲击伤害修正", type: "number", value: 0, step: 1 },
-    { key: "damageDone", label: "造成伤害修正", type: "number", value: 0, step: 1 },
-    { key: "damageTaken", label: "承受伤害修正", type: "number", value: 0, step: 1 },
-    { key: "moraleBonus", label: "额外士气加成(%)", type: "number", value: 0, step: 1 },
-    { key: "armyTradition", label: "陆军传统", type: "number", value: 0, min: 0, max: 100, step: 1 },
-    { key: "prestige", label: "威望", type: "number", value: 0, min: -100, max: 100, step: 1 },
-    { key: "moraleDamageDone", label: "造成士气伤害修正", type: "number", value: 0, step: 1 },
-    { key: "moraleDamageTaken", label: "承受士气伤害修正", type: "number", value: 0, step: 1 },
-    { key: "professionalism", label: "职业度", type: "number", value: 0, min: 0, max: 100, step: 1 }
+    { key: "strength", label: "参战人数", type: "number", value: 1000, step: 100 },
+    { key: "combatAbility", label: "作战能力（%）", type: "number", value: 0, step: 1 },
+    { key: "discipline", label: "训练度（%）", type: "number", value: 0, step: 1 },
+    { key: "extraMilitaryTactics", label: "额外军事战术（+x）", type: "number", value: 0, step: 0.1 },
+    { key: "fireDamage", label: "火力伤害修正（+x）", type: "number", value: 0, step: 1 },
+    { key: "shockDamage", label: "冲击伤害修正（+x）", type: "number", value: 0, step: 1 },
+    { key: "damageDone", label: "造成伤害修正（%）", type: "number", value: 0, step: 1 },
+    { key: "damageTaken", label: "承受伤害修正（%）", type: "number", value: 0, step: 1 },
+    { key: "moraleBonus", label: "额外士气加成（%）", type: "number", value: 0, step: 1 },
+    { key: "armyTradition", label: "陆军传统（0-100）", type: "number", value: 0, min: 0, max: 100, step: 1 },
+    { key: "prestige", label: "威望（-100~100）", type: "number", value: 0, min: -100, max: 100, step: 1 },
+    { key: "moraleDamageDone", label: "士气打击（%）", type: "number", value: 0, step: 1 },
+    { key: "moraleDamageTaken", label: "士气防御（%）", type: "number", value: 0, step: 1 },
+    { key: "professionalism", label: "职业度（0-100）", type: "number", value: 0, min: 0, max: 100, step: 1 }
   ]
 };
 sideSchemas.template = [
+  { key: "strength", label: "参战人数", type: "number", value: 1000, step: 100 },
   { key: "techLevel", label: "军事科技", type: "number", value: 3, min: 0, max: 32, step: 1 },
-  { key: "strength", label: "参战兵力（默认 1000，固定前排）", type: "number", value: 1000, step: 100 },
-  { key: "combatAbility", label: "作战能力", type: "number", value: 0, step: 1 },
-  { key: "discipline", label: "训练度", type: "number", value: 0, step: 1 },
-  { key: "extraMilitaryTactics", label: "额外军事战术", type: "number", value: 0, step: 0.1 },
-  { key: "fireDamageInfantry", label: "步兵火力修正", type: "number", value: 0, step: 1 },
-  { key: "fireDamageCavalry", label: "骑兵火力修正", type: "number", value: 0, step: 1 },
-  { key: "fireDamageArtillery", label: "炮兵火力修正", type: "number", value: 0, step: 1 },
-  { key: "shockDamageInfantry", label: "步兵冲击修正", type: "number", value: 0, step: 1 },
-  { key: "shockDamageCavalry", label: "骑兵冲击修正", type: "number", value: 0, step: 1 },
-  { key: "shockDamageArtillery", label: "炮兵冲击修正", type: "number", value: 0, step: 1 },
-  { key: "damageDoneFire", label: "造成火力伤害修正", type: "number", value: 0, step: 1 },
-  { key: "damageDoneShock", label: "造成冲击伤害修正", type: "number", value: 0, step: 1 },
-  { key: "damageTakenFire", label: "承受火力伤害修正", type: "number", value: 0, step: 1 },
-  { key: "damageTakenShock", label: "承受冲击伤害修正", type: "number", value: 0, step: 1 },
-  { key: "moraleBonus", label: "额外士气加成(%)", type: "number", value: 0, step: 1 },
-  { key: "armyTradition", label: "陆军传统", type: "number", value: 0, min: 0, max: 100, step: 1 },
-  { key: "prestige", label: "威望", type: "number", value: 0, min: -100, max: 100, step: 1 },
-  { key: "moraleDamageDone", label: "造成士气伤害修正", type: "number", value: 0, step: 1 },
-  { key: "moraleDamageTaken", label: "承受士气伤害修正", type: "number", value: 0, step: 1 },
-  { key: "professionalism", label: "职业度", type: "number", value: 0, min: 0, max: 100, step: 1 }
+  { key: "discipline", label: "训练度（%）", type: "number", value: 0, step: 1 },
+  { key: "extraMilitaryTactics", label: "额外军事战术（+x）", type: "number", value: 0, step: 0.1 },
+  { key: "combatAbilityInfantry", label: "步兵作战能力（%）", type: "number", value: 0, step: 1 },
+  { key: "combatAbilityCavalry", label: "骑兵作战能力（%）", type: "number", value: 0, step: 1 },
+  { key: "combatAbilityArtillery", label: "炮兵作战能力（%）", type: "number", value: 0, step: 1 },
+  { key: "fireDamageInfantry", label: "步兵火力修正（+x）", type: "number", value: 0, step: 1 },
+  { key: "fireDamageCavalry", label: "骑兵火力修正（+x）", type: "number", value: 0, step: 1 },
+  { key: "fireDamageArtillery", label: "炮兵火力修正（+x）", type: "number", value: 0, step: 1 },
+  { key: "shockDamageInfantry", label: "步兵冲击修正（+x）", type: "number", value: 0, step: 1 },
+  { key: "shockDamageCavalry", label: "骑兵冲击修正（+x）", type: "number", value: 0, step: 1 },
+  { key: "shockDamageArtillery", label: "炮兵冲击修正（+x）", type: "number", value: 0, step: 1 },
+  { key: "damageDoneFire", label: "火力伤害（%）", type: "number", value: 0, step: 1 },
+  { key: "damageDoneShock", label: "冲击伤害（%）", type: "number", value: 0, step: 1 },
+  { key: "damageTakenFire", label: "火力防御（%）", type: "number", value: 0, step: 1 },
+  { key: "damageTakenShock", label: "冲击防御（%）", type: "number", value: 0, step: 1 },
+  { key: "moraleBonus", label: "额外士气加成（%）", type: "number", value: 0, step: 1 },
+  { key: "moraleDamageDone", label: "士气打击（%）", type: "number", value: 0, step: 1 },
+  { key: "moraleDamageTaken", label: "士气防御（%）", type: "number", value: 0, step: 1 },
+  { key: "armyTradition", label: "陆军传统（0-100）", type: "number", value: 0, min: 0, max: 100, step: 1 },
+  { key: "prestige", label: "威望（-100~100）", type: "number", value: 0, min: -100, max: 100, step: 1 },
+  { key: "professionalism", label: "职业度（0-100）", type: "number", value: 0, min: 0, max: 100, step: 1 }
+];
+
+var templateLayout = [
+  { title: "基础属性", fields: ["strength", "techLevel", "discipline", "extraMilitaryTactics"] },
+  { title: "作战能力", fields: ["combatAbilityInfantry", "combatAbilityCavalry", "combatAbilityArtillery"] },
+  { title: "火力修正", fields: ["fireDamageInfantry", "fireDamageCavalry", "fireDamageArtillery"] },
+  { title: "冲击修正", fields: ["shockDamageInfantry", "shockDamageCavalry", "shockDamageArtillery"] },
+  { title: "伤害修正", fields: ["damageDoneFire", "damageDoneShock", "damageTakenFire", "damageTakenShock"] },
+  { title: "士气修正", fields: ["moraleBonus", "moraleDamageDone", "moraleDamageTaken"] },
+  { title: "额外修正", fields: ["armyTradition", "prestige", "professionalism"] }
 ];
 
 const sideState = {
@@ -452,7 +470,6 @@ const phaseSelect = document.querySelector("#phase");
 const calculateButton = document.querySelector("#calculate");
 const backButton = document.querySelector("#back-button");
 const detailsOutput = document.querySelector("#details-output");
-const errorBanner = document.querySelector("#error-banner");
 const attackerLossEl = document.querySelector("#attacker-loss");
 const defenderLossEl = document.querySelector("#defender-loss");
 const attackerMoraleLossEl = document.querySelector("#attacker-morale-loss");
@@ -470,15 +487,19 @@ const phaseBox = document.querySelector(".phase-box");
 // Simulation-mode strips
 const simStrip = document.querySelector("#sim-strip");
 const simDiceStrip = document.querySelector("#sim-dice-strip");
-const simDiceFixedStrip = document.querySelector("#sim-dice-fixed-strip");
+const simDiceFixedField = document.querySelector("#sim-dice-fixed-field");
 const simDiceFixedValue = document.querySelector("#sim-dice-fixed-value");
 const simDiceMode = document.querySelector("#sim-dice-mode");
 const simRounds = document.querySelector("#sim-rounds");
-const simLeaderDiff = document.querySelector("#sim-leader-diff");
 const simTerrainPenalty = document.querySelector("#sim-terrain-penalty");
-const simPhaseMode = document.querySelector("#sim-phase-mode");
-const simDiceFire = document.querySelector("#sim-dice-fire");
-const simDiceShock = document.querySelector("#sim-dice-shock");
+const simRiverCrossing = document.querySelector("#sim-river-crossing");
+const singleRiverCrossing = document.querySelector("#river-crossing");
+const singleAttackerDice = document.querySelector("#attacker-dice");
+const singleDefenderDice = document.querySelector("#defender-dice");
+const simDiceFireAtt = document.querySelector("#sim-dice-fire-att");
+const simDiceFireDef = document.querySelector("#sim-dice-fire-def");
+const simDiceShockAtt = document.querySelector("#sim-dice-shock-att");
+const simDiceShockDef = document.querySelector("#sim-dice-shock-def");
 const simResults = document.querySelector("#sim-results");
 const simSummary = document.querySelector("#sim-summary");
 const simTbody = document.querySelector("#sim-tbody");
@@ -524,6 +545,10 @@ const crossTechConfirmProgress = document.querySelector("#cross-tech-confirm-pro
 const crossTechConfirmProgressFill = document.querySelector("#cross-tech-confirm-progress-fill");
 const crossTechConfirmProgressLabel = document.querySelector("#cross-tech-confirm-progress-label");
 const crossTechConfirmProgressPercent = document.querySelector("#cross-tech-confirm-progress-percent");
+const errorDialog = document.querySelector("#error-dialog");
+const errorDialogBackdrop = document.querySelector("#error-dialog-backdrop");
+const errorDialogClose = document.querySelector("#error-dialog-close");
+const errorDialogMessage = document.querySelector("#error-dialog-message");
 
 const groupKeys = [...new Set(UNIT_DATA.filter(item => item.group !== "Shared").map(item => item.group))];
 var latestRankingLogText = "";
@@ -631,6 +656,7 @@ function maybeWarnStrengthLimit(control) {
 function openChartLightbox(title, contentHtml) {
   chartLightboxTitle.textContent = title;
   chartLightboxBody.innerHTML = contentHtml;
+  enhanceChartLightboxLegend();
   chartLightbox.style.display = "";
   chartLightbox.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
@@ -648,6 +674,9 @@ function formatTemplateValue(value, schema) {
   if (schema && (
     schema.key === "discipline" ||
     schema.key === "combatAbility" ||
+    schema.key === "combatAbilityInfantry" ||
+    schema.key === "combatAbilityCavalry" ||
+    schema.key === "combatAbilityArtillery" ||
     schema.key === "damageDoneFire" ||
     schema.key === "damageDoneShock" ||
     schema.key === "damageTakenFire" ||
@@ -666,14 +695,29 @@ function formatTemplateValue(value, schema) {
 
 function renderCrossTechTemplateDialog() {
   var template = readSide("template");
-  var html = "";
+  var schemaMap = {};
   for (var i = 0; i < sideSchemas.template.length; i++) {
-    var schema = sideSchemas.template[i];
-    html +=
-      '<div class="cross-tech-template-item">' +
-        '<div class="cross-tech-template-label">' + schema.label + '</div>' +
-        '<div class="cross-tech-template-value">' + formatTemplateValue(template[schema.key], schema) + '</div>' +
-      '</div>';
+    schemaMap[sideSchemas.template[i].key] = sideSchemas.template[i];
+  }
+
+  var html = "";
+  for (var g = 0; g < templateLayout.length; g++) {
+    var group = templateLayout[g];
+    html += '<div class="cross-tech-template-section">';
+    html += '<div class="cross-tech-template-section-title">' + group.title + '</div>';
+    html += '<div class="cross-tech-template-cards">';
+    for (var k = 0; k < group.fields.length; k++) {
+      var key = group.fields[k];
+      var schema = schemaMap[key];
+      if (!schema) continue;
+      html +=
+        '<div class="cross-tech-template-item">' +
+          '<span class="cross-tech-template-label">' + schema.label + '</span>' +
+          '<span class="cross-tech-template-sep">：</span>' +
+          '<span class="cross-tech-template-value">' + formatTemplateValue(template[schema.key], schema) + '</span>' +
+        '</div>';
+    }
+    html += '</div></div>';
   }
   crossTechTemplateGrid.innerHTML = html;
 }
@@ -720,10 +764,27 @@ function closeCrossTechConfirmDialog() {
   crossTechConfirmProgressPercent.textContent = "0%";
 }
 
+function openErrorDialog(message) {
+  errorDialogMessage.textContent = message || "请检查输入内容。";
+  errorDialog.style.display = "";
+  errorDialog.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeErrorDialog() {
+  errorDialog.style.display = "none";
+  errorDialog.setAttribute("aria-hidden", "true");
+  errorDialogMessage.textContent = "";
+  if (chartLightbox.style.display === "none" &&
+      crossTechTemplateDialog.style.display === "none" &&
+      crossTechConfirmDialog.style.display === "none") {
+    document.body.style.overflow = "auto";
+  }
+}
+
 function startCrossTechRankingFlow() {
   try {
-    errorBanner.style.display = "none";
-    errorBanner.textContent = "";
+    closeErrorDialog();
     clearCrossTechConfirmTimers();
     crossTechConfirmText.textContent = "正在遍历科技排行，请稍候。";
     crossTechConfirmProgress.style.display = "";
@@ -737,16 +798,14 @@ function startCrossTechRankingFlow() {
             calculateCrossTechRanking();
           } catch (error) {
             closeCrossTechConfirmDialog();
-            errorBanner.textContent = error.message;
-            errorBanner.style.display = "";
+            openErrorDialog(error.message);
           }
         }, 24);
       });
     });
   } catch (error) {
     closeCrossTechConfirmDialog();
-    errorBanner.textContent = error.message;
-    errorBanner.style.display = "";
+    openErrorDialog(error.message);
   }
 }
 
@@ -806,6 +865,57 @@ function bindChartPreview(container, titleText) {
   });
 }
 
+function applyChartLegendHighlight(shell, activeGroupKey) {
+  var lines = shell.querySelectorAll("[data-chart-group-key]");
+  var legendItems = shell.querySelectorAll(".cross-tech-chart-legend-item");
+  var hasActive = !!activeGroupKey;
+
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i];
+    var isMatch = line.getAttribute("data-chart-group-key") === activeGroupKey;
+    line.classList.toggle("is-dimmed", hasActive && !isMatch);
+    line.classList.toggle("is-highlighted", hasActive && isMatch);
+  }
+
+  for (i = 0; i < legendItems.length; i++) {
+    var item = legendItems[i];
+    var itemMatch = item.getAttribute("data-chart-group-key") === activeGroupKey;
+    item.classList.toggle("is-dimmed", hasActive && !itemMatch);
+    item.classList.toggle("is-active", hasActive && itemMatch);
+    item.setAttribute("aria-pressed", hasActive && itemMatch ? "true" : "false");
+  }
+}
+
+function enhanceChartLightboxLegend() {
+  var shell = chartLightboxBody.querySelector(".cross-tech-chart-shell");
+  if (!shell) return;
+  var legendItems = shell.querySelectorAll(".cross-tech-chart-legend-item");
+  if (!legendItems.length) return;
+
+  for (var i = 0; i < legendItems.length; i++) {
+    var item = legendItems[i];
+    item.setAttribute("role", "button");
+    item.setAttribute("tabindex", "0");
+    item.setAttribute("aria-pressed", "false");
+    item.setAttribute("aria-label", "高亮显示" + item.textContent.trim());
+    item.addEventListener("click", function() {
+      var groupKey = this.getAttribute("data-chart-group-key");
+      var current = shell.getAttribute("data-active-group-key") || "";
+      var next = current === groupKey ? "" : groupKey;
+      shell.setAttribute("data-active-group-key", next);
+      applyChartLegendHighlight(shell, next);
+    });
+    item.addEventListener("keydown", function(event) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        this.click();
+      }
+    });
+  }
+
+  applyChartLegendHighlight(shell, "");
+}
+
 function fillOptions(select, options, selectedValue) {
   select.innerHTML = "";
   for (const option of options) {
@@ -820,10 +930,46 @@ function fillOptions(select, options, selectedValue) {
   }
 }
 
+function lockNumericControl(control, reason) {
+  control.value = "0";
+  control.readOnly = true;
+  control.classList.add("locked-control");
+  control.setAttribute("aria-disabled", "true");
+  control.title = reason;
+
+  var lastNoticeAt = 0;
+  function showNotice() {
+    var now = Date.now();
+    if (now - lastNoticeAt < 800) return;
+    lastNoticeAt = now;
+    window.alert(reason);
+  }
+
+  control.addEventListener("pointerdown", function(event) {
+    event.preventDefault();
+    showNotice();
+  });
+  control.addEventListener("keydown", function(event) {
+    if (event.key === "Tab") return;
+    event.preventDefault();
+    showNotice();
+  });
+  control.addEventListener("wheel", function(event) {
+    event.preventDefault();
+    showNotice();
+  });
+  control.addEventListener("input", function() {
+    control.value = "0";
+    showNotice();
+  });
+  control.addEventListener("change", function() {
+    control.value = "0";
+  });
+}
+
 function createField(side, schema, mount) {
   const wrapper = document.createElement("label");
-  wrapper.className = "field";
-  if (schema.wide) wrapper.style.gridColumn = "1 / -1";
+  wrapper.className = side === "template" ? "template-field" : "battle-field";
   const label = document.createElement("span");
   label.textContent = schema.label;
   wrapper.append(label);
@@ -843,6 +989,9 @@ function createField(side, schema, mount) {
   control.id = `${side}-${schema.key}`;
   control.dataset.side = side;
   control.dataset.key = schema.key;
+  if (schema.lockedReason) {
+    lockNumericControl(control, schema.lockedReason);
+  }
   wrapper.append(control);
   mount.append(wrapper);
   sideState[side][schema.key] = control;
@@ -850,7 +999,105 @@ function createField(side, schema, mount) {
 
 function buildPanel(side) {
   const mount = document.querySelector(`#${side}-fields`);
-  sideSchemas[side].forEach(schema => createField(side, schema, mount));
+  if (side === "template") {
+    var schemaMap = {};
+    sideSchemas.template.forEach(function(s) { schemaMap[s.key] = s; });
+    templateLayout.forEach(function(group) {
+      var section = document.createElement("div");
+      section.className = "template-section";
+      var header = document.createElement("div");
+      header.className = "template-section-header";
+      header.textContent = group.title;
+      section.append(header);
+      var row = document.createElement("div");
+      row.className = "template-parameter-grid";
+      group.fields.forEach(function(key) {
+        var schema = schemaMap[key];
+        if (!schema) return;
+        var wrapper = document.createElement("label");
+        wrapper.className = "battle-field template-battle-field";
+        var label = document.createElement("span");
+        label.textContent = schema.label;
+        wrapper.append(label);
+        var control = document.createElement("input");
+        control.type = "number";
+        control.value = String(schema.value ?? 0);
+        if (schema.step !== undefined) control.step = String(schema.step);
+        if (schema.min !== undefined) control.min = String(schema.min);
+        if (schema.max !== undefined) control.max = String(schema.max);
+        control.id = side + "-" + schema.key;
+        control.dataset.side = side;
+        control.dataset.key = schema.key;
+        wrapper.append(control);
+        row.append(wrapper);
+        sideState[side][schema.key] = control;
+      });
+      section.append(row);
+      mount.append(section);
+    });
+  } else {
+    // Attacker / defender: compact property-editor layout
+    var leaderKeys = ["leaderFire", "leaderShock", "leaderManeuver", "leaderSiege"];
+    var selectorKeys = ["group", "unitType", "techLevel"];
+    var sideHead = document.querySelector("#" + side + "-card .side-head");
+    var selectorStrip = document.createElement("div");
+    selectorStrip.className = "battle-selector-strip";
+    var selectorRow = document.createElement("div");
+    selectorRow.className = "battle-field-grid battle-field-grid-selectors";
+    sideSchemas[side].forEach(function(schema) {
+      if (selectorKeys.indexOf(schema.key) >= 0) {
+        createField(side, schema, selectorRow);
+      }
+    });
+    selectorStrip.append(selectorRow);
+
+    // Unit buttons container
+    var unitRow = document.createElement("div");
+    unitRow.className = "battle-unit-row battle-unit-row-head";
+    unitRow.id = side + "-unit-buttons";
+    if (sideHead) {
+      sideHead.append(unitRow);
+    }
+    mount.append(selectorStrip);
+
+    var leaderSection = document.createElement("div");
+    leaderSection.className = "battle-leader-section";
+    var leaderTitle = document.createElement("div");
+    leaderTitle.className = "battle-leader-title";
+    leaderTitle.textContent = "将领";
+    leaderSection.append(leaderTitle);
+    var leaderRow = document.createElement("div");
+    leaderRow.className = "battle-field-grid battle-field-grid-leaders";
+    sideSchemas[side].forEach(function(schema) {
+      if (leaderKeys.indexOf(schema.key) >= 0) {
+        createField(side, schema, leaderRow);
+      }
+    });
+    leaderSection.append(leaderRow);
+    mount.append(leaderSection);
+
+    // Remaining fields
+    var restRow = document.createElement("div");
+    restRow.className = "battle-field-grid battle-field-grid-stats";
+    sideSchemas[side].forEach(function(schema) {
+      if (selectorKeys.indexOf(schema.key) < 0 && leaderKeys.indexOf(schema.key) < 0) {
+        createField(side, schema, restRow);
+      }
+    });
+    mount.append(restRow);
+
+    // Refresh unit buttons when selector changes
+    function refresh(event) {
+      syncSideUnitButtons(side, !!event);
+    }
+    selectorKeys.forEach(function(key) {
+      var ctrl = sideState[side][key];
+      if (ctrl) ctrl.addEventListener("change", refresh);
+    });
+
+    // Initial unit button population
+    syncSideUnitButtons(side, false);
+  }
 }
 
 function selectableUnits(group, unitType, techLevel) {
@@ -870,17 +1117,80 @@ function selectableUnits(group, unitType, techLevel) {
   return matches;
 }
 
-function syncUnitOptions(side) {
-  const controls = sideState[side];
-  const group = controls.group.value;
-  const unitType = controls.unitType.value;
-  const techLevel = Math.max(0, Math.min(32, Number(controls.techLevel.value || 0)));
-  const units = selectableUnits(group, unitType, techLevel);
-  fillOptions(
-    controls.unit,
-    units.map(item => ({ value: item.unitName, label: translateUnit(item.unitName) })),
-    controls.unit.value
-  );
+function enforceArtilleryTechRequirement(side, shouldAlert) {
+  var controls = sideState[side];
+  if (!controls || !controls.unitType) return false;
+  if (controls.unitType.value !== "Artillery") {
+    controls.unitType.dataset.lastValidValue = controls.unitType.value;
+    return false;
+  }
+
+  var techLevel = controls.techLevel ? Math.max(0, Math.min(32, Number(controls.techLevel.value || 0))) : 0;
+  if (techLevel >= 7) {
+    return false;
+  }
+
+  var fallbackType = controls.unitType.dataset.lastValidValue;
+  if (!fallbackType || fallbackType === "Artillery") {
+    fallbackType = "Infantry";
+  }
+  controls.unitType.value = fallbackType;
+  if (shouldAlert) {
+    window.alert("7军科前不存在炮兵。");
+  }
+  return true;
+}
+
+function syncSideUnitButtons(side, shouldAlert) {
+  enforceArtilleryTechRequirement(side, shouldAlert);
+  refreshUnitButtons(side);
+}
+
+function refreshUnitButtons(side) {
+  var container = document.getElementById(side + "-unit-buttons");
+  if (!container) return;
+  var controls = sideState[side];
+  var group = controls.group ? controls.group.value : "";
+  var unitType = controls.unitType ? controls.unitType.value : "";
+  var techLevel = controls.techLevel ? Math.max(0, Math.min(32, Number(controls.techLevel.value || 0))) : 0;
+  var units = selectableUnits(group, unitType, techLevel);
+  var currentUnit = (controls.unit && controls.unit.value) || "";
+  container.innerHTML = "";
+  if (units.length === 0) {
+    container.style.display = "none";
+    return;
+  }
+  container.style.display = "";
+  var selectedIndex = -1;
+  for (var i = 0; i < units.length; i++) {
+    (function(unit) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "unit-btn" + (unit.unitName === currentUnit ? " selected" : "");
+      btn.textContent = translateUnit(unit.unitName);
+      btn.addEventListener("click", function() {
+        var allBtns = container.querySelectorAll(".unit-btn");
+        for (var j = 0; j < allBtns.length; j++) allBtns[j].classList.remove("selected");
+        btn.classList.add("selected");
+        if (!controls.unit) {
+          var hidden = document.createElement("input");
+          hidden.type = "hidden";
+          hidden.id = side + "-unit";
+          hidden.dataset.side = side;
+          hidden.dataset.key = "unit";
+          document.getElementById(side + "-fields").appendChild(hidden);
+          controls.unit = hidden;
+        }
+        controls.unit.value = unit.unitName;
+      });
+      container.appendChild(btn);
+      if (unit.unitName === currentUnit) selectedIndex = i;
+    })(units[i]);
+  }
+  // Auto-select first unit if none selected
+  if (selectedIndex < 0 && units.length > 0) {
+    container.querySelector(".unit-btn").click();
+  }
 }
 
 function initOptions() {
@@ -897,13 +1207,17 @@ function initOptions() {
       UNIT_TYPES.map(type => ({ value: type.value, label: type.label })),
       "Infantry"
     );
-    syncUnitOptions(side);
+    syncSideUnitButtons(side, false);
   }
 }
 
 function readSide(side) {
   const controls = sideState[side];
   const data = {};
+  if (controls.leaderFire) data.leaderFire = Number(controls.leaderFire.value);
+  if (controls.leaderShock) data.leaderShock = Number(controls.leaderShock.value);
+  if (controls.leaderManeuver) data.leaderManeuver = Number(controls.leaderManeuver.value);
+  if (controls.leaderSiege) data.leaderSiege = Number(controls.leaderSiege.value);
   if (controls.group) data.group = controls.group.value;
   if (controls.unitType) data.unitType = controls.unitType.value;
   if (controls.unit) data.unitName = controls.unit.value;
@@ -914,6 +1228,10 @@ function readSide(side) {
   if (controls.extraMilitaryTactics) data.extraMilitaryTactics = Number(controls.extraMilitaryTactics.value);
   if (controls.fireDamage) data.fireDamage = Number(controls.fireDamage.value);
   if (controls.shockDamage) data.shockDamage = Number(controls.shockDamage.value);
+  if (controls.combatAbility) data.combatAbility = Number(controls.combatAbility.value);
+  if (controls.combatAbilityInfantry) data.combatAbilityInfantry = Number(controls.combatAbilityInfantry.value);
+  if (controls.combatAbilityCavalry) data.combatAbilityCavalry = Number(controls.combatAbilityCavalry.value);
+  if (controls.combatAbilityArtillery) data.combatAbilityArtillery = Number(controls.combatAbilityArtillery.value);
   if (controls.fireDamageInfantry) data.fireDamageInfantry = Number(controls.fireDamageInfantry.value);
   if (controls.fireDamageCavalry) data.fireDamageCavalry = Number(controls.fireDamageCavalry.value);
   if (controls.fireDamageArtillery) data.fireDamageArtillery = Number(controls.fireDamageArtillery.value);
@@ -968,7 +1286,7 @@ function updateModeUI() {
     singleStrip.style.display = "none";
     simStrip.style.display = "none";
     simDiceStrip.style.display = "none";
-    simDiceFixedStrip.style.display = "none";
+    simDiceFixedField.style.display = "none";
     templateCard.style.display = "none";
     phaseBox.style.display = "none";
     battleGrid.style.display = "none";
@@ -991,26 +1309,61 @@ function updateModeUI() {
 function updateSimDiceVisibility() {
   if (!modeSimRadio.checked) {
     simDiceStrip.style.display = "none";
-    simDiceFixedStrip.style.display = "none";
+    simDiceFixedField.style.display = "none";
     return;
   }
   simDiceStrip.style.display = simDiceMode.value === "manual" ? "" : "none";
-  simDiceFixedStrip.style.display = simDiceMode.value === "fixed" ? "" : "none";
+  simDiceFixedField.style.display = simDiceMode.value === "fixed" ? "" : "none";
+}
+
+function leaderPhaseDiff(attacker, defender, phase, fallbackDiff) {
+  if (phase === "fire") {
+    if (attacker.leaderFire !== undefined || defender.leaderFire !== undefined) {
+      return Math.max(0, (attacker.leaderFire || 0) - (defender.leaderFire || 0));
+    }
+    return Math.max(0, fallbackDiff || 0);
+  }
+  if (attacker.leaderShock !== undefined || defender.leaderShock !== undefined) {
+    return Math.max(0, (attacker.leaderShock || 0) - (defender.leaderShock || 0));
+  }
+  return Math.max(0, fallbackDiff || 0);
+}
+
+function resolveAttackerPenalty(attacker, defender, terrainPenalty, riverCrossing) {
+  var attackerManeuver = attacker && attacker.leaderManeuver !== undefined ? Number(attacker.leaderManeuver || 0) : 0;
+  var defenderManeuver = defender && defender.leaderManeuver !== undefined ? Number(defender.leaderManeuver || 0) : 0;
+  var ignoreRiverCrossing = riverCrossing > 0 && attackerManeuver > defenderManeuver;
+  return {
+    totalPenalty: terrainPenalty + (ignoreRiverCrossing ? 0 : riverCrossing),
+    riverPenaltyApplied: ignoreRiverCrossing ? 0 : riverCrossing,
+    ignoredByManeuver: ignoreRiverCrossing
+  };
 }
 
 // ---- Single-phase calculation ----
 function calculateSingle() {
-  const dice = Number(document.querySelector("#dice").value);
-  const leaderDiff = Number(document.querySelector("#leader-diff").value);
+  const attackerDice = Number(singleAttackerDice.value);
+  const defenderDice = Number(singleDefenderDice.value);
   const terrainPenalty = Number(document.querySelector("#terrain-penalty").value);
+  const riverCrossing = Number(singleRiverCrossing.value || 0);
   const phase = phaseSelect.value;
 
-  [ ["骰子", dice], ["将领差额", leaderDiff], ["进攻地形惩罚", terrainPenalty] ].forEach(([name, value]) => validateNumber(name, value));
-  if (dice < 0 || dice > 9) throw new Error("骰子应在 0 到 9 之间。");
+  [ ["进攻方骰子", attackerDice], ["防守方骰子", defenderDice], ["进攻地形惩罚", terrainPenalty], ["跨河惩罚", riverCrossing] ].forEach(([name, value]) => validateNumber(name, value));
+  if (!Number.isInteger(attackerDice) || attackerDice < 0 || attackerDice > 9) {
+    throw new Error("进攻方骰子应为 0 到 9 的整数。");
+  }
+  if (!Number.isInteger(defenderDice) || defenderDice < 0 || defenderDice > 9) {
+    throw new Error("防守方骰子应为 0 到 9 的整数。");
+  }
   if (terrainPenalty < 0) throw new Error("进攻地形惩罚不能为负数。");
+  if (riverCrossing !== 0 && riverCrossing !== 1) throw new Error("跨河惩罚只允许为 0 或 1。");
 
   const attacker = readSide("attacker");
   const defender = readSide("defender");
+  const attackerLeaderDiff = leaderPhaseDiff(attacker, defender, phase);
+  const defenderLeaderDiff = leaderPhaseDiff(defender, attacker, phase);
+  const attackerPenaltyInfo = resolveAttackerPenalty(attacker, defender, terrainPenalty, riverCrossing);
+  const attackerPenalty = attackerPenaltyInfo.totalPenalty;
 
   for (const side of [attacker, defender]) {
     if (!Number.isInteger(side.techLevel) || side.techLevel < 0 || side.techLevel > 32) {
@@ -1018,8 +1371,8 @@ function calculateSingle() {
     }
   }
 
-  const attackerToDefender = computeOneWay(attacker, defender, phase, dice, leaderDiff, terrainPenalty, false);
-  const defenderToAttacker = computeOneWay(defender, attacker, phase, dice, -leaderDiff, 0, false);
+  const attackerToDefender = computeOneWay(attacker, defender, phase, attackerDice, attackerLeaderDiff, attackerPenalty, false);
+  const defenderToAttacker = computeOneWay(defender, attacker, phase, defenderDice, defenderLeaderDiff, 0, false);
 
   attackerLossEl.textContent = defenderToAttacker.damage.toFixed(2);
   defenderLossEl.textContent = attackerToDefender.damage.toFixed(2);
@@ -1033,12 +1386,12 @@ function calculateSingle() {
   const attToDefMorale = computeMoraleDamage(
     Object.assign({}, attacker, { maxMorale: attFinalMorale }),
     Object.assign({}, defender, { maxMorale: defFinalMorale }),
-    phase, dice, leaderDiff, terrainPenalty, false, 0, defender.professionalism || 0
+    phase, attackerDice, attackerLeaderDiff, attackerPenalty, false, 0, defender.professionalism || 0
   );
   const defToAttMorale = computeMoraleDamage(
     Object.assign({}, defender, { maxMorale: defFinalMorale }),
     Object.assign({}, attacker, { maxMorale: attFinalMorale }),
-    phase, dice, -leaderDiff, 0, false, 0, attacker.professionalism || 0
+    phase, defenderDice, defenderLeaderDiff, 0, false, 0, attacker.professionalism || 0
   );
 
   attackerMoraleLossEl.textContent = defToAttMorale.moraleDamage.toFixed(2);
@@ -1046,6 +1399,7 @@ function calculateSingle() {
 
   detailsOutput.textContent = [
     "阶段：" + (phase === "fire" ? "火力" : "冲击"),
+    "进攻方骰子：" + attackerDice + "  防守方骰子：" + defenderDice,
     "进攻方兵员损失：" + defenderToAttacker.damage.toFixed(2),
     "防守方兵员损失：" + attackerToDefender.damage.toFixed(2),
     "进攻方士气损失：" + defToAttMorale.moraleDamage.toFixed(2),
@@ -1058,12 +1412,15 @@ function calculateSingle() {
     "--- 兵员伤害明细 ---",
     "进攻方 -> 防守方",
     "兵种组：" + translateGroup(attacker.group) + "；兵种：" + translateUnit(attacker.unitName),
-    "基础伤亡 = max(15, 15 + 5 x (" + dice.toFixed(2) + " + " + leaderDiff.toFixed(2) + " + " + attackerToDefender.attackerPips.toFixed(2) + " - " + attackerToDefender.defenderPips.toFixed(2) + " - " + terrainPenalty.toFixed(2) + ")) = " + attackerToDefender.baseCasualties.toFixed(2),
+    "基础伤亡 = max(15, 15 + 5 x (" + attackerDice.toFixed(2) + " + " + attackerLeaderDiff.toFixed(2) + " + " + attackerToDefender.attackerPips.toFixed(2) + " - " + attackerToDefender.defenderPips.toFixed(2) + " - " + attackerPenalty.toFixed(2) + ")) = " + attackerToDefender.baseCasualties.toFixed(2),
+    attackerPenaltyInfo.ignoredByManeuver
+      ? ("跨河惩罚=" + riverCrossing.toFixed(2) + "，但攻方机动高于守方，因此本次按 0 计算；总惩罚=" + attackerPenalty.toFixed(2))
+      : ("进攻地形惩罚=" + terrainPenalty.toFixed(2) + "，跨河惩罚=" + attackerPenaltyInfo.riverPenaltyApplied.toFixed(2) + "；总惩罚=" + attackerPenalty.toFixed(2)),
     "科技修正 = " + attackerToDefender.tech.toFixed(2) + "（含职业度阶段伤害 +" + attackerToDefender.professionalismBonus.toFixed(2) + "%），守方战术 = " + attackerToDefender.tactics.toFixed(2),
     "",
     "防守方 -> 进攻方",
     "兵种组：" + translateGroup(defender.group) + "；兵种：" + translateUnit(defender.unitName),
-    "基础伤亡 = max(15, 15 + 5 x (" + dice.toFixed(2) + " + " + (-leaderDiff).toFixed(2) + " + " + defenderToAttacker.attackerPips.toFixed(2) + " - " + defenderToAttacker.defenderPips.toFixed(2) + " - 0.00)) = " + defenderToAttacker.baseCasualties.toFixed(2),
+    "基础伤亡 = max(15, 15 + 5 x (" + defenderDice.toFixed(2) + " + " + defenderLeaderDiff.toFixed(2) + " + " + defenderToAttacker.attackerPips.toFixed(2) + " - " + defenderToAttacker.defenderPips.toFixed(2) + " - 0.00)) = " + defenderToAttacker.baseCasualties.toFixed(2),
     "科技修正 = " + defenderToAttacker.tech.toFixed(2) + "（含职业度阶段伤害 +" + defenderToAttacker.professionalismBonus.toFixed(2) + "%），守方战术 = " + defenderToAttacker.tactics.toFixed(2),
     "",
     "--- 士气损失明细 ---",
@@ -1092,19 +1449,21 @@ function parseDiceArray(text, fieldName) {
 }
 
 function readSimulationBattleOptions(rounds, forOpenEnded) {
-  var leaderDiff = parseFloat(simLeaderDiff.value) || 0;
   var terrainPenalty = parseFloat(simTerrainPenalty.value) || 0;
   if (terrainPenalty < 0) throw new Error("进攻地形惩罚不能为负数。");
-
-  var phaseModeRaw = simPhaseMode.value;
-  var phaseOnly = (phaseModeRaw === "alternate") ? null : phaseModeRaw;
+  var riverCrossing = parseInt(simRiverCrossing.value, 10) || 0;
+  if (riverCrossing !== 0 && riverCrossing !== 1) throw new Error("跨河惩罚只允许为 0 或 1。");
 
   var diceConfig = {};
   if (simDiceMode.value === "manual") {
-    var fireArr = parseDiceArray(simDiceFire.value, "火力骰子序列");
-    var shockArr = parseDiceArray(simDiceShock.value, "冲击骰子序列");
-    if (fireArr !== null) diceConfig.fire = fireArr;
-    if (shockArr !== null) diceConfig.shock = shockArr;
+    var fireArrAtt = parseDiceArray(simDiceFireAtt.value, "攻方火力骰子序列");
+    var fireArrDef = parseDiceArray(simDiceFireDef.value, "守方火力骰子序列");
+    var shockArrAtt = parseDiceArray(simDiceShockAtt.value, "攻方冲击骰子序列");
+    var shockArrDef = parseDiceArray(simDiceShockDef.value, "守方冲击骰子序列");
+    if (fireArrAtt !== null) diceConfig.fireAtt = fireArrAtt;
+    if (fireArrDef !== null) diceConfig.fireDef = fireArrDef;
+    if (shockArrAtt !== null) diceConfig.shockAtt = shockArrAtt;
+    if (shockArrDef !== null) diceConfig.shockDef = shockArrDef;
   } else if (simDiceMode.value === "fixed") {
     var fixedVal = parseInt(simDiceFixedValue.value, 10);
     if (isNaN(fixedVal) || fixedVal < 0 || fixedVal > 9) {
@@ -1122,9 +1481,8 @@ function readSimulationBattleOptions(rounds, forOpenEnded) {
   }
 
   return {
-    leaderDiff: leaderDiff,
     terrainPenalty: terrainPenalty,
-    phaseOnly: phaseOnly,
+    riverCrossing: riverCrossing,
     diceConfig: diceConfig,
     diceMode: simDiceMode.value
   };
@@ -1135,10 +1493,10 @@ function calculateSimulation() {
   if (isNaN(rounds) || rounds < 1 || rounds > 20) {
     throw new Error("轮次数应在 1 到 20 之间。");
   }
-  var battleOptions = readSimulationBattleOptions(rounds, false);
-
   var attacker = readSide("attacker");
   var defender = readSide("defender");
+  var battleOptions = readSimulationBattleOptions(rounds, false);
+  var attackerPenaltyInfo = resolveAttackerPenalty(attacker, defender, battleOptions.terrainPenalty, battleOptions.riverCrossing);
 
   for (var si = 0; si < 2; si++) {
     var side = si === 0 ? attacker : defender;
@@ -1152,13 +1510,12 @@ function calculateSimulation() {
     defender,
     rounds,
     battleOptions.diceConfig,
-    battleOptions.leaderDiff,
-    battleOptions.terrainPenalty,
-    false,
-    battleOptions.phaseOnly
+    0,
+    attackerPenaltyInfo.totalPenalty,
+    false
   );
 
-  renderSimResults(result, attacker, defender, battleOptions.phaseOnly);
+  renderSimResults(result, attacker, defender);
 
   // Also show single-phase style result cards for total losses
   attackerLossEl.textContent = result.totalAttackerStrengthLoss.toFixed(2);
@@ -1174,6 +1531,11 @@ function calculateSimulation() {
   lines.push("=== 多轮模拟结果（含士气） ===");
   lines.push("总天数：" + result.totalDays + "  轮数：" + result.rounds.length);
   lines.push("说明：当前模型按每个兵种初始 1000 兵且固定前排计算。");
+  if (attackerPenaltyInfo.ignoredByManeuver) {
+    lines.push("跨河惩罚=" + battleOptions.riverCrossing + "，但攻方机动高于守方，因此本次模拟未计入跨河惩罚。");
+  } else {
+    lines.push("进攻地形惩罚=" + battleOptions.terrainPenalty + "  跨河惩罚=" + attackerPenaltyInfo.riverPenaltyApplied + "  总惩罚=" + attackerPenaltyInfo.totalPenalty);
+  }
   lines.push("");
   lines.push("--- 兵员 ---");
   lines.push("进攻方初始兵力：" + result.initialAttackerStrength + "  →  剩余：" + result.finalAttackerStrength.toFixed(2) + "  （损失 " + result.totalAttackerStrengthLoss.toFixed(2) + "）");
@@ -1202,14 +1564,14 @@ function calculateSimulation() {
     var rr = result.rounds[r];
     lines.push("第" + rr.round + "轮：");
     if (rr.fire) {
-      lines.push("  火力阶段（骰子=" + rr.fire.dice + "）：攻方兵损=" + rr.fire.attackerStrengthLoss.toFixed(2) + " 守方兵损=" + rr.fire.defenderStrengthLoss.toFixed(2) + " 攻方士气损=" + rr.fire.attackerMoraleLoss.toFixed(2) + " 守方士气损=" + rr.fire.defenderMoraleLoss.toFixed(2));
+      lines.push("  火力阶段（攻方骰子=" + rr.fire.attackerDice + " 守方骰子=" + rr.fire.defenderDice + "）：攻方兵损=" + rr.fire.attackerStrengthLoss.toFixed(2) + " 守方兵损=" + rr.fire.defenderStrengthLoss.toFixed(2) + " 攻方士气损=" + rr.fire.attackerMoraleLoss.toFixed(2) + " 守方士气损=" + rr.fire.defenderMoraleLoss.toFixed(2));
       for (var di = 0; di < rr.fire.days.length; di++) {
         var day = rr.fire.days[di];
         lines.push("    第" + day.day + "天  攻方兵伤=" + day.attackerStrengthDmg.toFixed(2) + " 守方兵伤=" + day.defenderStrengthDmg.toFixed(2) + "  攻方剩=" + day.attackerStrengthRemaining.toFixed(2) + " 守方剩=" + day.defenderStrengthRemaining.toFixed(2) + "  攻方士气(主动=" + day.attackerMoraleLoss.toFixed(2) + "+被动=" + day.attackerPassiveMoraleLoss.toFixed(2) + ")=" + day.attackerCurrentMorale.toFixed(2) + " 守方士气(主动=" + day.defenderMoraleLoss.toFixed(2) + "+被动=" + day.defenderPassiveMoraleLoss.toFixed(2) + ")=" + day.defenderCurrentMorale.toFixed(2) + "  攻溃败=" + day.attackerBrokenRegiments + " 守溃败=" + day.defenderBrokenRegiments);
       }
     }
     if (rr.shock) {
-      lines.push("  冲击阶段（骰子=" + rr.shock.dice + "）：攻方兵损=" + rr.shock.attackerStrengthLoss.toFixed(2) + " 守方兵损=" + rr.shock.defenderStrengthLoss.toFixed(2) + " 攻方士气损=" + rr.shock.attackerMoraleLoss.toFixed(2) + " 守方士气损=" + rr.shock.defenderMoraleLoss.toFixed(2));
+      lines.push("  冲击阶段（攻方骰子=" + rr.shock.attackerDice + " 守方骰子=" + rr.shock.defenderDice + "）：攻方兵损=" + rr.shock.attackerStrengthLoss.toFixed(2) + " 守方兵损=" + rr.shock.defenderStrengthLoss.toFixed(2) + " 攻方士气损=" + rr.shock.attackerMoraleLoss.toFixed(2) + " 守方士气损=" + rr.shock.defenderMoraleLoss.toFixed(2));
       for (di = 0; di < rr.shock.days.length; di++) {
         var day2 = rr.shock.days[di];
         lines.push("    第" + day2.day + "天  攻方兵伤=" + day2.attackerStrengthDmg.toFixed(2) + " 守方兵伤=" + day2.defenderStrengthDmg.toFixed(2) + "  攻方剩=" + day2.attackerStrengthRemaining.toFixed(2) + " 守方剩=" + day2.defenderStrengthRemaining.toFixed(2) + "  攻方士气=" + day2.attackerCurrentMorale.toFixed(2) + " 守方士气=" + day2.defenderCurrentMorale.toFixed(2) + "  攻方后备士气损耗/天=" + day2.attackerPassiveMoraleLoss.toFixed(4) + " 守方后备士气损耗/天=" + day2.defenderPassiveMoraleLoss.toFixed(4) + "  攻溃败=" + day2.attackerBrokenRegiments + " 守溃败=" + day2.defenderBrokenRegiments);
@@ -1220,7 +1582,7 @@ function calculateSimulation() {
   detailsOutput.textContent = lines.join("\n");
 }
 
-function renderSimResults(result, attacker, defender, phaseOnly) {
+function renderSimResults(result, attacker, defender) {
   // Summary cards
   var winnerClass = result.winner === "attacker" ? "win" : (result.winner === "defender" ? "lose" : "draw");
   var attClass = result.winner === "attacker" ? "win" : (result.winner === "defender" ? "lose" : "draw");
@@ -1295,8 +1657,8 @@ function renderSimResults(result, attacker, defender, phaseOnly) {
 
   for (var r = 0; r < result.rounds.length; r++) {
     var rr = result.rounds[r];
-    var fireDice = rr.fire ? rr.fire.dice : "-";
-    var shockDice = rr.shock ? rr.shock.dice : "-";
+    var fireDice = rr.fire ? (rr.fire.attackerDice + "/" + rr.fire.defenderDice) : "-";
+    var shockDice = rr.shock ? (rr.shock.attackerDice + "/" + rr.shock.defenderDice) : "-";
 
     // Strength losses
     var fireAttStrLoss = rr.fire ? rr.fire.attackerStrengthLoss : 0;
@@ -1392,7 +1754,7 @@ function renderDailyLog(result) {
           '<tr>' +
             '<td>' + day.day + '</td>' +
             '<td>' + phaseLabel.fire + '</td>' +
-            '<td>' + rr.fire.dice + '</td>' +
+            '<td>' + rr.fire.attackerDice + '/' + rr.fire.defenderDice + '</td>' +
             '<td>' + day.attackerStrengthDmg.toFixed(2) + '</td>' +
             '<td>' + day.defenderStrengthDmg.toFixed(2) + '</td>' +
             '<td>' + day.attackerStrengthLoss.toFixed(2) + '</td>' +
@@ -1417,7 +1779,7 @@ function renderDailyLog(result) {
           '<tr>' +
             '<td>' + day2.day + '</td>' +
             '<td>' + phaseLabel.shock + '</td>' +
-            '<td>' + rr.shock.dice + '</td>' +
+            '<td>' + rr.shock.attackerDice + '/' + rr.shock.defenderDice + '</td>' +
             '<td>' + day2.attackerStrengthDmg.toFixed(2) + '</td>' +
             '<td>' + day2.defenderStrengthDmg.toFixed(2) + '</td>' +
             '<td>' + day2.attackerStrengthLoss.toFixed(2) + '</td>' +
@@ -1444,6 +1806,16 @@ function formatTournamentCandidate(candidate) {
   return translateGroup(candidate.group) + " / " + translateUnitType(candidate.unitType) + " / " + translateUnit(candidate.unitName);
 }
 
+function formatDiceModeLabel(battleOptions) {
+  if (battleOptions.diceMode === "fixed") {
+    return "固定骰子 " + battleOptions.diceConfig.value;
+  }
+  if (battleOptions.diceMode === "manual") {
+    return "手动序列循环";
+  }
+  return "全部随机";
+}
+
 function buildRankingLogText(result, template, battleOptions) {
   var lines = [];
   lines.push("=== 全兵种排行日志 ===");
@@ -1451,9 +1823,13 @@ function buildRankingLogText(result, template, battleOptions) {
   lines.push(
     "科技=" + template.techLevel +
     "  兵力=" + template.strength +
-    "  作战能力=" + template.combatAbility +
-    "%  训练度=" + template.discipline +
+    "  训练度=" + template.discipline +
     "%  额外战术=" + template.extraMilitaryTactics.toFixed(2)
+  );
+  lines.push(
+    "步兵作战=" + template.combatAbilityInfantry +
+    "%  骑兵作战=" + template.combatAbilityCavalry +
+    "%  炮兵作战=" + template.combatAbilityArtillery + "%"
   );
   lines.push(
     "步兵火力=" + template.fireDamageInfantry +
@@ -1475,8 +1851,7 @@ function buildRankingLogText(result, template, battleOptions) {
   );
   lines.push(
     "阶段模式=" + (battleOptions.phaseOnly === null ? "火力+冲击交替" : (battleOptions.phaseOnly === "fire" ? "仅火力" : "仅冲击")) +
-    "  骰子模式=" + (battleOptions.diceMode === "fixed" ? "固定骰子 5" : (battleOptions.diceMode === "manual" ? "手动序列循环" : "全部随机")) +
-    "  将领差额=" + battleOptions.leaderDiff +
+    "  骰子模式=" + formatDiceModeLabel(battleOptions) +
     "  进攻地形惩罚=" + battleOptions.terrainPenalty
   );
   lines.push("候选兵种数：" + result.candidates.length + "  配对组合数：" + result.totalPairs + "  实际对战场次：" + result.totalMatches);
@@ -1548,7 +1923,7 @@ function renderRankingResults(result, battleOptions) {
     '</div>' +
     '<div class="sim-summary-item">' +
       '<span class="label">骰子模式</span>' +
-      '<span class="value">固定骰子 5</span>' +
+      '<span class="value">' + formatDiceModeLabel(battleOptions) + '</span>' +
     '</div>' +
     '<div class="sim-summary-item">' +
       '<span class="label">排名第一</span>' +
@@ -1609,7 +1984,6 @@ function calculateRanking() {
   }
 
   var battleOptions = {
-    leaderDiff: 0,
     terrainPenalty: 0,
     phaseOnly: null,
     diceConfig: { mode: "fixed", value: 5 },
@@ -1677,7 +2051,6 @@ function calculateCrossTechRanking() {
   var totalTechCount = 33;
   var template = readSide("template");
   var battleOptions = {
-    leaderDiff: 0,
     terrainPenalty: 0,
     phaseOnly: null,
     diceConfig: { mode: "fixed", value: 5 },
@@ -1845,10 +2218,10 @@ function renderCrossTechLineChart(container, seriesData, titleText) {
       var pt = group.points[p];
       path.push((p === 0 ? "M" : "L") + xForTech(pt.techLevel).toFixed(2) + " " + yForRank(pt.rank).toFixed(2));
     }
-    svg += '<path d="' + path.join(" ") + '" fill="none" stroke="' + group.color + '" stroke-width="' + (group.key === "Shared" ? "3" : "2.2") + '" stroke-linecap="round" stroke-linejoin="round"></path>';
+    svg += '<path class="cross-tech-chart-line" data-chart-group-key="' + group.key + '" d="' + path.join(" ") + '" fill="none" stroke="' + group.color + '" stroke-width="' + (group.key === "Shared" ? "3" : "2.2") + '" stroke-linecap="round" stroke-linejoin="round"></path>';
     for (p = 0; p < group.points.length; p++) {
       pt = group.points[p];
-      svg += '<circle cx="' + xForTech(pt.techLevel).toFixed(2) + '" cy="' + yForRank(pt.rank).toFixed(2) + '" r="' + (group.key === "Shared" ? "3.4" : "2.6") + '" fill="' + group.color + '"><title>' + group.label + ' | 科技 ' + pt.techLevel + ' | 第 ' + pt.rank + ' 名</title></circle>';
+      svg += '<circle class="cross-tech-chart-point" data-chart-group-key="' + group.key + '" cx="' + xForTech(pt.techLevel).toFixed(2) + '" cy="' + yForRank(pt.rank).toFixed(2) + '" r="' + (group.key === "Shared" ? "3.4" : "2.6") + '" fill="' + group.color + '"><title>' + group.label + ' | 科技 ' + pt.techLevel + ' | 第 ' + pt.rank + ' 名</title></circle>';
     }
   }
 
@@ -1857,7 +2230,7 @@ function renderCrossTechLineChart(container, seriesData, titleText) {
   var legend = '<div class="cross-tech-chart-legend">';
   for (i = 0; i < seriesData.groups.length; i++) {
     group = seriesData.groups[i];
-    legend += '<span class="cross-tech-chart-legend-item"><span class="cross-tech-chart-legend-swatch" style="background:' + group.color + ';"></span>' + group.label + '</span>';
+    legend += '<span class="cross-tech-chart-legend-item" data-chart-group-key="' + group.key + '"><span class="cross-tech-chart-legend-swatch" style="background:' + group.color + ';"></span>' + group.label + '</span>';
   }
   legend += '</div>';
 
@@ -2056,6 +2429,7 @@ function renderCrossTechResults(results, maxCols) {
   renderCrossTechTable(results);
   downloadCrossTechBtn.disabled = false;
   toggleCrossTechChartsBtn.disabled = false;
+  showCrossTechTemplateBtn.disabled = false;
   updateCrossTechView();
 }
 
@@ -2104,9 +2478,6 @@ function calculate() {
 // ---- Event binding ----
 function bindEvents() {
   ["attacker", "defender"].forEach(side => {
-    sideState[side].group.addEventListener("change", function() { syncUnitOptions(side); });
-    sideState[side].unitType.addEventListener("change", function() { syncUnitOptions(side); });
-    sideState[side].techLevel.addEventListener("change", function() { syncUnitOptions(side); });
     sideState[side].strength.addEventListener("change", function() { maybeWarnStrengthLimit(sideState[side].strength); });
   });
 
@@ -2120,12 +2491,10 @@ function bindEvents() {
 
   calculateButton.addEventListener("click", function() {
     try {
-      errorBanner.style.display = "none";
-      errorBanner.textContent = "";
+      closeErrorDialog();
       calculate();
     } catch (error) {
-      errorBanner.textContent = error.message;
-      errorBanner.style.display = "";
+      openErrorDialog(error.message);
       uiView = "settings";
       resultMode = null;
       updateModeUI();
@@ -2174,10 +2543,16 @@ function bindEvents() {
   crossTechConfirmBackdrop.addEventListener("click", closeCrossTechConfirmDialog);
   crossTechTemplateBackdrop.addEventListener("click", closeCrossTechTemplateDialog);
   crossTechTemplateClose.addEventListener("click", closeCrossTechTemplateDialog);
+  errorDialogBackdrop.addEventListener("click", closeErrorDialog);
+  errorDialogClose.addEventListener("click", closeErrorDialog);
 
   chartLightboxBackdrop.addEventListener("click", closeChartLightbox);
   chartLightboxClose.addEventListener("click", closeChartLightbox);
   document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape" && errorDialog.style.display !== "none") {
+      closeErrorDialog();
+      return;
+    }
     if (event.key === "Escape" && chartLightbox.style.display !== "none") {
       closeChartLightbox();
       return;
@@ -2192,8 +2567,7 @@ function bindEvents() {
   });
 
   backButton.addEventListener("click", function() {
-    errorBanner.style.display = "none";
-    errorBanner.textContent = "";
+    closeErrorDialog();
     closeChartLightbox();
     closeCrossTechTemplateDialog();
     closeCrossTechConfirmDialog();
@@ -2217,3 +2591,9 @@ initOptions();
 bindEvents();
 document.body.className = "settings-view";
 updateModeUI();
+
+requestAnimationFrame(function() {
+  requestAnimationFrame(function() {
+    alert("提示：目前本项目不考虑前排炮兵承伤翻倍和后排炮兵输出减半的效果。");
+  });
+});

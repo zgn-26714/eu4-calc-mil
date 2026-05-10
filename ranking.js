@@ -88,18 +88,18 @@ function cloneCombatantFromTemplate(template, candidate) {
 
 function tournamentDiceForRound(diceConfig, phase, roundIndex) {
   if (!diceConfig || diceConfig.mode === "random") {
-    return randomDiceMorale();
+    return { attacker: randomDiceMorale(), defender: randomDiceMorale() };
   }
 
   if (diceConfig.mode === "fixed") {
-    return diceConfig.value;
+    return { attacker: diceConfig.value, defender: diceConfig.value };
   }
 
-  var arr = phase === "fire" ? diceConfig.fire : diceConfig.shock;
-  if (!arr || !arr.length) {
-    return randomDiceMorale();
-  }
-  return arr[roundIndex % arr.length];
+  var arrAtt = phase === "fire" ? (diceConfig.fireAtt || diceConfig.fire) : (diceConfig.shockAtt || diceConfig.shock);
+  var arrDef = phase === "fire" ? (diceConfig.fireDef || diceConfig.fire) : (diceConfig.shockDef || diceConfig.shock);
+  var attVal = (arrAtt && arrAtt.length) ? arrAtt[roundIndex % arrAtt.length] : randomDiceMorale();
+  var defVal = (arrDef && arrDef.length) ? arrDef[roundIndex % arrDef.length] : randomDiceMorale();
+  return { attacker: attVal, defender: defVal };
 }
 
 function summarizeTournamentWinner(attackerBreakDay, defenderBreakDay) {
@@ -193,7 +193,17 @@ function simulateBattleToMoraleBreak(attacker, defender, options) {
     return endedBy === "stalled" || attackerMoraleBreakDay !== null || defenderMoraleBreakDay !== null;
   }
 
-  function executePhase(phase, dice, attackLeaderDiff, attackTerrainPenalty) {
+  function phaseLeaderDiff(phase) {
+    if ((attacker.leaderFire !== undefined || defender.leaderFire !== undefined) && phase === "fire") {
+      return Math.max(0, (attacker.leaderFire || 0) - (defender.leaderFire || 0));
+    }
+    if ((attacker.leaderShock !== undefined || defender.leaderShock !== undefined) && phase === "shock") {
+      return Math.max(0, (attacker.leaderShock || 0) - (defender.leaderShock || 0));
+    }
+    return Math.max(0, leaderDiff);
+  }
+
+  function executePhase(phase, dicePair, attackLeaderDiff, attackTerrainPenalty) {
     var phaseAttStrengthLoss = 0;
     var phaseDefStrengthLoss = 0;
     var phaseAttMoraleLoss = 0;
@@ -203,10 +213,10 @@ function simulateBattleToMoraleBreak(attacker, defender, options) {
       var attState = makeState(attBase, attStrength);
       var defState = makeState(defBase, defStrength);
 
-      var a2d = computeOneWay(attState, defState, phase, dice, attackLeaderDiff, attackTerrainPenalty, backrowArtillery, battleDay);
-      var d2a = computeOneWay(defState, attState, phase, dice, -attackLeaderDiff, 0, backrowArtillery, battleDay);
-      var a2dMorale = computeMoraleDamage(attState, defState, phase, dice, attackLeaderDiff, attackTerrainPenalty, backrowArtillery, battleDay, defProfessionalism);
-      var d2aMorale = computeMoraleDamage(defState, attState, phase, dice, -attackLeaderDiff, 0, backrowArtillery, battleDay, attProfessionalism);
+      var a2d = computeOneWay(attState, defState, phase, dicePair.attacker, attackLeaderDiff, attackTerrainPenalty, backrowArtillery, battleDay);
+      var d2a = computeOneWay(defState, attState, phase, dicePair.defender, -attackLeaderDiff, 0, backrowArtillery, battleDay);
+      var a2dMorale = computeMoraleDamage(attState, defState, phase, dicePair.attacker, attackLeaderDiff, attackTerrainPenalty, backrowArtillery, battleDay, defProfessionalism);
+      var d2aMorale = computeMoraleDamage(defState, attState, phase, dicePair.defender, -attackLeaderDiff, 0, backrowArtillery, battleDay, attProfessionalism);
 
       var attackerStrengthLoss = Math.min(attStrength, d2a.damage);
       var defenderStrengthLoss = Math.min(defStrength, a2d.damage);
@@ -242,10 +252,10 @@ function simulateBattleToMoraleBreak(attacker, defender, options) {
 
   for (var round = 0; round < maxRounds && !battleFinished(); round++) {
     if (phaseOnly !== "shock") {
-      executePhase("fire", tournamentDiceForRound(diceConfig, "fire", round), leaderDiff, terrainPenalty);
+      executePhase("fire", tournamentDiceForRound(diceConfig, "fire", round), phaseLeaderDiff("fire"), terrainPenalty);
     }
     if (phaseOnly !== "fire" && !battleFinished()) {
-      executePhase("shock", tournamentDiceForRound(diceConfig, "shock", round), leaderDiff, terrainPenalty);
+      executePhase("shock", tournamentDiceForRound(diceConfig, "shock", round), phaseLeaderDiff("shock"), terrainPenalty);
     }
   }
 
