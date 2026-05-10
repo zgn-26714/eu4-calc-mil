@@ -90,9 +90,13 @@ function computeMoraleDamage(attacker, defender, phase, dice, leaderDiff, terrai
     percentMultiplier(defender.discipline || 0);
 
   // 基础乘数：与兵员伤害共用
+  var combatAbility = attacker.combatAbility || 0;
+  if (attacker.unitType === "Infantry") combatAbility = attacker.combatAbilityInfantry || combatAbility;
+  else if (attacker.unitType === "Cavalry") combatAbility = attacker.combatAbilityCavalry || combatAbility;
+  else if (attacker.unitType === "Artillery") combatAbility = attacker.combatAbilityArtillery || combatAbility;
   var baseMult = computeMultipliers(
     attacker.strength, tech, tactics,
-    attacker.combatAbility || 0,
+    combatAbility,
     attacker.discipline || 0,
     battleDay || 0
   );
@@ -214,6 +218,16 @@ function simulateBattleWithMorale(attacker, defender, rounds, diceConfig, leader
   var defProfessionalism = defender.professionalism || 0;
 
   var battleDay = 1;
+
+  function phaseLeaderDiff(phase) {
+    if ((attacker.leaderFire !== undefined || defender.leaderFire !== undefined) && phase === "fire") {
+      return Math.max(0, (attacker.leaderFire || 0) - (defender.leaderFire || 0));
+    }
+    if ((attacker.leaderShock !== undefined || defender.leaderShock !== undefined) && phase === "shock") {
+      return Math.max(0, (attacker.leaderShock || 0) - (defender.leaderShock || 0));
+    }
+    return Math.max(0, leaderDiff);
+  }
   var roundResults = [];
   var annihilated = null;   // 'attacker' | 'defender' | null
   var moraleBroken = null;  // 'attacker' | 'defender' | null
@@ -247,12 +261,32 @@ function simulateBattleWithMorale(attacker, defender, rounds, diceConfig, leader
   }
 
   for (var r = 0; r < rounds && !annihilated && !moraleBroken; r++) {
-    var fireDiceArr = diceConfig.fire;
-    var shockDiceArr = diceConfig.shock;
-    var fd = (phaseOnly === 'shock') ? null :
-      (fireDiceArr && fireDiceArr[r] !== undefined ? fireDiceArr[r] : randomDiceMorale());
-    var sd = (phaseOnly === 'fire') ? null :
-      (shockDiceArr && shockDiceArr[r] !== undefined ? shockDiceArr[r] : randomDiceMorale());
+    var fireDiceArrAtt = diceConfig.fireAtt || diceConfig.fire;
+    var fireDiceArrDef = diceConfig.fireDef || diceConfig.fire;
+    var shockDiceArrAtt = diceConfig.shockAtt || diceConfig.shock;
+    var shockDiceArrDef = diceConfig.shockDef || diceConfig.shock;
+    var isFixed = diceConfig.mode === 'fixed';
+    var attFd, defFd, attSd, defSd;
+    if (phaseOnly === 'shock') {
+      attFd = null; defFd = null;
+    } else if (isFixed) {
+      attFd = diceConfig.value; defFd = diceConfig.value;
+    } else if (fireDiceArrAtt && fireDiceArrAtt[r] !== undefined) {
+      attFd = fireDiceArrAtt[r];
+      defFd = (fireDiceArrDef && fireDiceArrDef[r] !== undefined) ? fireDiceArrDef[r] : attFd;
+    } else {
+      attFd = randomDiceMorale(); defFd = randomDiceMorale();
+    }
+    if (phaseOnly === 'fire') {
+      attSd = null; defSd = null;
+    } else if (isFixed) {
+      attSd = diceConfig.value; defSd = diceConfig.value;
+    } else if (shockDiceArrAtt && shockDiceArrAtt[r] !== undefined) {
+      attSd = shockDiceArrAtt[r];
+      defSd = (shockDiceArrDef && shockDiceArrDef[r] !== undefined) ? shockDiceArrDef[r] : attSd;
+    } else {
+      attSd = randomDiceMorale(); defSd = randomDiceMorale();
+    }
 
     var roundResult = {
       round: r + 1,
@@ -261,7 +295,7 @@ function simulateBattleWithMorale(attacker, defender, rounds, diceConfig, leader
     };
 
     // ---- 火力阶段 (3 天) ----
-    if (fd !== null) {
+    if (attFd !== null) {
       var fireDays = [];
       var fireAttStrLoss = 0, fireDefStrLoss = 0;
       var fireAttMorLoss = 0, fireDefMorLoss = 0;
@@ -269,17 +303,22 @@ function simulateBattleWithMorale(attacker, defender, rounds, diceConfig, leader
       for (var d = 0; d < 3 && !annihilated && !moraleBroken; d++) {
         var attState = makeState(attBase, attStrength);
         var defState = makeState(defBase, defStrength);
+        var fireLeaderDiff = phaseLeaderDiff('fire');
+        var defenderFireLeaderDiff = Math.max(0, -leaderDiff);
+        if (attacker.leaderFire !== undefined || defender.leaderFire !== undefined) {
+          defenderFireLeaderDiff = Math.max(0, (defender.leaderFire || 0) - (attacker.leaderFire || 0));
+        }
 
         // ---- 兵员伤害 ----
-        var a2d = computeOneWay(attState, defState, 'fire', fd, leaderDiff, terrainPenalty, backrowArtillery, battleDay);
-        var d2a = computeOneWay(defState, attState, 'fire', fd, -leaderDiff, 0, backrowArtillery, battleDay);
+        var a2d = computeOneWay(attState, defState, 'fire', attFd, fireLeaderDiff, terrainPenalty, backrowArtillery, battleDay);
+        var d2a = computeOneWay(defState, attState, 'fire', defFd, defenderFireLeaderDiff, 0, backrowArtillery, battleDay);
 
         var aStrLoss = Math.min(attStrength, d2a.damage);
         var dStrLoss = Math.min(defStrength, a2d.damage);
 
         // ---- 士气损失 ----
-        var a2dMorale = computeMoraleDamage(attState, defState, 'fire', fd, leaderDiff, terrainPenalty, backrowArtillery, battleDay, defProfessionalism);
-        var d2aMorale = computeMoraleDamage(defState, attState, 'fire', fd, -leaderDiff, 0, backrowArtillery, battleDay, attProfessionalism);
+        var a2dMorale = computeMoraleDamage(attState, defState, 'fire', attFd, fireLeaderDiff, terrainPenalty, backrowArtillery, battleDay, defProfessionalism);
+        var d2aMorale = computeMoraleDamage(defState, attState, 'fire', defFd, defenderFireLeaderDiff, 0, backrowArtillery, battleDay, attProfessionalism);
 
         var aMorLoss = Math.min(attCurrentMorale, d2aMorale.moraleDamage);
         var dMorLoss = Math.min(defCurrentMorale, a2dMorale.moraleDamage);
@@ -335,7 +374,9 @@ function simulateBattleWithMorale(attacker, defender, rounds, diceConfig, leader
       }
 
       roundResult.fire = {
-        dice: fd,
+        dice: attFd,
+        attackerDice: attFd,
+        defenderDice: defFd,
         attackerStrengthLoss: fireAttStrLoss,
         defenderStrengthLoss: fireDefStrLoss,
         attackerMoraleLoss: fireAttMorLoss,
@@ -345,7 +386,7 @@ function simulateBattleWithMorale(attacker, defender, rounds, diceConfig, leader
     }
 
     // ---- 冲击阶段 (3 天) ----
-    if (sd !== null && !annihilated && !moraleBroken) {
+    if (attSd !== null && !annihilated && !moraleBroken) {
       var shockDays = [];
       var shockAttStrLoss = 0, shockDefStrLoss = 0;
       var shockAttMorLoss = 0, shockDefMorLoss = 0;
@@ -353,17 +394,22 @@ function simulateBattleWithMorale(attacker, defender, rounds, diceConfig, leader
       for (d = 0; d < 3 && !annihilated && !moraleBroken; d++) {
         var attState = makeState(attBase, attStrength);
         var defState = makeState(defBase, defStrength);
+        var shockLeaderDiff = phaseLeaderDiff('shock');
+        var defenderShockLeaderDiff = Math.max(0, -leaderDiff);
+        if (attacker.leaderShock !== undefined || defender.leaderShock !== undefined) {
+          defenderShockLeaderDiff = Math.max(0, (defender.leaderShock || 0) - (attacker.leaderShock || 0));
+        }
 
         // ---- 兵员伤害 ----
-        var a2d = computeOneWay(attState, defState, 'shock', sd, leaderDiff, terrainPenalty, backrowArtillery, battleDay);
-        var d2a = computeOneWay(defState, attState, 'shock', sd, -leaderDiff, 0, backrowArtillery, battleDay);
+        var a2d = computeOneWay(attState, defState, 'shock', attSd, shockLeaderDiff, terrainPenalty, backrowArtillery, battleDay);
+        var d2a = computeOneWay(defState, attState, 'shock', defSd, defenderShockLeaderDiff, 0, backrowArtillery, battleDay);
 
         var aStrLoss = Math.min(attStrength, d2a.damage);
         var dStrLoss = Math.min(defStrength, a2d.damage);
 
         // ---- 士气损失 ----
-        var a2dMorale = computeMoraleDamage(attState, defState, 'shock', sd, leaderDiff, terrainPenalty, backrowArtillery, battleDay, defProfessionalism);
-        var d2aMorale = computeMoraleDamage(defState, attState, 'shock', sd, -leaderDiff, 0, backrowArtillery, battleDay, attProfessionalism);
+        var a2dMorale = computeMoraleDamage(attState, defState, 'shock', attSd, shockLeaderDiff, terrainPenalty, backrowArtillery, battleDay, defProfessionalism);
+        var d2aMorale = computeMoraleDamage(defState, attState, 'shock', defSd, defenderShockLeaderDiff, 0, backrowArtillery, battleDay, attProfessionalism);
 
         var aMorLoss = Math.min(attCurrentMorale, d2aMorale.moraleDamage);
         var dMorLoss = Math.min(defCurrentMorale, a2dMorale.moraleDamage);
@@ -418,7 +464,9 @@ function simulateBattleWithMorale(attacker, defender, rounds, diceConfig, leader
       }
 
       roundResult.shock = {
-        dice: sd,
+        dice: attSd,
+        attackerDice: attSd,
+        defenderDice: defSd,
         attackerStrengthLoss: shockAttStrLoss,
         defenderStrengthLoss: shockDefStrLoss,
         attackerMoraleLoss: shockAttMorLoss,
