@@ -279,7 +279,12 @@
           <span class="cross-tech-table-legend-item"><span class="cross-tech-table-legend-swatch cavalry"></span>骑兵</span>
           <span class="cross-tech-table-legend-item"><span class="cross-tech-table-legend-swatch artillery"></span>炮兵</span>
           <span class="cross-tech-table-meta" id="cross-tech-tech-range"></span>
-          <button id="show-cross-tech-template" class="cross-tech-meta-link" type="button" disabled>查看模板参数</button>
+          <span class="cross-tech-template-anchor">
+            <button id="show-cross-tech-template" class="cross-tech-meta-link" type="button" disabled>查看模板参数</button>
+            <div class="cross-tech-template-card" id="cross-tech-template-card" style="display:none;">
+              <div class="cross-tech-template-grid" id="cross-tech-template-grid"></div>
+            </div>
+          </span>
         </div>
         <button id="toggle-cross-tech-table-mode" class="secondary cross-tech-switch-btn" type="button" disabled>⇄ 转换成兵种显示</button>
       </div>
@@ -346,18 +351,6 @@
     </div>
   </div>
 
-  <div class="chart-lightbox" id="cross-tech-template-dialog" style="display:none;" aria-hidden="true">
-    <div class="chart-lightbox-backdrop" id="cross-tech-template-backdrop"></div>
-    <div class="chart-lightbox-dialog cross-tech-template-dialog" role="dialog" aria-modal="true" aria-labelledby="cross-tech-template-title">
-      <div class="chart-lightbox-head">
-        <h3 id="cross-tech-template-title">模板参数</h3>
-        <button id="cross-tech-template-close" class="secondary" type="button">关闭</button>
-      </div>
-      <div class="chart-lightbox-body">
-        <div class="cross-tech-template-grid" id="cross-tech-template-grid"></div>
-      </div>
-    </div>
-  </div>
 
   <div class="confirm-dialog" id="cross-tech-confirm-dialog" style="display:none;" aria-hidden="true">
     <div class="confirm-dialog-backdrop" id="cross-tech-confirm-backdrop"></div>

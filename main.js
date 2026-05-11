@@ -100,9 +100,7 @@ var chartLightboxClose = document.querySelector("#chart-lightbox-close");
 var chartLightboxTitle = document.querySelector("#chart-lightbox-title");
 var chartLightboxBody = document.querySelector("#chart-lightbox-body");
 
-var crossTechTemplateDialog = document.querySelector("#cross-tech-template-dialog");
-var crossTechTemplateBackdrop = document.querySelector("#cross-tech-template-backdrop");
-var crossTechTemplateClose = document.querySelector("#cross-tech-template-close");
+var crossTechTemplateCard = document.querySelector("#cross-tech-template-card");
 var crossTechTemplateGrid = document.querySelector("#cross-tech-template-grid");
 var crossTechConfirmDialog = document.querySelector("#cross-tech-confirm-dialog");
 var crossTechConfirmBackdrop = document.querySelector("#cross-tech-confirm-backdrop");
@@ -146,8 +144,7 @@ var dom = {
   crossTechInfantryOnlyChart: crossTechInfantryOnlyChart, crossTechCavalryOnlyChart: crossTechCavalryOnlyChart,
   crossTechConfirmText: crossTechConfirmText, crossTechConfirmProgress: crossTechConfirmProgress, crossTechConfirmStart: crossTechConfirmStart,
   crossTechConfirmCancel: crossTechConfirmCancel, crossTechConfirmProgressFill: crossTechConfirmProgressFill,
-  crossTechConfirmProgressLabel: crossTechConfirmProgressLabel, crossTechConfirmProgressPercent: crossTechConfirmProgressPercent,
-  crossTechTemplateGrid: crossTechTemplateGrid
+  crossTechConfirmProgressLabel: crossTechConfirmProgressLabel, crossTechConfirmProgressPercent: crossTechConfirmProgressPercent
 };
 
 var state = {
@@ -168,7 +165,7 @@ var state = {
 initDialogDom({
   chartLightbox: chartLightbox, chartLightboxTitle: chartLightboxTitle, chartLightboxBody: chartLightboxBody,
   errorDialog: errorDialog, errorDialogMessage: errorDialogMessage,
-  crossTechTemplateDialog: crossTechTemplateDialog, crossTechConfirmDialog: crossTechConfirmDialog
+  crossTechConfirmDialog: crossTechConfirmDialog
 });
 
 function getCalcMode() {
@@ -261,12 +258,17 @@ function closeCrossTechConfirmDialog() {
   crossTechConfirmProgressPercent.textContent = "0%";
 }
 
-function closeCrossTechTemplateDialog() {
-  crossTechTemplateDialog.style.display = "none";
-  crossTechTemplateDialog.setAttribute("aria-hidden", "true");
+function closeCrossTechTemplateCard() {
+  crossTechTemplateCard.style.display = "none";
   crossTechTemplateGrid.innerHTML = "";
-  document.body.style.overflow = "";
+  document.removeEventListener("click", closeCrossTechTemplateCardOnOutside);
 }
+
+var closeCrossTechTemplateCardOnOutside = function(e) {
+  if (!crossTechTemplateCard.contains(e.target) && e.target.id !== "show-cross-tech-template") {
+    closeCrossTechTemplateCard();
+  }
+};
 
 function renderCrossTechTemplateDialog() {
   var template = readSide("template");
@@ -291,11 +293,17 @@ function renderCrossTechTemplateDialog() {
   crossTechTemplateGrid.innerHTML = html;
 }
 
-function openCrossTechTemplateDialog() {
+function openCrossTechTemplateCard() {
+  var isVisible = crossTechTemplateCard.style.display !== "none";
+  if (isVisible) {
+    closeCrossTechTemplateCard();
+    return;
+  }
   renderCrossTechTemplateDialog();
-  crossTechTemplateDialog.style.display = "";
-  crossTechTemplateDialog.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
+  crossTechTemplateCard.style.display = "";
+  setTimeout(function() {
+    document.addEventListener("click", closeCrossTechTemplateCardOnOutside);
+  }, 0);
 }
 
 function updateCrossTechProgress(value, labelText) {
@@ -326,7 +334,7 @@ function resetCrossTechResults() {
   showCrossTechTemplateBtn.disabled = true;
   crossTechChartsPanel.style.display = "none";
   closeChartLightbox();
-  closeCrossTechTemplateDialog();
+  closeCrossTechTemplateCard();
 }
 
 function startCrossTechRankingFlow() {
@@ -465,9 +473,10 @@ function bindEvents() {
     downloadRankingLog(state);
   });
   crossTechRankingBtn.addEventListener("click", openCrossTechConfirmDialog);
-  showCrossTechTemplateBtn.addEventListener("click", function() {
+  showCrossTechTemplateBtn.addEventListener("click", function(e) {
+    e.stopPropagation();
     if (!crossTechData) return;
-    openCrossTechTemplateDialog();
+    openCrossTechTemplateCard();
   });
   toggleCrossTechTableModeBtn.addEventListener("click", function() {
     if (!crossTechData) return;
@@ -489,8 +498,6 @@ function bindEvents() {
   crossTechConfirmStart.addEventListener("click", startCrossTechRankingFlow);
   crossTechConfirmCancel.addEventListener("click", closeCrossTechConfirmDialog);
   crossTechConfirmBackdrop.addEventListener("click", closeCrossTechConfirmDialog);
-  crossTechTemplateBackdrop.addEventListener("click", closeCrossTechTemplateDialog);
-  crossTechTemplateClose.addEventListener("click", closeCrossTechTemplateDialog);
   errorDialogBackdrop.addEventListener("click", closeErrorDialog);
   errorDialogClose.addEventListener("click", closeErrorDialog);
   chartLightboxBackdrop.addEventListener("click", closeChartLightbox);
@@ -504,8 +511,8 @@ function bindEvents() {
       closeChartLightbox();
       return;
     }
-    if (event.key === "Escape" && crossTechTemplateDialog.style.display !== "none") {
-      closeCrossTechTemplateDialog();
+    if (event.key === "Escape" && crossTechTemplateCard.style.display !== "none") {
+      closeCrossTechTemplateCard();
       return;
     }
     if (event.key === "Escape" && crossTechConfirmDialog.style.display !== "none") {
@@ -515,7 +522,7 @@ function bindEvents() {
   backButton.addEventListener("click", function() {
     closeErrorDialog();
     closeChartLightbox();
-    closeCrossTechTemplateDialog();
+    closeCrossTechTemplateCard();
     closeCrossTechConfirmDialog();
     crossTechRunToken += 1;
     uiView = "settings";

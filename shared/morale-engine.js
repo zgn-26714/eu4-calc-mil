@@ -7,7 +7,6 @@
   var lookupUnit = calcEngine.lookupUnit;
   var computeBaseCasualties = calcEngine.computeBaseCasualties;
   var computeMultipliers = calcEngine.computeMultipliers;
-  var professionalismPhaseDamageBonus = calcEngine.professionalismPhaseDamageBonus;
 
   function computeMaxMorale(techLevel, extraMorale, armyTradition, prestige, powerProjection, advisorBonus, goldenAge, otherModifiers) {
     var moraleBase = baseMorale(techLevel || 0);
@@ -46,8 +45,7 @@
       else if (attacker.unitType === "Cavalry") phaseDamage = (attacker.shockDamageCavalry || attacker.shockDamage || 0);
       else if (attacker.unitType === "Artillery") phaseDamage = (attacker.shockDamageArtillery || attacker.shockDamage || 0);
     }
-    var professionalismBonus = professionalismPhaseDamageBonus(attacker.professionalism || 0);
-    var tech = (techModifier(attacker.techLevel, attacker.unitType, phase) + phaseDamage) * percentMultiplier(professionalismBonus);
+    var tech = techModifier(attacker.techLevel, attacker.unitType, phase) + phaseDamage;
     var tactics = (baseTactics(defender.techLevel) + (defender.extraMilitaryTactics || 0)) *
       percentMultiplier(defender.discipline || 0);
 

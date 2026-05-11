@@ -33,7 +33,6 @@
     dom.errorDialog.setAttribute("aria-hidden", "true");
     dom.errorDialogMessage.textContent = "";
     if (dom.chartLightbox.style.display === "none" &&
-        dom.crossTechTemplateDialog.style.display === "none" &&
         dom.crossTechConfirmDialog.style.display === "none") {
       document.body.style.overflow = "auto";
     }

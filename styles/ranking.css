@@ -77,55 +77,73 @@
   color: #56657d;
 }
 
-.chart-lightbox-dialog.cross-tech-template-dialog {
-  width: 52vw;
+.cross-tech-template-anchor {
+  position: relative;
+  display: inline-block;
+}
+
+.cross-tech-template-card {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  margin-left: 8px;
+  background: var(--surface, #fff);
+  border: 1px solid var(--border, #ddd);
+  border-radius: 8px;
+  padding: 12px 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  z-index: 100;
+  white-space: nowrap;
+  width: max-content;
 }
 
 .cross-tech-template-grid {
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
 .cross-tech-template-section {
   display: grid;
-  gap: 8px;
+  gap: 6px;
 }
 
 .cross-tech-template-section-title {
   color: var(--text);
-  font-size: 12px;
+  font-size: 11px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  font-weight: 600;
 }
 
 .cross-tech-template-cards {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 6px 12px;
 }
 
 .cross-tech-template-item {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   padding: 0;
   line-height: 1.35;
 }
 
 .cross-tech-template-label {
   color: var(--muted);
-  font-size: 14px;
+  font-size: 13px;
   white-space: nowrap;
 }
 
 .cross-tech-template-sep {
   color: var(--muted);
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .cross-tech-template-value {
   color: var(--text);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
 }
@@ -348,7 +366,4 @@
     flex-direction: column;
   }
 
-  .chart-lightbox-dialog.cross-tech-template-dialog {
-    width: 78vw;
-  }
 }

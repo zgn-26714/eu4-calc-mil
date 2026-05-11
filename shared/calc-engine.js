@@ -58,11 +58,6 @@
       percentMultiplier(battleDayBonus || 0);
   }
 
-  function professionalismPhaseDamageBonus(professionalism) {
-    var clamped = Math.max(0, Math.min(100, professionalism || 0));
-    return clamped * 0.1;
-  }
-
   function computeOneWay(attacker, defender, phase, dice, leaderDiff, terrainPenalty, backrowArtillery, battleDay) {
     if (battleDay === undefined) battleDay = 0;
     var attackerUnit = lookupUnit(attacker.group, attacker.unitType, attacker.unitName);
@@ -81,8 +76,7 @@
       else if (attacker.unitType === "Cavalry") phaseDamage = attacker.shockDamageCavalry || attacker.shockDamage || 0;
       else if (attacker.unitType === "Artillery") phaseDamage = attacker.shockDamageArtillery || attacker.shockDamage || 0;
     }
-    var professionalismBonus = professionalismPhaseDamageBonus(attacker.professionalism);
-    var tech = (techModifier(attacker.techLevel, attacker.unitType, phase) + phaseDamage) * percentMultiplier(professionalismBonus);
+    var tech = techModifier(attacker.techLevel, attacker.unitType, phase) + phaseDamage;
     var tactics = (baseTactics(defender.techLevel) + defender.extraMilitaryTactics) * percentMultiplier(defender.discipline);
 
     var damageDonePhase = phase === "fire" ? (attacker.damageDoneFire || attacker.damageDone || 0) : (attacker.damageDoneShock || attacker.damageDone || 0);
@@ -105,7 +99,6 @@
       baseCasualties: baseCasualties,
       tech: tech,
       tactics: tactics,
-      professionalismBonus: professionalismBonus,
       damage: baseCasualties * multiplier
     };
   }
@@ -123,7 +116,6 @@
     validateNumber: validateNumber,
     computeBaseCasualties: computeBaseCasualties,
     computeMultipliers: computeMultipliers,
-    professionalismPhaseDamageBonus: professionalismPhaseDamageBonus,
     computeOneWay: computeOneWay,
     randomDice: randomDice
   };
