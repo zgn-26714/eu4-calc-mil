@@ -72,6 +72,7 @@
     for (var i = 0; i < results.length; i++) {
       var row = results[i];
       var techRanks = {};
+      var techUnitNames = {};
       var filteredEntries = [];
 
       for (var j = 0; j < row.rankings.length; j++) {
@@ -81,13 +82,42 @@
         filteredEntries.push(entry);
       }
 
-      for (j = 0; j < filteredEntries.length; j++) {
-        entry = filteredEntries[j];
-        candidate = entry.candidate;
-        var groupKey = candidate.unitType === "Artillery" ? "Shared" : candidate.group;
-        var rankValue = recomputeFilteredRanks ? (j + 1) : (row.rankings.indexOf(entry) + 1);
-        if (!techRanks[groupKey] || techRanks[groupKey] > rankValue) {
-          techRanks[groupKey] = rankValue;
+      if (recomputeFilteredRanks) {
+        var seenGroups = {};
+        var deduped = [];
+        for (j = 0; j < filteredEntries.length; j++) {
+          entry = filteredEntries[j];
+          candidate = entry.candidate;
+          var groupKey = candidate.unitType === "Artillery" ? "Shared" : candidate.group;
+          if (seenGroups[groupKey]) continue;
+          seenGroups[groupKey] = true;
+          deduped.push(entry);
+        }
+        for (j = 0; j < deduped.length; j++) {
+          entry = deduped[j];
+          candidate = entry.candidate;
+          var gk2 = candidate.unitType === "Artillery" ? "Shared" : candidate.group;
+          techRanks[gk2] = j + 1;
+          techUnitNames[gk2] = stripParenthetical(translateUnit(candidate.unitName));
+        }
+      } else {
+        var seenAll = {};
+        var dedupedAll = [];
+        for (j = 0; j < row.rankings.length; j++) {
+          entry = row.rankings[j];
+          candidate = entry.candidate;
+          var allKey = candidate.unitType === "Artillery" ? "Artillery|Shared" : candidate.unitType + "|" + candidate.group;
+          if (seenAll[allKey]) continue;
+          seenAll[allKey] = true;
+          dedupedAll.push(entry);
+        }
+        for (j = 0; j < dedupedAll.length; j++) {
+          entry = dedupedAll[j];
+          candidate = entry.candidate;
+          if (candidate.unitType !== primaryUnitType && !(includeArtillery && candidate.unitType === "Artillery")) continue;
+          var gk3 = candidate.unitType === "Artillery" ? "Shared" : candidate.group;
+          techRanks[gk3] = j + 1;
+          techUnitNames[gk3] = stripParenthetical(translateUnit(candidate.unitName));
         }
       }
 
@@ -98,7 +128,7 @@
           groupRanks[gk] = [];
           groupOrder.push(gk);
         }
-        groupRanks[gk].push({ techLevel: row.techLevel, rank: techRanks[gk] });
+        groupRanks[gk].push({ techLevel: row.techLevel, rank: techRanks[gk], unitName: techUnitNames[gk] });
       }
     }
 
@@ -144,7 +174,8 @@
         rankedGroups.push({
           label: candidate.unitType === "Artillery" ? "炮兵" : stripParenthetical(translateGroup(candidate.group)),
           sublabel: stripParenthetical(translateUnit(candidate.unitName)),
-          unitType: candidate.unitType
+          unitType: candidate.unitType,
+          groupKey: candidate.unitType === "Artillery" ? "Shared" : candidate.group
         });
       }
 
@@ -175,7 +206,8 @@
         rankedUnits.push({
           label: stripParenthetical(translateUnit(candidate.unitName)),
           sublabel: candidate.unitType === "Artillery" ? "炮兵" : stripParenthetical(translateGroup(candidate.group)),
-          unitType: candidate.unitType
+          unitType: candidate.unitType,
+          groupKey: candidate.unitType === "Artillery" ? "Shared" : candidate.group
         });
       }
 

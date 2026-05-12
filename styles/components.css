@@ -422,6 +422,25 @@ button:disabled {
   border-color: rgba(198, 59, 59, 0.22);
 }
 
+.welcome-dialog-panel {
+  width: min(480px, calc(100vw - 32px));
+  margin-top: 22vh;
+  border-color: rgba(59, 130, 246, 0.35);
+  box-shadow: 0 28px 64px rgba(17, 24, 39, 0.25), 0 0 0 1px rgba(59, 130, 246, 0.12);
+  text-align: center;
+}
+
+.welcome-dialog-panel h3 {
+  font-size: 24px;
+  color: var(--primary, #2563eb);
+}
+
+.welcome-dialog-panel p {
+  font-size: 16px;
+  color: var(--text);
+  margin: 16px 0 0;
+}
+
 .error-dialog-panel h3 {
   color: #9f2626;
 }

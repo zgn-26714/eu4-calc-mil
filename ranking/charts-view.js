@@ -23,56 +23,28 @@
     });
   }
 
-  function applyChartLegendHighlight(shell, activeGroupKey) {
+  function applyChartLegendHighlight(shell, activeGroupKeys) {
+    if (typeof activeGroupKeys === "string") {
+      activeGroupKeys = activeGroupKeys ? [activeGroupKeys] : [];
+    }
     var lines = shell.querySelectorAll("[data-chart-group-key]");
     var legendItems = shell.querySelectorAll(".cross-tech-chart-legend-item");
-    var hasActive = !!activeGroupKey;
+    var hasActive = activeGroupKeys.length > 0;
 
     for (var i = 0; i < lines.length; i++) {
       var line = lines[i];
-      var isMatch = line.getAttribute("data-chart-group-key") === activeGroupKey;
+      var isMatch = activeGroupKeys.indexOf(line.getAttribute("data-chart-group-key")) !== -1;
       line.classList.toggle("is-dimmed", hasActive && !isMatch);
       line.classList.toggle("is-highlighted", hasActive && isMatch);
     }
 
     for (i = 0; i < legendItems.length; i++) {
       var item = legendItems[i];
-      var itemMatch = item.getAttribute("data-chart-group-key") === activeGroupKey;
+      var itemMatch = activeGroupKeys.indexOf(item.getAttribute("data-chart-group-key")) !== -1;
       item.classList.toggle("is-dimmed", hasActive && !itemMatch);
       item.classList.toggle("is-active", hasActive && itemMatch);
-      item.setAttribute("aria-pressed", hasActive && itemMatch ? "true" : "false");
+      item.setAttribute("aria-pressed", itemMatch ? "true" : "false");
     }
-  }
-
-  function enhanceChartLightboxLegend() {
-    var chartLightboxBody = document.querySelector("#chart-lightbox-body");
-    var shell = chartLightboxBody.querySelector(".cross-tech-chart-shell");
-    if (!shell) return;
-    var legendItems = shell.querySelectorAll(".cross-tech-chart-legend-item");
-    if (!legendItems.length) return;
-
-    for (var i = 0; i < legendItems.length; i++) {
-      var item = legendItems[i];
-      item.setAttribute("role", "button");
-      item.setAttribute("tabindex", "0");
-      item.setAttribute("aria-pressed", "false");
-      item.setAttribute("aria-label", "高亮显示" + item.textContent.trim());
-      item.addEventListener("click", function() {
-        var groupKey = this.getAttribute("data-chart-group-key");
-        var current = shell.getAttribute("data-active-group-key") || "";
-        var next = current === groupKey ? "" : groupKey;
-        shell.setAttribute("data-active-group-key", next);
-        applyChartLegendHighlight(shell, next);
-      });
-      item.addEventListener("keydown", function(event) {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          this.click();
-        }
-      });
-    }
-
-    applyChartLegendHighlight(shell, "");
   }
 
 
@@ -164,7 +136,7 @@
       svg += '<path class="cross-tech-chart-line" data-chart-group-key="' + group.key + '" d="' + path.join(" ") + '" fill="none" stroke="' + group.color + '" stroke-width="' + (group.key === "Shared" ? "3" : "2.2") + '" stroke-linecap="round" stroke-linejoin="round"></path>';
       for (p = 0; p < group.points.length; p++) {
         pt = group.points[p];
-        svg += '<circle class="cross-tech-chart-point" data-chart-group-key="' + group.key + '" cx="' + xForTech(pt.techLevel).toFixed(2) + '" cy="' + yForRank(pt.rank).toFixed(2) + '" r="' + (group.key === "Shared" ? "3.4" : "2.6") + '" fill="' + group.color + '"><title>' + group.label + ' | 科技 ' + pt.techLevel + ' | 第 ' + pt.rank + ' 名</title></circle>';
+        svg += '<circle class="cross-tech-chart-point" data-chart-group-key="' + group.key + '" data-unit-name="' + (pt.unitName || '') + '" data-tech-level="' + pt.techLevel + '" data-rank="' + pt.rank + '" cx="' + xForTech(pt.techLevel).toFixed(2) + '" cy="' + yForRank(pt.rank).toFixed(2) + '" r="' + (group.key === "Shared" ? "3.4" : "2.6") + '" fill="' + group.color + '"><title>' + group.label + ' | 科技 ' + pt.techLevel + ' | 第 ' + pt.rank + ' 名' + (pt.unitName ? ' | ' + pt.unitName : '') + '</title></circle>';
       }
     }
 
@@ -183,7 +155,6 @@
   M['ranking/charts-view'] = {
     bindChartPreview: bindChartPreview,
     applyChartLegendHighlight: applyChartLegendHighlight,
-    enhanceChartLightboxLegend: enhanceChartLightboxLegend,
     renderCrossTechLineChart: renderCrossTechLineChart
   };
 })(window._M = window._M || {});

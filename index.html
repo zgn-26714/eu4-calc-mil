@@ -233,7 +233,7 @@
         <button id="download-ranking-log" class="secondary" disabled>下载配对日志</button>
         <button id="cross-tech-ranking-btn" class="secondary">遍历科技排行</button>
       </div>
-      <div class="sim-summary" id="ranking-summary"></div>
+      <div class="sim-summary sim-summary--row" id="ranking-summary"></div>
       <div class="sim-table-wrap">
         <table class="sim-table">
           <thead>
@@ -268,23 +268,40 @@
     <section class="sim-results results-only" id="cross-tech-section" style="display:none">
       <div class="details-head">
         <h3>全科技排行总览</h3>
+        <span class="cross-tech-template-anchor">
+          <button id="show-cross-tech-template" class="cross-tech-meta-link" type="button" disabled>查看模板参数</button>
+          <div class="cross-tech-template-card" id="cross-tech-template-card" style="display:none;">
+            <div class="cross-tech-template-grid" id="cross-tech-template-grid"></div>
+          </div>
+        </span>
       </div>
       <div class="cross-tech-head-row">
         <p>这里先显示逐科技兵种组排名表；兵种组成长图收在下方折叠区里，需要时再展开查看。</p>
         <button id="toggle-cross-tech-charts" class="secondary" type="button" disabled>展开兵种组成长图</button>
       </div>
       <div class="cross-tech-table-toolbar">
-        <div class="cross-tech-table-legend" id="cross-tech-table-legend">
-          <span class="cross-tech-table-legend-item"><span class="cross-tech-table-legend-swatch infantry"></span>步兵</span>
-          <span class="cross-tech-table-legend-item"><span class="cross-tech-table-legend-swatch cavalry"></span>骑兵</span>
-          <span class="cross-tech-table-legend-item"><span class="cross-tech-table-legend-swatch artillery"></span>炮兵</span>
-          <span class="cross-tech-table-meta" id="cross-tech-tech-range"></span>
-          <span class="cross-tech-template-anchor">
-            <button id="show-cross-tech-template" class="cross-tech-meta-link" type="button" disabled>查看模板参数</button>
-            <div class="cross-tech-template-card" id="cross-tech-template-card" style="display:none;">
-              <div class="cross-tech-template-grid" id="cross-tech-template-grid"></div>
-            </div>
+        <div class="cross-tech-toolbar-left">
+          <div class="cross-tech-table-legend" id="cross-tech-table-legend">
+            <span class="cross-tech-table-legend-item"><span class="cross-tech-table-legend-swatch infantry"></span>步兵</span>
+            <span class="cross-tech-table-legend-item"><span class="cross-tech-table-legend-swatch cavalry"></span>骑兵</span>
+            <span class="cross-tech-table-legend-item"><span class="cross-tech-table-legend-swatch artillery"></span>炮兵</span>
+            <span class="cross-tech-table-meta" id="cross-tech-tech-range"></span>
+          </div>
+          <span class="cross-tech-filter-group">
+            兵种类型
+            <span class="cross-tech-filter-dropdown" id="cross-tech-filter-type">
+              <button type="button" class="cross-tech-filter-arrow-btn" id="cross-tech-filter-type-btn">▼</button>
+              <div class="cross-tech-filter-menu" id="cross-tech-filter-type-menu" style="display:none;"></div>
+            </span>
           </span>
+          <span class="cross-tech-filter-group">
+            兵种组
+            <span class="cross-tech-filter-dropdown" id="cross-tech-filter-group">
+              <button type="button" class="cross-tech-filter-arrow-btn" id="cross-tech-filter-group-btn">▼</button>
+              <div class="cross-tech-filter-menu" id="cross-tech-filter-group-menu" style="display:none;"></div>
+            </span>
+          </span>
+          <button id="cross-tech-clear-filter" class="cross-tech-meta-link" type="button" style="display:none;">清除筛选</button>
         </div>
         <button id="toggle-cross-tech-table-mode" class="secondary cross-tech-switch-btn" type="button" disabled>⇄ 转换成兵种显示</button>
       </div>
@@ -384,6 +401,17 @@
     </div>
   </div>
 
+  <div class="confirm-dialog" id="welcome-dialog" style="display:none;" aria-hidden="true">
+    <div class="confirm-dialog-backdrop" id="welcome-dialog-backdrop"></div>
+    <div class="confirm-dialog-panel welcome-dialog-panel" role="alertdialog" aria-modal="true" aria-labelledby="welcome-dialog-title" aria-describedby="welcome-dialog-message">
+      <h3 id="welcome-dialog-title">使用提示</h3>
+      <p id="welcome-dialog-message">目前本项目不考虑前排炮兵承伤翻倍和后排炮兵输出减半的效果。</p>
+      <div class="confirm-dialog-actions">
+        <button id="welcome-dialog-close" type="button">知道了</button>
+      </div>
+    </div>
+  </div>
+
   <script src="./data/constants.js"></script>
   <script src="./data/units.js"></script>
   <script src="./data/translations.js"></script>
@@ -403,6 +431,7 @@
   <script src="./ranking/cross-tech-logic.js"></script>
   <script src="./ranking/charts-view.js"></script>
   <script src="./ranking/cross-tech-view.js"></script>
+  <script src="./ranking/cross-tech-filter.js"></script>
   <script src="./main.js"></script>
 </body>
 </html>

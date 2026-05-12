@@ -38,7 +38,7 @@
       for (var c2 = 0; c2 < tableData.maxCols; c2++) {
         if (c2 < row.entries.length) {
           var item = row.entries[c2];
-          bodyHtml += '<td class="text-left ' + crossTechCellClassForUnitType(item.unitType) + '">' + buildCrossTechCellHtml(item) + '</td>';
+          bodyHtml += '<td class="text-left ' + crossTechCellClassForUnitType(item.unitType) + '" data-group-key="' + (item.groupKey || '') + '">' + buildCrossTechCellHtml(item) + '</td>';
         } else {
           bodyHtml += '<td class="text-left" style="color:var(--muted);">-</td>';
         }
@@ -48,6 +48,9 @@
     dom.crossTechTbody.innerHTML = bodyHtml;
     dom.downloadCrossTechBtn.disabled = false;
     updateCrossTechTableModeButton(dom, state);
+
+    var filterModule = M['ranking/cross-tech-filter'];
+    if (filterModule) filterModule.applyFilter(dom);
   }
 
   function renderCrossTechSummary(results, dom) {

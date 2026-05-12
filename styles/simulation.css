@@ -18,6 +18,23 @@
   gap: 12px;
 }
 
+.sim-summary--row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
+}
+
+.sim-summary--row .sim-summary-item {
+  flex-direction: row;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.sim-summary--row .sim-summary-item .value {
+  font-size: 14px;
+}
+
 .sim-summary-item {
   display: flex;
   flex-direction: column;

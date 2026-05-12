@@ -36,6 +36,9 @@ var calculateCrossTechRanking = crossTechView.calculateCrossTechRanking;
 var renderCrossTechTable = crossTechView.renderCrossTechTable;
 var downloadCrossTechCSV = crossTechView.downloadCrossTechCSV;
 
+var crossTechFilter = M['ranking/cross-tech-filter'];
+var initCrossTechFilter = crossTechFilter.initCrossTechFilter;
+
 // ---- DOM refs ----
 var phaseSelect = document.querySelector("#phase");
 var calculateButton = document.querySelector("#calculate");
@@ -167,6 +170,8 @@ initDialogDom({
   errorDialog: errorDialog, errorDialogMessage: errorDialogMessage,
   crossTechConfirmDialog: crossTechConfirmDialog
 });
+
+initCrossTechFilter(dom);
 
 function getCalcMode() {
   if (modeRankingRadio.checked) return "ranking";
@@ -545,7 +550,22 @@ document.body.className = "settings-view";
 updateModeUI();
 requestAnimationFrame(function() {
   requestAnimationFrame(function() {
-    alert("提示：目前本项目不考虑前排炮兵承伤翻倍和后排炮兵输出减半的效果。");
+    var welcomeDialog = document.querySelector("#welcome-dialog");
+    var welcomeBackdrop = document.querySelector("#welcome-dialog-backdrop");
+    var welcomeClose = document.querySelector("#welcome-dialog-close");
+    function closeWelcome() {
+      welcomeDialog.style.display = "none";
+      welcomeDialog.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", welcomeEsc);
+    }
+    function welcomeEsc(e) { if (e.key === "Escape") closeWelcome(); }
+    welcomeDialog.style.display = "";
+    welcomeDialog.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    welcomeClose.addEventListener("click", closeWelcome);
+    welcomeBackdrop.addEventListener("click", closeWelcome);
+    document.addEventListener("keydown", welcomeEsc);
   });
 });
 
