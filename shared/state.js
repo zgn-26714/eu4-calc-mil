@@ -30,6 +30,7 @@
       { key: "moraleBonus", label: "额外士气加成（%）", type: "number", value: 0, step: 1 },
       { key: "armyTradition", label: "陆军传统（0-100）", type: "number", value: 0, min: 0, max: 100, step: 1 },
       { key: "prestige", label: "威望（-100~100）", type: "number", value: 0, min: -100, max: 100, step: 1 },
+      { key: "powerProjection", label: "力量投射（0-100）", type: "number", value: 0, min: 0, max: 100, step: 1 },
       { key: "moraleDamageDone", label: "士气打击（%）", type: "number", value: 0, step: 1 },
       { key: "moraleDamageTaken", label: "士气防御（%）", type: "number", value: 0, step: 1 },
       { key: "professionalism", label: "职业度（0-100）", type: "number", value: 0, min: 0, max: 100, step: 1 }
@@ -53,6 +54,7 @@
       { key: "moraleBonus", label: "额外士气加成（%）", type: "number", value: 0, step: 1 },
       { key: "armyTradition", label: "陆军传统（0-100）", type: "number", value: 0, min: 0, max: 100, step: 1 },
       { key: "prestige", label: "威望（-100~100）", type: "number", value: 0, min: -100, max: 100, step: 1 },
+      { key: "powerProjection", label: "力量投射（0-100）", type: "number", value: 0, min: 0, max: 100, step: 1 },
       { key: "moraleDamageDone", label: "士气打击（%）", type: "number", value: 0, step: 1 },
       { key: "moraleDamageTaken", label: "士气防御（%）", type: "number", value: 0, step: 1 },
       { key: "professionalism", label: "职业度（0-100）", type: "number", value: 0, min: 0, max: 100, step: 1 }
@@ -83,6 +85,7 @@
     { key: "moraleDamageTaken", label: "士气防御（%）", type: "number", value: 0, step: 1 },
     { key: "armyTradition", label: "陆军传统（0-100）", type: "number", value: 0, min: 0, max: 100, step: 1 },
     { key: "prestige", label: "威望（-100~100）", type: "number", value: 0, min: -100, max: 100, step: 1 },
+    { key: "powerProjection", label: "力量投射（0-100）", type: "number", value: 0, min: 0, max: 100, step: 1 },
     { key: "professionalism", label: "职业度（0-100）", type: "number", value: 0, min: 0, max: 100, step: 1 }
   ];
 
@@ -93,7 +96,7 @@
     { title: "冲击修正", fields: ["shockDamageInfantry", "shockDamageCavalry", "shockDamageArtillery"] },
     { title: "伤害修正", fields: ["damageDoneFire", "damageDoneShock", "damageTakenFire", "damageTakenShock"] },
     { title: "士气修正", fields: ["moraleBonus", "moraleDamageDone", "moraleDamageTaken"] },
-    { title: "额外修正", fields: ["armyTradition", "prestige", "professionalism"] }
+    { title: "额外修正", fields: ["armyTradition", "prestige", "powerProjection", "professionalism"] }
   ];
 
   var sideState = {
@@ -375,9 +378,11 @@
     if (controls.moraleBonus) data.moraleBonus = Number(controls.moraleBonus.value);
     if (controls.armyTradition) data.armyTradition = Number(controls.armyTradition.value);
     if (controls.prestige) data.prestige = Number(controls.prestige.value);
+    if (controls.powerProjection) data.powerProjection = Number(controls.powerProjection.value);
     if (controls.moraleDamageDone) data.moraleDamageDone = Number(controls.moraleDamageDone.value);
     if (controls.moraleDamageTaken) data.moraleDamageTaken = Number(controls.moraleDamageTaken.value);
     if (controls.professionalism) data.professionalism = Number(controls.professionalism.value);
+    if (controls.professionalism) data.damageBonus = Math.max(0, Math.min(100, Number(controls.professionalism.value || 0))) * 0.1;
     return data;
   }
 

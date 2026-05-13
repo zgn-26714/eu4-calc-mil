@@ -146,10 +146,10 @@
     var maxRounds = options.maxRounds || 200;
 
     var attMaxMoralePerReg = computeMaxMorale(
-      attacker.techLevel || 0, attacker.moraleBonus || 0, attacker.armyTradition || 0, attacker.prestige || 0
+      attacker.techLevel || 0, attacker.moraleBonus || 0, attacker.armyTradition || 0, attacker.prestige || 0, attacker.powerProjection || 0
     );
     var defMaxMoralePerReg = computeMaxMorale(
-      defender.techLevel || 0, defender.moraleBonus || 0, defender.armyTradition || 0, defender.prestige || 0
+      defender.techLevel || 0, defender.moraleBonus || 0, defender.armyTradition || 0, defender.prestige || 0, defender.powerProjection || 0
     );
 
     var attBase = {};
@@ -172,9 +172,6 @@
     var defStrength = initialDefenderStrength;
     var attMorale = initialAttackerMorale;
     var defMorale = initialDefenderMorale;
-    var attProfessionalism = attacker.professionalism || 0;
-    var defProfessionalism = defender.professionalism || 0;
-
     var attackerMoraleBreakDay = null;
     var defenderMoraleBreakDay = null;
     var attackerBreakCause = null;
@@ -230,8 +227,8 @@
 
         var a2d = computeOneWay(attState, defState, phase, dicePair.attacker, attackLeaderDiff, attackTerrainPenalty, backrowArtillery, battleDay);
         var d2a = computeOneWay(defState, attState, phase, dicePair.defender, -attackLeaderDiff, 0, backrowArtillery, battleDay);
-        var a2dMorale = computeMoraleDamage(attState, defState, phase, dicePair.attacker, attackLeaderDiff, attackTerrainPenalty, backrowArtillery, battleDay, defProfessionalism);
-        var d2aMorale = computeMoraleDamage(defState, attState, phase, dicePair.defender, -attackLeaderDiff, 0, backrowArtillery, battleDay, attProfessionalism);
+        var a2dMorale = computeMoraleDamage(attState, defState, phase, dicePair.attacker, attackLeaderDiff, attackTerrainPenalty, backrowArtillery, battleDay);
+        var d2aMorale = computeMoraleDamage(defState, attState, phase, dicePair.defender, -attackLeaderDiff, 0, backrowArtillery, battleDay);
 
         var attackerStrengthLoss = Math.min(attStrength, d2a.damage);
         var defenderStrengthLoss = Math.min(defStrength, a2d.damage);

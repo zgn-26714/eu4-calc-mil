@@ -23,6 +23,12 @@
     var attackerPenaltyInfo = result.attackerPenaltyInfo;
     var riverCrossing = result.riverCrossing;
     var terrainPenalty = result.terrainPenalty;
+    var attackerDamageDone = phase === "fire"
+      ? (attacker.damageDoneFire || attacker.damageDone || 0)
+      : (attacker.damageDoneShock || attacker.damageDone || 0);
+    var defenderDamageDone = phase === "fire"
+      ? (defender.damageDoneFire || defender.damageDone || 0)
+      : (defender.damageDoneShock || defender.damageDone || 0);
 
     dom.attackerLossEl.textContent = defenderToAttacker.damage.toFixed(2);
     dom.defenderLossEl.textContent = attackerToDefender.damage.toFixed(2);
@@ -38,8 +44,8 @@
       "防守方士气损失：" + attToDefMorale.moraleDamage.toFixed(2),
       "",
       "--- 士气参数 ---",
-      "进攻方科技基础士气=" + attBaseMorale.toFixed(1) + "  额外士气加成=" + attacker.moraleBonus.toFixed(1) + "%  陆军传统=" + attacker.armyTradition + "  威望=" + attacker.prestige + "  最终最大士气=" + attFinalMorale.toFixed(2),
-      "防守方科技基础士气=" + defBaseMorale.toFixed(1) + "  额外士气加成=" + defender.moraleBonus.toFixed(1) + "%  陆军传统=" + defender.armyTradition + "  威望=" + defender.prestige + "  最终最大士气=" + defFinalMorale.toFixed(2),
+      "进攻方科技基础士气=" + attBaseMorale.toFixed(1) + "  额外士气加成=" + attacker.moraleBonus.toFixed(1) + "%  陆军传统=" + attacker.armyTradition + "  威望=" + attacker.prestige + "  力量投射=" + (attacker.powerProjection || 0) + "  最终最大士气=" + attFinalMorale.toFixed(2),
+      "防守方科技基础士气=" + defBaseMorale.toFixed(1) + "  额外士气加成=" + defender.moraleBonus.toFixed(1) + "%  陆军传统=" + defender.armyTradition + "  威望=" + defender.prestige + "  力量投射=" + (defender.powerProjection || 0) + "  最终最大士气=" + defFinalMorale.toFixed(2),
       "",
       "--- 兵员伤害明细 ---",
       "进攻方 -> 防守方",
@@ -48,20 +54,18 @@
       attackerPenaltyInfo.ignoredByManeuver
         ? ("跨河惩罚=" + riverCrossing.toFixed(2) + "，但攻方机动高于守方，因此本次按 0 计算；总惩罚=" + attackerPenalty.toFixed(2))
         : ("进攻地形惩罚=" + terrainPenalty.toFixed(2) + "，跨河惩罚=" + attackerPenaltyInfo.riverPenaltyApplied.toFixed(2) + "；总惩罚=" + attackerPenalty.toFixed(2)),
-      "科技修正 = " + attackerToDefender.tech.toFixed(2) + "，守方战术 = " + attackerToDefender.tactics.toFixed(2),
+      "科技修正 = " + attackerToDefender.tech.toFixed(2) + "，守方战术 = " + attackerToDefender.tactics.toFixed(2) + "；攻击方有效造成伤害修正 = " + attackerToDefender.effectiveDamageDone.toFixed(1) + "%（原始 " + attackerDamageDone.toFixed(1) + "% + 伤害加成 " + attackerToDefender.damageBonus.toFixed(1) + "%）",
       "",
       "防守方 -> 进攻方",
       "兵种组：" + translateGroup(defender.group) + "；兵种：" + translateUnit(defender.unitName),
       "基础伤亡 = max(15, 15 + 5 x (" + defenderDice.toFixed(2) + " + " + defenderLeaderDiff.toFixed(2) + " + " + defenderToAttacker.attackerPips.toFixed(2) + " - " + defenderToAttacker.defenderPips.toFixed(2) + " - 0.00)) = " + defenderToAttacker.baseCasualties.toFixed(2),
-      "科技修正 = " + defenderToAttacker.tech.toFixed(2) + "，守方战术 = " + defenderToAttacker.tactics.toFixed(2),
+      "科技修正 = " + defenderToAttacker.tech.toFixed(2) + "，守方战术 = " + defenderToAttacker.tactics.toFixed(2) + "；防守方有效造成伤害修正 = " + defenderToAttacker.effectiveDamageDone.toFixed(1) + "%（原始 " + defenderDamageDone.toFixed(1) + "% + 伤害加成 " + defenderToAttacker.damageBonus.toFixed(1) + "%）",
       "",
       "--- 士气损失明细 ---",
-      "最大士气 = 科技基础士气 x (1 + 额外士气加成 + 陆军传统加成 + 威望加成)",
+      "最大士气 = 科技基础士气 x (1 + 额外士气加成 + 陆军传统加成 + 威望加成 + 力量投射加成)",
       "士气损失 = 基础伤亡 x 基础乘数 x (1+士气损失修正) x (1+士气承受伤害修正) x (己方最大士气/540)",
       "进攻方 -> 防守方：基础伤亡=" + attackerToDefender.baseCasualties.toFixed(2) + "  己方士气=" + attFinalMorale.toFixed(2) + "  -> 士气损失=" + attToDefMorale.moraleDamage.toFixed(2),
-      "防守方 -> 进攻方：基础伤亡=" + defenderToAttacker.baseCasualties.toFixed(2) + "  己方士气=" + defFinalMorale.toFixed(2) + "  -> 士气损失=" + defToAttMorale.moraleDamage.toFixed(2),
-      "防守方被动士气损耗/天：" + attToDefMorale.passiveMoraleLoss.toFixed(4) + "（职业度 100 时减半）",
-      "进攻方被动士气损耗/天：" + defToAttMorale.passiveMoraleLoss.toFixed(4) + "（职业度 100 时减半）"
+      "防守方 -> 进攻方：基础伤亡=" + defenderToAttacker.baseCasualties.toFixed(2) + "  己方士气=" + defFinalMorale.toFixed(2) + "  -> 士气损失=" + defToAttMorale.moraleDamage.toFixed(2)
     ].join("\n");
   }
 

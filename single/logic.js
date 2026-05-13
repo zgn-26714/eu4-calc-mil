@@ -76,18 +76,18 @@
 
     var attBaseMorale = baseMorale(attacker.techLevel);
     var defBaseMorale = baseMorale(defender.techLevel);
-    var attFinalMorale = computeMaxMorale(attacker.techLevel, attacker.moraleBonus, attacker.armyTradition, attacker.prestige);
-    var defFinalMorale = computeMaxMorale(defender.techLevel, defender.moraleBonus, defender.armyTradition, defender.prestige);
+    var attFinalMorale = computeMaxMorale(attacker.techLevel, attacker.moraleBonus, attacker.armyTradition, attacker.prestige, attacker.powerProjection);
+    var defFinalMorale = computeMaxMorale(defender.techLevel, defender.moraleBonus, defender.armyTradition, defender.prestige, defender.powerProjection);
 
     var attToDefMorale = computeMoraleDamage(
       Object.assign({}, attacker, { maxMorale: attFinalMorale }),
       Object.assign({}, defender, { maxMorale: defFinalMorale }),
-      phase, attackerDice, attackerLeaderDiff, attackerPenalty, false, 0, defender.professionalism || 0
+      phase, attackerDice, attackerLeaderDiff, attackerPenalty, false, 0
     );
     var defToAttMorale = computeMoraleDamage(
       Object.assign({}, defender, { maxMorale: defFinalMorale }),
       Object.assign({}, attacker, { maxMorale: attFinalMorale }),
-      phase, defenderDice, defenderLeaderDiff, 0, false, 0, attacker.professionalism || 0
+      phase, defenderDice, defenderLeaderDiff, 0, false, 0
     );
 
     return {

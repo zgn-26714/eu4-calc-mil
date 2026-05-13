@@ -21,12 +21,7 @@
     return moraleBase * mult;
   }
 
-  function computePassiveMoraleLoss(enemyAvgMorale, professionalism) {
-    var reduction = (professionalism || 0) >= 100 ? 0.5 : 0.0;
-    return 0.01 * enemyAvgMorale * (1 - reduction);
-  }
-
-  function computeMoraleDamage(attacker, defender, phase, dice, leaderDiff, terrainPenalty, backrowArtillery, battleDay, defProfessionalism) {
+  function computeMoraleDamage(attacker, defender, phase, dice, leaderDiff, terrainPenalty, backrowArtillery, battleDay) {
     var attackerUnit = lookupUnit(attacker.group, attacker.unitType, attacker.unitName);
     var defenderUnit = lookupUnit(defender.group, defender.unitType, defender.unitName);
 
@@ -59,8 +54,10 @@
       attacker.discipline || 0,
       battleDay || 0
     );
+    var professionalDamageBonus = attacker.damageBonus != null ? attacker.damageBonus : 0;
 
     var moraleDmg = baseCas * baseMult *
+      percentMultiplier(professionalDamageBonus) *
       percentMultiplier(attacker.moraleDamageDone || 0) *
       percentMultiplier(defender.moraleDamageTaken || 0) *
       ((attacker.maxMorale || 3.0) / 540);
@@ -69,11 +66,8 @@
       moraleDmg *= 0.4;
     }
 
-    var passiveLoss = computePassiveMoraleLoss(attacker.maxMorale || 3.0, defProfessionalism || 0);
-
     return {
-      moraleDamage: moraleDmg,
-      passiveMoraleLoss: passiveLoss
+      moraleDamage: moraleDmg
     };
   }
 
@@ -97,7 +91,6 @@
   M['shared/morale-engine'] = {
     baseMorale: baseMorale,
     computeMaxMorale: computeMaxMorale,
-    computePassiveMoraleLoss: computePassiveMoraleLoss,
     computeMoraleDamage: computeMoraleDamage,
     computeMoraleBreak: computeMoraleBreak,
     randomDiceMorale: randomDiceMorale

@@ -216,10 +216,10 @@
     phaseOnly = phaseOnly || null;
 
     var attMaxMoralePerReg = computeMaxMorale(
-      attacker.techLevel || 0, attacker.moraleBonus || 0, attacker.armyTradition || 0, attacker.prestige || 0
+      attacker.techLevel || 0, attacker.moraleBonus || 0, attacker.armyTradition || 0, attacker.prestige || 0, attacker.powerProjection || 0
     );
     var defMaxMoralePerReg = computeMaxMorale(
-      defender.techLevel || 0, defender.moraleBonus || 0, defender.armyTradition || 0, defender.prestige || 0
+      defender.techLevel || 0, defender.moraleBonus || 0, defender.armyTradition || 0, defender.prestige || 0, defender.powerProjection || 0
     );
 
     var attBase = {};
@@ -246,9 +246,6 @@
     var defCurrentMorale = defTotalMaxMorale;
     var initialAttMorale = attTotalMaxMorale;
     var initialDefMorale = defTotalMaxMorale;
-
-    var attProfessionalism = attacker.professionalism || 0;
-    var defProfessionalism = defender.professionalism || 0;
 
     var battleDay = 1;
 
@@ -350,8 +347,8 @@
           var aStrLoss = Math.min(attStrength, d2a.damage);
           var dStrLoss = Math.min(defStrength, a2d.damage);
 
-          var a2dMorale = computeMoraleDamage(attState, defState, 'fire', attFd, fireLeaderDiff, terrainPenalty, backrowArtillery, battleDay, defProfessionalism);
-          var d2aMorale = computeMoraleDamage(defState, attState, 'fire', defFd, defenderFireLeaderDiff, 0, backrowArtillery, battleDay, attProfessionalism);
+          var a2dMorale = computeMoraleDamage(attState, defState, 'fire', attFd, fireLeaderDiff, terrainPenalty, backrowArtillery, battleDay);
+          var d2aMorale = computeMoraleDamage(defState, attState, 'fire', defFd, defenderFireLeaderDiff, 0, backrowArtillery, battleDay);
 
           var aMorLoss = Math.min(attCurrentMorale, d2aMorale.moraleDamage);
           var dMorLoss = Math.min(defCurrentMorale, a2dMorale.moraleDamage);
@@ -361,15 +358,10 @@
           attCurrentMorale -= aMorLoss;
           defCurrentMorale -= dMorLoss;
 
-          var attPassiveLoss = d2aMorale.passiveMoraleLoss;
-          var defPassiveLoss = a2dMorale.passiveMoraleLoss;
-          attCurrentMorale = Math.max(0, attCurrentMorale - attPassiveLoss);
-          defCurrentMorale = Math.max(0, defCurrentMorale - defPassiveLoss);
-
           fireAttStrLoss += aStrLoss;
           fireDefStrLoss += dStrLoss;
-          fireAttMorLoss += aMorLoss + attPassiveLoss;
-          fireDefMorLoss += dMorLoss + defPassiveLoss;
+          fireAttMorLoss += aMorLoss;
+          fireDefMorLoss += dMorLoss;
 
           var attBroken = Math.min(Math.floor(Math.max(0, initialAttMorale - attCurrentMorale) / attMaxMoralePerReg), attRegiments);
           var defBroken = Math.min(Math.floor(Math.max(0, initialDefMorale - defCurrentMorale) / defMaxMoralePerReg), defRegiments);
@@ -389,9 +381,7 @@
             attackerCurrentMorale: attCurrentMorale,
             defenderCurrentMorale: defCurrentMorale,
             attackerBrokenRegiments: attBroken,
-            defenderBrokenRegiments: defBroken,
-            attackerPassiveMoraleLoss: attPassiveLoss,
-            defenderPassiveMoraleLoss: defPassiveLoss
+            defenderBrokenRegiments: defBroken
           });
 /* __PLACEHOLDER_BATTLESIM_MORALE_FIRE2__ */
 
@@ -437,8 +427,8 @@
           var aStrLoss = Math.min(attStrength, d2a.damage);
           var dStrLoss = Math.min(defStrength, a2d.damage);
 
-          var a2dMorale = computeMoraleDamage(attState, defState, 'shock', attSd, shockLeaderDiff, terrainPenalty, backrowArtillery, battleDay, defProfessionalism);
-          var d2aMorale = computeMoraleDamage(defState, attState, 'shock', defSd, defenderShockLeaderDiff, 0, backrowArtillery, battleDay, attProfessionalism);
+          var a2dMorale = computeMoraleDamage(attState, defState, 'shock', attSd, shockLeaderDiff, terrainPenalty, backrowArtillery, battleDay);
+          var d2aMorale = computeMoraleDamage(defState, attState, 'shock', defSd, defenderShockLeaderDiff, 0, backrowArtillery, battleDay);
 
           var aMorLoss = Math.min(attCurrentMorale, d2aMorale.moraleDamage);
           var dMorLoss = Math.min(defCurrentMorale, a2dMorale.moraleDamage);
@@ -449,15 +439,10 @@
           defCurrentMorale -= dMorLoss;
 /* __PLACEHOLDER_BATTLESIM_MORALE_SHOCK2__ */
 
-          var attPassiveLoss = d2aMorale.passiveMoraleLoss;
-          var defPassiveLoss = a2dMorale.passiveMoraleLoss;
-          attCurrentMorale = Math.max(0, attCurrentMorale - attPassiveLoss);
-          defCurrentMorale = Math.max(0, defCurrentMorale - defPassiveLoss);
-
           shockAttStrLoss += aStrLoss;
           shockDefStrLoss += dStrLoss;
-          shockAttMorLoss += aMorLoss + attPassiveLoss;
-          shockDefMorLoss += dMorLoss + defPassiveLoss;
+          shockAttMorLoss += aMorLoss;
+          shockDefMorLoss += dMorLoss;
 
           var attBroken = Math.min(Math.floor(Math.max(0, initialAttMorale - attCurrentMorale) / attMaxMoralePerReg), attRegiments);
           var defBroken = Math.min(Math.floor(Math.max(0, initialDefMorale - defCurrentMorale) / defMaxMoralePerReg), defRegiments);
@@ -477,9 +462,7 @@
             attackerCurrentMorale: attCurrentMorale,
             defenderCurrentMorale: defCurrentMorale,
             attackerBrokenRegiments: attBroken,
-            defenderBrokenRegiments: defBroken,
-            attackerPassiveMoraleLoss: attPassiveLoss,
-            defenderPassiveMoraleLoss: defPassiveLoss
+            defenderBrokenRegiments: defBroken
           });
 
           var currentDay = battleDay;

@@ -181,8 +181,6 @@
               '<td>' + Math.max(0, day.defenderStrengthRemaining).toFixed(2) + '</td>' +
               '<td>' + day.attackerMoraleLoss.toFixed(2) + '</td>' +
               '<td>' + day.defenderMoraleLoss.toFixed(2) + '</td>' +
-              '<td>' + day.attackerPassiveMoraleLoss.toFixed(2) + '</td>' +
-              '<td>' + day.defenderPassiveMoraleLoss.toFixed(2) + '</td>' +
               '<td>' + Math.max(0, day.attackerCurrentMorale).toFixed(2) + '</td>' +
               '<td>' + Math.max(0, day.defenderCurrentMorale).toFixed(2) + '</td>' +
               '<td>' + day.attackerBrokenRegiments + '/' + result.attRegiments + '</td>' +
@@ -206,8 +204,6 @@
               '<td>' + Math.max(0, day2.defenderStrengthRemaining).toFixed(2) + '</td>' +
               '<td>' + day2.attackerMoraleLoss.toFixed(2) + '</td>' +
               '<td>' + day2.defenderMoraleLoss.toFixed(2) + '</td>' +
-              '<td>' + day2.attackerPassiveMoraleLoss.toFixed(2) + '</td>' +
-              '<td>' + day2.defenderPassiveMoraleLoss.toFixed(2) + '</td>' +
               '<td>' + Math.max(0, day2.attackerCurrentMorale).toFixed(2) + '</td>' +
               '<td>' + Math.max(0, day2.defenderCurrentMorale).toFixed(2) + '</td>' +
               '<td>' + day2.attackerBrokenRegiments + '/' + result.attRegiments + '</td>' +
@@ -238,6 +234,9 @@
     lines.push("防守方初始兵力：" + result.initialDefenderStrength + "  →  剩余：" + result.finalDefenderStrength.toFixed(2) + "  （损失 " + result.totalDefenderStrengthLoss.toFixed(2) + "）");
     lines.push("");
     lines.push("--- 士气 ---");
+    lines.push("进攻方：陆军传统=" + (attacker.armyTradition || 0) + "  威望=" + (attacker.prestige || 0) + "  力量投射=" + (attacker.powerProjection || 0) + "  职业度=" + (attacker.professionalism || 0));
+    lines.push("防守方：陆军传统=" + (defender.armyTradition || 0) + "  威望=" + (defender.prestige || 0) + "  力量投射=" + (defender.powerProjection || 0) + "  职业度=" + (defender.professionalism || 0));
+    lines.push("职业度衍生伤害加成（已并入造成伤害修正）：进攻方 +" + ((attacker.damageBonus || 0).toFixed(1)) + "%  防守方 +" + ((defender.damageBonus || 0).toFixed(1)) + "%");
     lines.push("进攻方团数：" + result.attRegiments + "  每团最大士气：" + result.attMaxMoralePerRegiment.toFixed(2) + "  初始总士气：" + result.initialAttackerMorale.toFixed(2) + "  →  剩余：" + result.finalAttackerMorale.toFixed(2) + "  （损失 " + result.totalAttackerMoraleLoss.toFixed(2) + "）");
     lines.push("防守方团数：" + result.defRegiments + "  每团最大士气：" + result.defMaxMoralePerRegiment.toFixed(2) + "  初始总士气：" + result.initialDefenderMorale.toFixed(2) + "  →  剩余：" + result.finalDefenderMorale.toFixed(2) + "  （损失 " + result.totalDefenderMoraleLoss.toFixed(2) + "）");
     if (result.attackerMoraleBreakDay !== null) {
@@ -263,14 +262,14 @@
         lines.push("  火力阶段（攻方骰子=" + rr.fire.attackerDice + " 守方骰子=" + rr.fire.defenderDice + "）：攻方兵损=" + rr.fire.attackerStrengthLoss.toFixed(2) + " 守方兵损=" + rr.fire.defenderStrengthLoss.toFixed(2) + " 攻方士气损=" + rr.fire.attackerMoraleLoss.toFixed(2) + " 守方士气损=" + rr.fire.defenderMoraleLoss.toFixed(2));
         for (var di = 0; di < rr.fire.days.length; di++) {
           var day = rr.fire.days[di];
-          lines.push("    第" + day.day + "天  攻方兵伤=" + day.attackerStrengthDmg.toFixed(2) + " 守方兵伤=" + day.defenderStrengthDmg.toFixed(2) + "  攻方剩=" + day.attackerStrengthRemaining.toFixed(2) + " 守方剩=" + day.defenderStrengthRemaining.toFixed(2) + "  攻方士气(主动=" + day.attackerMoraleLoss.toFixed(2) + "+被动=" + day.attackerPassiveMoraleLoss.toFixed(2) + ")=" + day.attackerCurrentMorale.toFixed(2) + " 守方士气(主动=" + day.defenderMoraleLoss.toFixed(2) + "+被动=" + day.defenderPassiveMoraleLoss.toFixed(2) + ")=" + day.defenderCurrentMorale.toFixed(2) + "  攻溃败=" + day.attackerBrokenRegiments + " 守溃败=" + day.defenderBrokenRegiments);
+          lines.push("    第" + day.day + "天  攻方兵伤=" + day.attackerStrengthDmg.toFixed(2) + " 守方兵伤=" + day.defenderStrengthDmg.toFixed(2) + "  攻方剩=" + day.attackerStrengthRemaining.toFixed(2) + " 守方剩=" + day.defenderStrengthRemaining.toFixed(2) + "  攻方士气=" + day.attackerCurrentMorale.toFixed(2) + " 守方士气=" + day.defenderCurrentMorale.toFixed(2) + "  攻溃败=" + day.attackerBrokenRegiments + " 守溃败=" + day.defenderBrokenRegiments);
         }
       }
       if (rr.shock) {
         lines.push("  冲击阶段（攻方骰子=" + rr.shock.attackerDice + " 守方骰子=" + rr.shock.defenderDice + "）：攻方兵损=" + rr.shock.attackerStrengthLoss.toFixed(2) + " 守方兵损=" + rr.shock.defenderStrengthLoss.toFixed(2) + " 攻方士气损=" + rr.shock.attackerMoraleLoss.toFixed(2) + " 守方士气损=" + rr.shock.defenderMoraleLoss.toFixed(2));
         for (di = 0; di < rr.shock.days.length; di++) {
           var day2 = rr.shock.days[di];
-          lines.push("    第" + day2.day + "天  攻方兵伤=" + day2.attackerStrengthDmg.toFixed(2) + " 守方兵伤=" + day2.defenderStrengthDmg.toFixed(2) + "  攻方剩=" + day2.attackerStrengthRemaining.toFixed(2) + " 守方剩=" + day2.defenderStrengthRemaining.toFixed(2) + "  攻方士气=" + day2.attackerCurrentMorale.toFixed(2) + " 守方士气=" + day2.defenderCurrentMorale.toFixed(2) + "  攻方后备士气损耗/天=" + day2.attackerPassiveMoraleLoss.toFixed(4) + " 守方后备士气损耗/天=" + day2.defenderPassiveMoraleLoss.toFixed(4) + "  攻溃败=" + day2.attackerBrokenRegiments + " 守溃败=" + day2.defenderBrokenRegiments);
+          lines.push("    第" + day2.day + "天  攻方兵伤=" + day2.attackerStrengthDmg.toFixed(2) + " 守方兵伤=" + day2.defenderStrengthDmg.toFixed(2) + "  攻方剩=" + day2.attackerStrengthRemaining.toFixed(2) + " 守方剩=" + day2.defenderStrengthRemaining.toFixed(2) + "  攻方士气=" + day2.attackerCurrentMorale.toFixed(2) + " 守方士气=" + day2.defenderCurrentMorale.toFixed(2) + "  攻溃败=" + day2.attackerBrokenRegiments + " 守溃败=" + day2.defenderBrokenRegiments);
         }
       }
     }

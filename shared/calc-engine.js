@@ -8,6 +8,15 @@
     return 1 + value / 100;
   }
 
+  function clamp(value, min, max) {
+    value = Number(value || 0);
+    return Math.max(min, Math.min(max, value));
+  }
+
+  function professionalismDamageBonus(professionalism) {
+    return clamp(professionalism, 0, 100) * 0.1;
+  }
+
   function baseTactics(techLevel) {
     return TECH_STATS[techLevel].militaryTactics;
   }
@@ -80,13 +89,16 @@
     var tactics = (baseTactics(defender.techLevel) + defender.extraMilitaryTactics) * percentMultiplier(defender.discipline);
 
     var damageDonePhase = phase === "fire" ? (attacker.damageDoneFire || attacker.damageDone || 0) : (attacker.damageDoneShock || attacker.damageDone || 0);
+    var professionalDamageBonus = attacker.damageBonus != null
+      ? attacker.damageBonus
+      : professionalismDamageBonus(attacker.professionalism);
     var damageTakenPhase = phase === "fire" ? (defender.damageTakenFire || defender.damageTaken || 0) : (defender.damageTakenShock || defender.damageTaken || 0);
     var combatAbility = attacker.combatAbility || 0;
     if (attacker.unitType === "Infantry") combatAbility = attacker.combatAbilityInfantry || combatAbility;
     else if (attacker.unitType === "Cavalry") combatAbility = attacker.combatAbilityCavalry || combatAbility;
     else if (attacker.unitType === "Artillery") combatAbility = attacker.combatAbilityArtillery || combatAbility;
     var multiplier = computeMultipliers(attacker.strength, tech, tactics, combatAbility, attacker.discipline, battleDay)
-      * percentMultiplier(damageDonePhase)
+      * percentMultiplier(damageDonePhase + professionalDamageBonus)
       * percentMultiplier(damageTakenPhase);
 
     if (backrowArtillery && attacker.unitType === "Artillery") {
@@ -99,6 +111,9 @@
       baseCasualties: baseCasualties,
       tech: tech,
       tactics: tactics,
+      damageBonus: professionalDamageBonus,
+      professionalismDamageBonus: professionalDamageBonus,
+      effectiveDamageDone: damageDonePhase + professionalDamageBonus,
       damage: baseCasualties * multiplier
     };
   }
@@ -109,6 +124,7 @@
 
   M['shared/calc-engine'] = {
     percentMultiplier: percentMultiplier,
+    professionalismDamageBonus: professionalismDamageBonus,
     baseTactics: baseTactics,
     baseMorale: baseMorale,
     techModifier: techModifier,

@@ -53,6 +53,8 @@
       "%  额外士气=" + template.moraleBonus +
       "%  陆军传统=" + template.armyTradition +
       "  威望=" + template.prestige +
+      "  力量投射=" + template.powerProjection +
+      "  职业度伤害加成（并入造成伤害修正）=+" + (template.damageBonus || 0).toFixed(1) + "%" +
       "  造成士气伤害=" + template.moraleDamageDone +
       "%  承受士气伤害=" + template.moraleDamageTaken +
       "%  职业度=" + template.professionalism
