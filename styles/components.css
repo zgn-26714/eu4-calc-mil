@@ -60,7 +60,7 @@
   align-items: center;
   gap: 18px;
   margin-bottom: 14px;
-  width: min(100%, calc(50% + 249px));
+  width: min(100%, calc(50% + 313px));
 }
 
 .battle-leader-title {
@@ -112,7 +112,7 @@
 }
 
 .battle-field-grid-leaders .battle-field {
-  grid-template-columns: max-content 56px;
+  grid-template-columns: max-content 72px;
 }
 
 .battle-field-grid-selectors .battle-field:has(input) {
@@ -530,7 +530,7 @@ button:disabled {
   }
 
   .battle-field-grid-leaders .battle-field {
-    grid-template-columns: max-content 56px;
+    grid-template-columns: max-content 72px;
   }
 
   .battle-field-grid-selectors .battle-field:has(input) {

@@ -429,7 +429,7 @@ function calculate() {
     defenderLossEl.textContent = simResult.result.totalDefenderStrengthLoss.toFixed(2);
     attackerMoraleLossEl.textContent = simResult.result.totalAttackerMoraleLoss.toFixed(2);
     defenderMoraleLossEl.textContent = simResult.result.totalDefenderMoraleLoss.toFixed(2);
-    renderSimDetailText(dom, simResult.result, simResult.battleOptions, simResult.attackerPenaltyInfo);
+    renderSimDetailText(dom, simResult.result, simResult.battleOptions, simResult.attackerPenaltyInfo, simResult.attacker, simResult.defender);
     uiView = "results";
     resultMode = "simulation";
     updateModeUI();

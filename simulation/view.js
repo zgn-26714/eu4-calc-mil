@@ -217,7 +217,7 @@
   }
 
 
-  function renderSimDetailText(dom, result, battleOptions, attackerPenaltyInfo) {
+  function renderSimDetailText(dom, result, battleOptions, attackerPenaltyInfo, attacker, defender) {
     // Build detailed breakdown
     var lines = [];
     lines.push("=== 多轮模拟结果（含士气） ===");

@@ -63,7 +63,7 @@
       "",
       "--- 士气损失明细 ---",
       "最大士气 = 科技基础士气 x (1 + 额外士气加成 + 陆军传统加成 + 威望加成 + 力量投射加成)",
-      "士气损失 = 基础伤亡 x 基础乘数 x (1+士气损失修正) x (1+士气承受伤害修正) x (己方最大士气/540)",
+      "士气损失 = 基础伤亡 x 基础乘数 x (1+士气打击修正) x (1-士气防御修正) x (己方最大士气/540)",
       "进攻方 -> 防守方：基础伤亡=" + attackerToDefender.baseCasualties.toFixed(2) + "  己方士气=" + attFinalMorale.toFixed(2) + "  -> 士气损失=" + attToDefMorale.moraleDamage.toFixed(2),
       "防守方 -> 进攻方：基础伤亡=" + defenderToAttacker.baseCasualties.toFixed(2) + "  己方士气=" + defFinalMorale.toFixed(2) + "  -> 士气损失=" + defToAttMorale.moraleDamage.toFixed(2)
     ].join("\n");

@@ -8,6 +8,10 @@
     return 1 + value / 100;
   }
 
+  function defenseMultiplier(value) {
+    return Math.max(0, 1 - value / 100);
+  }
+
   function clamp(value, min, max) {
     value = Number(value || 0);
     return Math.max(min, Math.min(max, value));
@@ -99,7 +103,7 @@
     else if (attacker.unitType === "Artillery") combatAbility = attacker.combatAbilityArtillery || combatAbility;
     var multiplier = computeMultipliers(attacker.strength, tech, tactics, combatAbility, attacker.discipline, battleDay)
       * percentMultiplier(damageDonePhase + professionalDamageBonus)
-      * percentMultiplier(damageTakenPhase);
+      * defenseMultiplier(damageTakenPhase);
 
     if (backrowArtillery && attacker.unitType === "Artillery") {
       multiplier *= 0.5;
@@ -124,6 +128,7 @@
 
   M['shared/calc-engine'] = {
     percentMultiplier: percentMultiplier,
+    defenseMultiplier: defenseMultiplier,
     professionalismDamageBonus: professionalismDamageBonus,
     baseTactics: baseTactics,
     baseMorale: baseMorale,

@@ -1,6 +1,7 @@
 (function(M) {
   var calcEngine = M['shared/calc-engine'];
   var percentMultiplier = calcEngine.percentMultiplier;
+  var defenseMultiplier = calcEngine.defenseMultiplier;
   var baseTactics = calcEngine.baseTactics;
   var baseMorale = calcEngine.baseMorale;
   var techModifier = calcEngine.techModifier;
@@ -59,7 +60,7 @@
     var moraleDmg = baseCas * baseMult *
       percentMultiplier(professionalDamageBonus) *
       percentMultiplier(attacker.moraleDamageDone || 0) *
-      percentMultiplier(defender.moraleDamageTaken || 0) *
+      defenseMultiplier(defender.moraleDamageTaken || 0) *
       ((attacker.maxMorale || 3.0) / 540);
 
     if (backrowArtillery && attacker.unitType === "Artillery") {

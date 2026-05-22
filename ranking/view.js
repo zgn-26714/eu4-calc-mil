@@ -48,15 +48,15 @@
     lines.push(
       "造成火力伤害=" + template.damageDoneFire +
       "%  造成冲击伤害=" + template.damageDoneShock +
-      "%  承受火力伤害=" + template.damageTakenFire +
-      "%  承受冲击伤害=" + template.damageTakenShock +
+      "%  火力防御=" + template.damageTakenFire +
+      "%  冲击防御=" + template.damageTakenShock +
       "%  额外士气=" + template.moraleBonus +
       "%  陆军传统=" + template.armyTradition +
       "  威望=" + template.prestige +
       "  力量投射=" + template.powerProjection +
       "  职业度伤害加成（并入造成伤害修正）=+" + (template.damageBonus || 0).toFixed(1) + "%" +
       "  造成士气伤害=" + template.moraleDamageDone +
-      "%  承受士气伤害=" + template.moraleDamageTaken +
+      "%  士气防御=" + template.moraleDamageTaken +
       "%  职业度=" + template.professionalism
     );
     lines.push(
