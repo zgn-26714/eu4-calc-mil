@@ -82,12 +82,12 @@
     var attToDefMorale = computeMoraleDamage(
       Object.assign({}, attacker, { maxMorale: attFinalMorale }),
       Object.assign({}, defender, { maxMorale: defFinalMorale }),
-      phase, attackerDice, attackerLeaderDiff, attackerPenalty, false, 0
+      phase, attackerDice, attackerLeaderDiff, attackerPenalty, false, 1
     );
     var defToAttMorale = computeMoraleDamage(
       Object.assign({}, defender, { maxMorale: defFinalMorale }),
       Object.assign({}, attacker, { maxMorale: attFinalMorale }),
-      phase, defenderDice, defenderLeaderDiff, 0, false, 0
+      phase, defenderDice, defenderLeaderDiff, 0, false, 1
     );
 
     return {

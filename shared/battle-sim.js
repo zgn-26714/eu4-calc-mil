@@ -233,6 +233,8 @@
 
     var attRegiments = Math.max(1, Math.round(attacker.strength / 1000));
     var defRegiments = Math.max(1, Math.round(defender.strength / 1000));
+    attBase.regimentCount = attRegiments;
+    defBase.regimentCount = defRegiments;
 
     var attTotalMaxMorale = attMaxMoralePerReg * attRegiments;
     var defTotalMaxMorale = defMaxMoralePerReg * defRegiments;
@@ -355,8 +357,8 @@
 
           attStrength -= aStrLoss;
           defStrength -= dStrLoss;
-          attCurrentMorale -= aMorLoss;
-          defCurrentMorale -= dMorLoss;
+          attCurrentMorale = moraleEngine.subtractMorale(attCurrentMorale, aMorLoss);
+          defCurrentMorale = moraleEngine.subtractMorale(defCurrentMorale, dMorLoss);
 
           fireAttStrLoss += aStrLoss;
           fireDefStrLoss += dStrLoss;
@@ -376,6 +378,8 @@
             defenderStrengthRemaining: defStrength,
             attackerMoraleDmg: a2dMorale.moraleDamage,
             defenderMoraleDmg: d2aMorale.moraleDamage,
+            attackerRawMoraleDmg: a2dMorale.rawMoraleDamage,
+            defenderRawMoraleDmg: d2aMorale.rawMoraleDamage,
             attackerMoraleLoss: aMorLoss,
             defenderMoraleLoss: dMorLoss,
             attackerCurrentMorale: attCurrentMorale,
@@ -435,8 +439,8 @@
 
           attStrength -= aStrLoss;
           defStrength -= dStrLoss;
-          attCurrentMorale -= aMorLoss;
-          defCurrentMorale -= dMorLoss;
+          attCurrentMorale = moraleEngine.subtractMorale(attCurrentMorale, aMorLoss);
+          defCurrentMorale = moraleEngine.subtractMorale(defCurrentMorale, dMorLoss);
 /* __PLACEHOLDER_BATTLESIM_MORALE_SHOCK2__ */
 
           shockAttStrLoss += aStrLoss;
@@ -457,6 +461,8 @@
             defenderStrengthRemaining: defStrength,
             attackerMoraleDmg: a2dMorale.moraleDamage,
             defenderMoraleDmg: d2aMorale.moraleDamage,
+            attackerRawMoraleDmg: a2dMorale.rawMoraleDamage,
+            defenderRawMoraleDmg: d2aMorale.rawMoraleDamage,
             attackerMoraleLoss: aMorLoss,
             defenderMoraleLoss: dMorLoss,
             attackerCurrentMorale: attCurrentMorale,

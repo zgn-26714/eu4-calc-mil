@@ -163,6 +163,8 @@
 
     var attRegiments = Math.max(1, Math.round(attacker.strength / 1000));
     var defRegiments = Math.max(1, Math.round(defender.strength / 1000));
+    attBase.regimentCount = attRegiments;
+    defBase.regimentCount = defRegiments;
     var initialAttackerStrength = attacker.strength;
     var initialDefenderStrength = defender.strength;
     var initialAttackerMorale = attMaxMoralePerReg * attRegiments;
@@ -237,8 +239,8 @@
 
         attStrength -= attackerStrengthLoss;
         defStrength -= defenderStrengthLoss;
-        attMorale -= attackerMoraleLoss;
-        defMorale -= defenderMoraleLoss;
+        attMorale = moraleEngine.subtractMorale(attMorale, attackerMoraleLoss);
+        defMorale = moraleEngine.subtractMorale(defMorale, defenderMoraleLoss);
 
         phaseAttStrengthLoss += attackerStrengthLoss;
         phaseDefStrengthLoss += defenderStrengthLoss;

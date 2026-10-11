@@ -78,6 +78,27 @@
     return String(value);
   }
 
+  // Battle tooltip path: army average (RVA d4c060), side average (d736b0),
+  // then fixed-point text truncation (1703850). Even one regiment goes
+  // through BOTH strength-weighted averages. Never feed this back into combat.
+  // Multi-regiment totals cannot reconstruct these averages without per-unit data.
+  function formatRemainingMorale(value, strength, regimentCount) {
+    var calc = M['shared/calc-engine'];
+    var p = Math.max(0, calc.toFixedPoint(value));
+    if (regimentCount === 1 && strength !== undefined) {
+      var soldiers = Math.max(0, Math.trunc(strength));
+      if (soldiers === 0) p = 0;
+      else {
+        p = calc.fixedDivide(calc.fixedMultiply(p, soldiers), soldiers);
+        p = calc.fixedDivide(calc.fixedMultiply(p, soldiers), soldiers);
+      }
+    }
+    var q = Math.floor(p / 10);
+    var intPart = Math.floor(q / 100);
+    var frac = q - intPart * 100;
+    return intPart + "." + (frac < 10 ? "0" : "") + frac;
+  }
+
   function maybeWarnStrengthLimit(control) {
     if (!control) return;
     var value = Number(control.value);
@@ -136,6 +157,7 @@
     cloneDataShallow: cloneDataShallow,
     fillOptions: fillOptions,
     formatTemplateValue: formatTemplateValue,
+    formatRemainingMorale: formatRemainingMorale,
     maybeWarnStrengthLimit: maybeWarnStrengthLimit,
     lockNumericControl: lockNumericControl
   };

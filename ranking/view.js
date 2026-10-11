@@ -3,6 +3,7 @@
   var translateGroup = uiHelpers.translateGroup;
   var translateUnit = uiHelpers.translateUnit;
   var translateUnitType = uiHelpers.translateUnitType;
+  var formatRemainingMorale = uiHelpers.formatRemainingMorale;
 
   var rankingLogic = M['ranking/logic'];
   var runUnitTournament = rankingLogic.runUnitTournament;
@@ -101,8 +102,8 @@
         "  守方士气损=" + matchResult.totalDefenderMoraleLoss.toFixed(2)
       );
       lines.push(
-        "    攻方剩余兵力/士气=" + matchResult.finalAttackerStrength.toFixed(2) + "/" + matchResult.finalAttackerMorale.toFixed(2) +
-        "  守方剩余兵力/士气=" + matchResult.finalDefenderStrength.toFixed(2) + "/" + matchResult.finalDefenderMorale.toFixed(2)
+        "    攻方剩余兵力/士气=" + matchResult.finalAttackerStrength.toFixed(2) + "/" + formatRemainingMorale(matchResult.finalAttackerMorale, matchResult.finalAttackerStrength, matchResult.attRegiments) +
+        "  守方剩余兵力/士气=" + matchResult.finalDefenderStrength.toFixed(2) + "/" + formatRemainingMorale(matchResult.finalDefenderMorale, matchResult.finalDefenderStrength, matchResult.defRegiments)
       );
     }
     return lines.join("\n");

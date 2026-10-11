@@ -67,6 +67,20 @@
   overflow-x: auto;
 }
 
+.morale-values {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.morale-values .morale-display,
+.morale-values .morale-actual {
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
 .sim-table {
   width: 100%;
   border-collapse: collapse;

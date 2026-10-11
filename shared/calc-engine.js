@@ -60,19 +60,36 @@
   }
 
   function computeBaseCasualties(dice, leaderDiff, attackerPips, defenderPips, terrainPenalty) {
-    return Math.max(15, 15 + 5 * (dice + leaderDiff + attackerPips - defenderPips - terrainPenalty));
+    return 15 + 5 * (dice + leaderDiff + attackerPips - defenderPips - terrainPenalty);
   }
 
   function computeMultipliers(strength, tech, tactics, combatAbility, discipline, battleDayBonus) {
+    // Floating-point comparison helper retained for compatibility. Combat engines
+    // use separate fixed-point steps instead of this merged multiplier.
     return (strength / 1000) *
       (tech / tactics) *
       percentMultiplier(combatAbility) *
-      percentMultiplier(discipline) *
-      percentMultiplier(battleDayBonus || 0);
+      percentMultiplier(discipline);
+  }
+
+  // EU4's combat arithmetic uses signed integers with scale 1000. Keep each
+  // multiply/divide separate: cancelling equal discipline changes casualties.
+  function toFixedPoint(value) {
+    var scaled = Number(value) * 1000;
+    return Math.trunc(scaled + Math.sign(scaled) * 1e-7);
+  }
+
+  function fixedMultiply(left, right) {
+    return Math.trunc(left * right / 1000);
+  }
+
+  function fixedDivide(left, right) {
+    if (right <= 0) throw new Error('军事战术必须大于 0');
+    return Math.trunc(left * 1000 / right);
   }
 
   function computeOneWay(attacker, defender, phase, dice, leaderDiff, terrainPenalty, backrowArtillery, battleDay) {
-    if (battleDay === undefined) battleDay = 0;
+    if (battleDay === undefined) battleDay = 1;
     var attackerUnit = lookupUnit(attacker.group, attacker.unitType, attacker.unitName);
     var defenderUnit = lookupUnit(defender.group, defender.unitType, defender.unitName);
 
@@ -90,7 +107,11 @@
       else if (attacker.unitType === "Artillery") phaseDamage = attacker.shockDamageArtillery || attacker.shockDamage || 0;
     }
     var tech = techModifier(attacker.techLevel, attacker.unitType, phase) + phaseDamage;
-    var tactics = (baseTactics(defender.techLevel) + defender.extraMilitaryTactics) * percentMultiplier(defender.discipline);
+    var tacticsFixed = fixedMultiply(
+      toFixedPoint(baseTactics(defender.techLevel) + (defender.extraMilitaryTactics || 0)),
+      toFixedPoint(percentMultiplier(defender.discipline || 0))
+    );
+    var tactics = tacticsFixed / 1000;
 
     var damageDonePhase = phase === "fire" ? (attacker.damageDoneFire || attacker.damageDone || 0) : (attacker.damageDoneShock || attacker.damageDone || 0);
     var professionalDamageBonus = attacker.damageBonus != null
@@ -101,24 +122,44 @@
     if (attacker.unitType === "Infantry") combatAbility = attacker.combatAbilityInfantry || combatAbility;
     else if (attacker.unitType === "Cavalry") combatAbility = attacker.combatAbilityCavalry || combatAbility;
     else if (attacker.unitType === "Artillery") combatAbility = attacker.combatAbilityArtillery || combatAbility;
-    var multiplier = computeMultipliers(attacker.strength, tech, tactics, combatAbility, attacker.discipline, battleDay)
-      * percentMultiplier(damageDonePhase + professionalDamageBonus)
-      * defenseMultiplier(damageTakenPhase);
-
-    if (backrowArtillery && attacker.unitType === "Artillery") {
-      multiplier *= 0.5;
+    // Local eu4.exe (Steam build 15918133), combat routine RVA 0x225860:
+    // base = (25 + 25 * clamp(roll + pips + 2, 0, 21)) / 1000;
+    // the 0.2 conversion is AFTER the other damage multipliers, BEFORE duration.
+    var baseFixed = Math.trunc(clamp(baseCasualties * 5, 25, 550));
+    var steps = [{ name: '内部基础值', value: baseFixed }];
+    function multiplyStep(name, factor) {
+      damageFixed = fixedMultiply(damageFixed, toFixedPoint(factor));
+      steps.push({ name: name, value: damageFixed });
     }
+    var damageFixed = baseFixed;
+    multiplyStep('乘日初兵力比例', attacker.strength / 1000);
+    multiplyStep('乘训练度', percentMultiplier(attacker.discipline || 0));
+    damageFixed = fixedDivide(damageFixed, tacticsFixed);
+    steps.push({ name: '除守方战术', value: damageFixed });
+    multiplyStep('乘科技阶段系数', tech);
+    multiplyStep('乘作战能力', percentMultiplier(combatAbility));
+    multiplyStep('乘承受伤害修正', Math.max(0.05, defenseMultiplier(damageTakenPhase)));
+    multiplyStep('乘造成伤害修正', percentMultiplier(damageDonePhase + professionalDamageBonus));
+    if (backrowArtillery && attacker.unitType === "Artillery") {
+      multiplyStep('乘后排炮兵系数', 0.5);
+    }
+    multiplyStep('乘兵损换算系数', 0.2);
+    var damageBeforeDuration = damageFixed;
+    multiplyStep('乘战斗天数加成', 1 + battleDay / 100);
 
     return {
       attackerPips: attackerPips,
       defenderPips: defenderPips,
-      baseCasualties: baseCasualties,
+      baseCasualties: baseFixed / 5,
       tech: tech,
       tactics: tactics,
       damageBonus: professionalDamageBonus,
       professionalismDamageBonus: professionalDamageBonus,
       effectiveDamageDone: damageDonePhase + professionalDamageBonus,
-      damage: baseCasualties * multiplier
+      battleDay: battleDay,
+      damageBeforeDuration: damageBeforeDuration,
+      fixedPointSteps: steps,
+      damage: damageFixed
     };
   }
 
@@ -137,6 +178,9 @@
     validateNumber: validateNumber,
     computeBaseCasualties: computeBaseCasualties,
     computeMultipliers: computeMultipliers,
+    toFixedPoint: toFixedPoint,
+    fixedMultiply: fixedMultiply,
+    fixedDivide: fixedDivide,
     computeOneWay: computeOneWay,
     randomDice: randomDice
   };

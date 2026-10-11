@@ -3,6 +3,18 @@
   var translateGroup = uiHelpers.translateGroup;
   var translateUnit = uiHelpers.translateUnit;
 
+  function strengthSteps(result) {
+    return result.fixedPointSteps.map(function(step) {
+      return step.name + ' = ' + (step.value / 1000).toFixed(3);
+    }).join('\n') + '\n换算人数 = ' + result.damage + ' 人';
+  }
+
+  function moraleSteps(result) {
+    return result.fixedPointSteps.map(function(step) {
+      return step.name + '：截断前=' + step.rawValue + '，截断后=' + (step.value / 1000).toFixed(3);
+    }).join('\n');
+  }
+
   function renderSingleResults(dom, result) {
     var attackerToDefender = result.attackerToDefender;
     var defenderToAttacker = result.defenderToAttacker;
@@ -48,24 +60,30 @@
       "防守方科技基础士气=" + defBaseMorale.toFixed(1) + "  额外士气加成=" + defender.moraleBonus.toFixed(1) + "%  陆军传统=" + defender.armyTradition + "  威望=" + defender.prestige + "  力量投射=" + (defender.powerProjection || 0) + "  最终最大士气=" + defFinalMorale.toFixed(2),
       "",
       "--- 兵员伤害明细 ---",
+      "各乘除步骤截断至千分位；兵损换算后再乘每天 +1% 的时长加成。单次计算按第 1 天。",
       "进攻方 -> 防守方",
       "兵种组：" + translateGroup(attacker.group) + "；兵种：" + translateUnit(attacker.unitName),
-      "基础伤亡 = max(15, 15 + 5 x (" + attackerDice.toFixed(2) + " + " + attackerLeaderDiff.toFixed(2) + " + " + attackerToDefender.attackerPips.toFixed(2) + " - " + attackerToDefender.defenderPips.toFixed(2) + " - " + attackerPenalty.toFixed(2) + ")) = " + attackerToDefender.baseCasualties.toFixed(2),
+      "等效基础伤亡 = " + attackerToDefender.baseCasualties.toFixed(2) + "（内部基础值与最后的 0.2 换算不能提前合并）",
       attackerPenaltyInfo.ignoredByManeuver
         ? ("跨河惩罚=" + riverCrossing.toFixed(2) + "，但攻方机动高于守方，因此本次按 0 计算；总惩罚=" + attackerPenalty.toFixed(2))
         : ("进攻地形惩罚=" + terrainPenalty.toFixed(2) + "，跨河惩罚=" + attackerPenaltyInfo.riverPenaltyApplied.toFixed(2) + "；总惩罚=" + attackerPenalty.toFixed(2)),
       "科技修正 = " + attackerToDefender.tech.toFixed(2) + "，守方战术 = " + attackerToDefender.tactics.toFixed(2) + "；攻击方有效造成伤害修正 = " + attackerToDefender.effectiveDamageDone.toFixed(1) + "%（原始 " + attackerDamageDone.toFixed(1) + "% + 伤害加成 " + attackerToDefender.damageBonus.toFixed(1) + "%）",
+      strengthSteps(attackerToDefender),
       "",
       "防守方 -> 进攻方",
       "兵种组：" + translateGroup(defender.group) + "；兵种：" + translateUnit(defender.unitName),
-      "基础伤亡 = max(15, 15 + 5 x (" + defenderDice.toFixed(2) + " + " + defenderLeaderDiff.toFixed(2) + " + " + defenderToAttacker.attackerPips.toFixed(2) + " - " + defenderToAttacker.defenderPips.toFixed(2) + " - 0.00)) = " + defenderToAttacker.baseCasualties.toFixed(2),
+      "等效基础伤亡 = " + defenderToAttacker.baseCasualties.toFixed(2) + "（内部基础值与最后的 0.2 换算不能提前合并）",
       "科技修正 = " + defenderToAttacker.tech.toFixed(2) + "，守方战术 = " + defenderToAttacker.tactics.toFixed(2) + "；防守方有效造成伤害修正 = " + defenderToAttacker.effectiveDamageDone.toFixed(1) + "%（原始 " + defenderDamageDone.toFixed(1) + "% + 伤害加成 " + defenderToAttacker.damageBonus.toFixed(1) + "%）",
+      strengthSteps(defenderToAttacker),
       "",
       "--- 士气损失明细 ---",
       "最大士气 = 科技基础士气 x (1 + 额外士气加成 + 陆军传统加成 + 威望加成 + 力量投射加成)",
-      "士气损失 = 基础伤亡 x 基础乘数 x (1+士气打击修正) x (1-士气防御修正) x (己方最大士气/540)",
-      "进攻方 -> 防守方：基础伤亡=" + attackerToDefender.baseCasualties.toFixed(2) + "  己方士气=" + attFinalMorale.toFixed(2) + "  -> 士气损失=" + attToDefMorale.moraleDamage.toFixed(2),
-      "防守方 -> 进攻方：基础伤亡=" + defenderToAttacker.baseCasualties.toFixed(2) + "  己方士气=" + defFinalMorale.toFixed(2) + "  -> 士气损失=" + defToAttMorale.moraleDamage.toFixed(2)
+      "士气损失 = 逐步截断至千分位的交战伤害 + 每团截断至千分位后相加的被动损耗；截断余数不参与后续计算。",
+      "被动损耗 = 敌方平均最大士气 x 1%，每团每天一次；不乘兵力或天数加成。",
+      "进攻方 -> 防守方：士气等效基础伤亡=" + attToDefMorale.baseCasualties.toFixed(2) + "  己方士气=" + attFinalMorale.toFixed(3) + "  交战伤害=" + attToDefMorale.combatMoraleDamage + "  被动损耗=" + attToDefMorale.passiveMoraleDamage + "  不截断的对照值=" + attToDefMorale.rawMoraleDamage + "  -> 实际扣除=" + attToDefMorale.moraleDamage,
+      moraleSteps(attToDefMorale),
+      "防守方 -> 进攻方：士气等效基础伤亡=" + defToAttMorale.baseCasualties.toFixed(2) + "  己方士气=" + defFinalMorale.toFixed(3) + "  交战伤害=" + defToAttMorale.combatMoraleDamage + "  被动损耗=" + defToAttMorale.passiveMoraleDamage + "  不截断的对照值=" + defToAttMorale.rawMoraleDamage + "  -> 实际扣除=" + defToAttMorale.moraleDamage,
+      moraleSteps(defToAttMorale)
     ].join("\n");
   }
 
