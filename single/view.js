@@ -46,6 +46,7 @@
     dom.defenderLossEl.textContent = attackerToDefender.damage.toFixed(2);
     dom.attackerMoraleLossEl.textContent = defToAttMorale.moraleDamage.toFixed(2);
     dom.defenderMoraleLossEl.textContent = attToDefMorale.moraleDamage.toFixed(2);
+    document.querySelector('#single-summary').textContent = (phase === 'fire' ? '火力' : '冲击') + '阶段 · 第 1 天 ｜ 进攻方：' + translateUnit(attacker.unitName) + '（骰子 ' + attackerDice + '） ｜ 防守方：' + translateUnit(defender.unitName) + '（骰子 ' + defenderDice + '）';
 
     dom.detailsOutput.textContent = [
       "阶段：" + (phase === "fire" ? "火力" : "冲击"),

@@ -1,0 +1,103 @@
+.single-context { color: var(--muted); margin: 0 0 16px; line-height: 1.8; }
+[tabindex="0"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.results-grid .result-card { border-top: 3px solid var(--attack); }
+.results-grid .result-card:nth-child(even) { border-top-color: var(--defend); }
+.results-grid .result-label { font-size: 14px; color: var(--text); }
+.results-grid strong { font-size: clamp(28px, 4vw, 40px); }
+.sim-summary:has(.battle-verdict) { display: block; background: transparent; border: 0; padding: 0; }
+.battle-verdict { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 20px; margin-bottom: 16px; background: var(--panel-soft); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 5px; }
+.battle-verdict.attacker { border-left-color: var(--attack); }
+.battle-verdict.defender { border-left-color: var(--defend); }
+.battle-verdict h3 { font-size: 28px; margin: 4px 0; }
+.battle-verdict p { margin: 0; font-size: 13px; color: var(--muted); }
+.battle-duration { display: flex; flex-direction: column; flex: 0 0 auto; text-align: right; color: var(--muted); }
+.battle-duration strong { font-size: 32px; color: var(--text); }
+.army-report-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.army-report { padding: 16px; border: 1px solid var(--border); border-top: 3px solid var(--side-color); border-radius: 5px; min-width: 0; }
+.army-report.attacker { --side-color: var(--attack); }
+.army-report.defender { --side-color: var(--defend); }
+.army-report-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 4px 10px; margin-bottom: 14px; }
+.army-report-head h4 { color: var(--side-color); font-size: 17px; margin: 0; }
+.army-report-head > span { color: var(--muted); font-size: 12px; }
+.army-stat { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; font-size: 13px; }
+.army-stat > strong { margin-left: auto; color: var(--side-color); font-size: 19px; font-variant-numeric: tabular-nums; }
+.stat-initial { color: var(--muted); font-size: 12px; }
+.army-meter { height: 8px; background: var(--panel-soft); border: 1px solid var(--border); border-radius: 2px; overflow: hidden; margin: 5px 0 12px; }
+.army-meter > span { display: block; height: 100%; background: var(--side-color); transition: width .18s ease; }
+.morale-caption { margin: 6px 0; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.morale-caption strong { color: var(--text); }
+.morale-explanation, .report-hint { font-size: 12px; color: var(--muted); line-height: 1.7; margin: 10px 0 0; }
+.morale-explanation { margin-bottom: 20px; }
+.battle-replay { padding: 18px; border: 1px solid var(--border); background: var(--chart-bg); border-radius: 5px; }
+.report-section-head { display: flex; align-items: center; justify-content: space-between; gap: 10px 16px; flex-wrap: wrap; margin-bottom: 14px; }
+.report-section-head h3 { margin: 0; font-size: 18px; }
+#replay-day { font-size: 13px; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
+.replay-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.replay-controls button { height: 36px; padding: 0 16px; }
+.replay-speed, .ranking-select-label { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.replay-speed select, .ranking-select-label select { height: 36px; border: 1px solid var(--border); background: var(--panel); color: var(--text); font: inherit; border-radius: 4px; padding: 0 8px; min-width: 0; }
+#replay-status { color: var(--muted); font-size: 12px; }
+.replay-progress-label { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--muted); margin-top: 16px; }
+#replay-progress { width: 100%; accent-color: var(--accent); min-height: 32px; margin: 0; cursor: pointer; }
+.trend-heading { margin-top: 20px; }
+.trend-switch { display: flex; gap: 6px; }
+.trend-switch button { height: 32px; padding: 0 14px; font-size: 13px; }
+.trend-switch button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.trend-legend { display: flex; gap: 20px; flex-wrap: wrap; font-size: 12px; margin-bottom: 8px; }
+.attacker-legend { color: var(--attack); }
+.defender-legend { color: var(--defend); }
+.trend-legend span::before { content: ''; display: inline-block; width: 22px; border-top: 3px solid currentColor; vertical-align: middle; margin-right: 7px; }
+.defender-legend::before { border-top-style: dashed !important; }
+#battle-trend { cursor: crosshair; border-radius: 4px; }
+#battle-trend svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.trend-readout { display: block; padding: 10px 12px; background: var(--panel-soft); font-size: 13px; font-variant-numeric: tabular-nums; min-height: 42px; border-radius: 4px; }
+.round-log { margin-top: 20px; }
+.sim-table-wrap { max-height: 560px; overflow: auto; overscroll-behavior: contain; border: 1px solid var(--border); border-radius: 4px; }
+.sim-table th { z-index: 1; }
+.sim-table tbody tr.replay-current-row { background: var(--accent-soft); box-shadow: inset 3px 0 var(--accent); }
+.details > summary { margin-bottom: 0; }
+.details[open] > summary { margin-bottom: 12px; }
+#details-output { min-height: 0; max-height: 560px; overflow: auto; }
+.ranking-comparison { border: 1px solid var(--border); border-radius: 5px; background: var(--chart-bg); padding: 16px; margin-bottom: 20px; }
+.ranking-select-label { flex-wrap: wrap; min-width: 0; max-width: 100%; }
+.ranking-select-label select { max-width: 100%; width: 260px; }
+.ranking-podium { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 16px; }
+.podium-card { padding: 12px; border: 1px solid var(--border); border-top: 3px solid #a67b36; border-radius: 4px; }
+.podium-card:nth-child(2) { border-top-color: #8a8981; }
+.podium-card:nth-child(3) { border-top-color: #9b6845; }
+.podium-card h4 { font-size: 14px; margin: 4px 0; }
+.podium-card p { margin: 0; color: var(--muted); font-size: 12px; }
+#ranking-score-chart { max-height: 360px; overflow: auto; }
+.ranking-score-row { display: grid; grid-template-columns: 24px minmax(160px, 1fr) minmax(100px, 2fr) 55px; gap: 10px; align-items: center; width: 100%; min-height: 44px; height: auto; padding: 8px 12px; margin: 4px 0; border: 1px solid transparent; background: transparent; color: var(--text); font-weight: 400; font-size: 13px; text-align: left; }
+.ranking-score-row.is-top { font-weight: 700; background: var(--accent-soft); }
+.ranking-score-row[aria-pressed="true"] { background: var(--attack-soft); border-color: var(--attack); }
+.ranking-score-track { height: 12px; background: var(--panel-soft); border-radius: 2px; }
+.ranking-score-fill { display: block; height: 100%; background: var(--accent); border-radius: inherit; }
+.ranking-score-row[aria-pressed="true"] .ranking-score-fill { background: var(--attack); }
+#ranking-tbody tr.ranking-selected { background: var(--attack-soft); box-shadow: inset 3px 0 var(--attack); }
+#ranking-tbody tr:nth-child(-n+3) td:first-child { font-weight: 800; color: var(--accent); }
+.cross-tech-chart-svg { font-family: var(--font); }
+.cross-tech-chart-point { cursor: help; }
+.cross-tech-chart-card { min-width: 0; }
+.cross-tech-filter-arrow-btn { width: 28px; height: 30px; }
+.cross-tech-filter-option { white-space: normal; }
+.cross-tech-chart-legend-swatch { width: 22px; height: 0; border-radius: 0; }
+.cross-tech-ranking-table td:nth-child(2), .cross-tech-ranking-table td:nth-child(3), .cross-tech-ranking-table td:nth-child(4) { background: var(--accent-soft); }
+.cross-tech-template-card { max-width: min(540px, calc(100vw - 40px)); max-height: 70vh; overflow: auto; white-space: normal; }
+@media (max-width: 760px) {
+  .army-report-grid { grid-template-columns: 1fr; }
+  .battle-verdict { padding: 16px; gap: 12px; }
+  .battle-verdict h3 { font-size: 24px; }
+  .sim-results, .battle-replay, .ranking-comparison { padding: 12px; }
+  .ranking-podium { grid-template-columns: 1fr; }
+  .ranking-score-row { grid-template-columns: 22px minmax(0, 1fr) 48px; gap: 8px; }
+  .ranking-score-track { grid-column: 2; grid-row: 2; }
+  .ranking-score-row > strong { grid-column: 3; grid-row: 1; text-align: right; }
+  .cross-tech-template-card { position: fixed; top: 20vh; left: 20px; right: 20px; width: auto; margin: 0; transform: none; }
+  .cross-tech-filter-menu { width: 180px; min-width: 0; }
+  .cross-tech-chart-svg { min-width: 600px; }
+  .cross-tech-chart-shell { overflow-x: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .army-meter > span { transition: none; }
+}

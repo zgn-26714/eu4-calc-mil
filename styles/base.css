@@ -1,22 +1,27 @@
 :root {
-  --bg: #f7f8fb;
-  --panel: #ffffff;
-  --panel-soft: #f2f5f9;
-  --border: #d7deea;
-  --text: #162033;
-  --muted: #627089;
-  --accent: #a96b11;
-  --accent-soft: rgba(169, 107, 17, 0.12);
-  --attack: #2359d1;
-  --defend: #177a57;
-  --danger: #c63b3b;
-  --shadow: 0 18px 40px rgba(30, 46, 76, 0.10);
-  --code-bg: #edf3fb;
-  --chart-bg: #fbfdff;
-  --chart-grid: #d8e0ed;
-  --chart-axis: #94a3b8;
+  --bg: #eee3ce;
+  --panel: #faf3e5;
+  --panel-soft: #f2e8d5;
+  --surface: var(--panel);
+  --border: #c6ae82;
+  --text: #30291f;
+  --muted: #6e604c;
+  --accent: #795626;
+  --accent-soft: rgba(121, 86, 38, 0.10);
+  --attack: #315b7c;
+  --attack-soft: #e7edf0;
+  --defend: #873f3d;
+  --defend-soft: #f2e6df;
+  --danger: #933d32;
+  --success: #496448;
+  --shadow: 0 4px 16px rgba(77, 56, 28, 0.07);
+  --code-bg: #f2e8d5;
+  --chart-bg: #fbf6eb;
+  --chart-grid: #dac9aa;
+  --chart-axis: #998463;
   --radius: 8px;
   --font: "Segoe UI", "Microsoft YaHei UI", sans-serif;
+  --heading-font: "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
 }
 
 * {
@@ -27,9 +32,8 @@ body {
   margin: 0;
   font-family: var(--font);
   background:
-    radial-gradient(circle at top left, rgba(35, 89, 209, 0.10), transparent 28%),
-    radial-gradient(circle at top right, rgba(23, 122, 87, 0.09), transparent 24%),
-    linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+    radial-gradient(ellipse at top, #faf2e1, transparent 75%),
+    var(--bg);
   color: var(--text);
 }
 
