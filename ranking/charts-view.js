@@ -11,7 +11,12 @@
     shell.setAttribute("aria-label", titleText + "，点击放大查看");
 
     function openPreview() {
-      openChartLightbox(titleText, shell.outerHTML.replace(" clickable", ""));
+      var preview = shell.cloneNode(true);
+      preview.classList.remove("clickable");
+      preview.removeAttribute("role");
+      preview.removeAttribute("tabindex");
+      preview.removeAttribute("aria-label");
+      openChartLightbox(titleText, preview.outerHTML);
     }
 
     shell.addEventListener("click", openPreview);
@@ -95,6 +100,7 @@
     var svg = '';
     svg += '<svg class="cross-tech-chart-svg" viewBox="0 0 ' + width + ' ' + height + '" role="img" aria-label="' + titleText + '兵种组最佳排名折线图">';
     svg += '<rect x="0" y="0" width="' + width + '" height="' + height + '" fill="' + chartBg + '"></rect>';
+    svg += '<rect x="' + paddingLeft + '" y="' + paddingTop + '" width="' + plotWidth + '" height="' + Math.min(plotHeight, Math.max(18, yForRank(Math.min(3, maxRank)) - paddingTop + 10)) + '" fill="' + styles.getPropertyValue('--accent-soft').trim() + '"></rect>';
 
 
     var yTicks = [];
@@ -133,10 +139,11 @@
         var pt = group.points[p];
         path.push((p === 0 ? "M" : "L") + xForTech(pt.techLevel).toFixed(2) + " " + yForRank(pt.rank).toFixed(2));
       }
-      svg += '<path class="cross-tech-chart-line" data-chart-group-key="' + group.key + '" d="' + path.join(" ") + '" fill="none" stroke="' + group.color + '" stroke-width="' + (group.key === "Shared" ? "3" : "2.2") + '" stroke-linecap="round" stroke-linejoin="round"></path>';
+      var dash = ['', '8 4', '3 3', '10 3 2 3'][i % 4];
+      svg += '<path class="cross-tech-chart-line" data-chart-group-key="' + group.key + '" d="' + path.join(" ") + '" fill="none" stroke="' + group.color + '" stroke-dasharray="' + dash + '" stroke-width="' + (group.key === "Shared" ? "3" : "2.2") + '" stroke-linecap="round" stroke-linejoin="round"></path>';
       for (p = 0; p < group.points.length; p++) {
         pt = group.points[p];
-        svg += '<circle class="cross-tech-chart-point" data-chart-group-key="' + group.key + '" data-unit-name="' + (pt.unitName || '') + '" data-tech-level="' + pt.techLevel + '" data-rank="' + pt.rank + '" cx="' + xForTech(pt.techLevel).toFixed(2) + '" cy="' + yForRank(pt.rank).toFixed(2) + '" r="' + (group.key === "Shared" ? "3.4" : "2.6") + '" fill="' + group.color + '"><title>' + group.label + ' | 科技 ' + pt.techLevel + ' | 第 ' + pt.rank + ' 名' + (pt.unitName ? ' | ' + pt.unitName : '') + '</title></circle>';
+        svg += '<circle class="cross-tech-chart-point" data-chart-group-key="' + group.key + '" data-unit-name="' + (pt.unitName || '') + '" data-tech-level="' + pt.techLevel + '" data-rank="' + pt.rank + '" cx="' + xForTech(pt.techLevel).toFixed(2) + '" cy="' + yForRank(pt.rank).toFixed(2) + '" r="' + (pt.rank <= 3 ? "4" : (group.key === "Shared" ? "3.4" : "2.6")) + '" fill="' + group.color + '"><title>' + group.label + ' | 科技 ' + pt.techLevel + ' | 第 ' + pt.rank + ' 名' + (pt.unitName ? ' | ' + pt.unitName : '') + '</title></circle>';
       }
     }
 
@@ -145,7 +152,7 @@
     var legend = '<div class="cross-tech-chart-legend">';
     for (i = 0; i < seriesData.groups.length; i++) {
       group = seriesData.groups[i];
-      legend += '<span class="cross-tech-chart-legend-item" data-chart-group-key="' + group.key + '"><span class="cross-tech-chart-legend-swatch" style="background:' + group.color + ';"></span>' + group.label + '</span>';
+      legend += '<span class="cross-tech-chart-legend-item" data-chart-group-key="' + group.key + '"><span class="cross-tech-chart-legend-swatch" style="border-top:3px ' + (i % 4 === 2 ? 'dotted' : (i % 4 ? 'dashed' : 'solid')) + ' ' + group.color + ';"></span>' + group.label + '</span>';
     }
     legend += '</div>';
 

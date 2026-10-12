@@ -1,0 +1,1459 @@
+Binary: D:\program\steamapps\common\Europa Universalis IV\eu4.exe
+Steam build: 15918133
+SHA256: 9ad3efe1af169f40ee577f9dae5debbc87af6fb8b5450fb345ebf110dc4d771a
+Addresses below are RVAs, not runtime virtual addresses.
+
+00225860: 48 89 54 24 10                   mov qword ptr [rsp + 0x10], rdx
+00225865: 48 89 4c 24 08                   mov qword ptr [rsp + 8], rcx
+0022586a: 55                               push rbp
+0022586b: 53                               push rbx
+0022586c: 56                               push rsi
+0022586d: 57                               push rdi
+0022586e: 41 54                            push r12
+00225870: 41 55                            push r13
+00225872: 41 56                            push r14
+00225874: 41 57                            push r15
+00225876: 48 8d ac 24 f8 fe ff ff          lea rbp, [rsp - 0x108]
+0022587e: 48 81 ec 08 02 00 00             sub rsp, 0x208
+00225885: 48 8b da                         mov rbx, rdx
+00225888: 48 83 7a 08 00                   cmp qword ptr [rdx + 8], 0
+0022588d: 0f 84 af 16 00 00                je 0x226f42
+00225893: 48 8b 4a 10                      mov rcx, qword ptr [rdx + 0x10]
+00225897: 48 89 8d 68 01 00 00             mov qword ptr [rbp + 0x168], rcx
+0022589e: 48 8b 42 18                      mov rax, qword ptr [rdx + 0x18]
+002258a2: 48 89 44 24 50                   mov qword ptr [rsp + 0x50], rax
+002258a7: 45 33 ed                         xor r13d, r13d
+002258aa: 45 8b e5                         mov r12d, r13d
+002258ad: 41 8b f5                         mov esi, r13d
+002258b0: 41 8b fd                         mov edi, r13d
+002258b3: 45 8b fd                         mov r15d, r13d
+002258b6: 45 8b f5                         mov r14d, r13d
+002258b9: 48 85 c9                         test rcx, rcx
+002258bc: 0f 84 55 01 00 00                je 0x225a17
+002258c2: 48 8b 01                         mov rax, qword ptr [rcx]
+002258c5: ff 50 50                         call qword ptr [rax + 0x50]
+002258c8: 84 c0                            test al, al
+002258ca: 0f 84 47 01 00 00                je 0x225a17
+002258d0: 48 8b 43 08                      mov rax, qword ptr [rbx + 8]
+002258d4: 48 8b 48 20                      mov rcx, qword ptr [rax + 0x20]
+002258d8: 44 8b 41 10                      mov r8d, dword ptr [rcx + 0x10]
+002258dc: 48 8d 95 60 01 00 00             lea rdx, [rbp + 0x160]
+002258e3: 4c 8b b5 68 01 00 00             mov r14, qword ptr [rbp + 0x168]
+002258ea: 49 8b ce                         mov rcx, r14
+002258ed: e8 8e 2d 64 00                   call 0x868680
+002258f2: 44 8b 20                         mov r12d, dword ptr [rax]
+002258f5: 49 8b 06                         mov rax, qword ptr [r14]
+002258f8: 49 8b ce                         mov rcx, r14
+002258fb: ff 50 50                         call qword ptr [rax + 0x50]
+002258fe: 84 c0                            test al, al
+00225900: 74 7d                            je 0x22597f
+00225902: 4d 8b 46 68                      mov r8, qword ptr [r14 + 0x68]
+00225906: 4d 85 c0                         test r8, r8
+00225909: 74 74                            je 0x22597f
+0022590b: 41 38 70 10                      cmp byte ptr [r8 + 0x10], sil
+0022590f: 74 0d                            je 0x22591e
+00225911: 49 8b 40 58                      mov rax, qword ptr [r8 + 0x58]
+00225915: 44 8b b8 3c 08 00 00             mov r15d, dword ptr [rax + 0x83c]
+0022591c: eb 2c                            jmp 0x22594a
+0022591e: 49 63 50 64                      movsxd rdx, dword ptr [r8 + 0x64]
+00225922: 48 85 d2                         test rdx, rdx
+00225925: 7e 23                            jle 0x22594a
+00225927: 49 8b cd                         mov rcx, r13
+0022592a: 49 8b 40 58                      mov rax, qword ptr [r8 + 0x58]
+0022592e: 66 90                            nop 
+00225930: 81 38 07 01 00 00                cmp dword ptr [rax], 0x107
+00225936: 74 0e                            je 0x225946
+00225938: 48 ff c1                         inc rcx
+0022593b: 48 83 c0 08                      add rax, 8
+0022593f: 48 3b ca                         cmp rcx, rdx
+00225942: 7c ec                            jl 0x225930
+00225944: eb 04                            jmp 0x22594a
+00225946: 44 8b 78 04                      mov r15d, dword ptr [rax + 4]
+0022594a: 44 89 bd 60 01 00 00             mov dword ptr [rbp + 0x160], r15d
+00225951: 48 8b 05 28 27 13 02             mov rax, qword ptr [rip + 0x2132728]
+00225958: 48 8b 88 e0 62 00 00             mov rcx, qword ptr [rax + 0x62e0]
+0022595f: 48 85 c9                         test rcx, rcx
+00225962: 74 1b                            je 0x22597f
+00225964: 48 8b 01                         mov rax, qword ptr [rcx]
+00225967: 4c 8d 8d 60 01 00 00             lea r9, [rbp + 0x160]
+0022596e: 48 8d 95 68 01 00 00             lea rdx, [rbp + 0x168]
+00225975: ff 50 08                         call qword ptr [rax + 8]
+00225978: 44 8b bd 68 01 00 00             mov r15d, dword ptr [rbp + 0x168]
+0022597f: 49 8b 06                         mov rax, qword ptr [r14]
+00225982: 49 8b ce                         mov rcx, r14
+00225985: ff 50 50                         call qword ptr [rax + 0x50]
+00225988: 84 c0                            test al, al
+0022598a: 0f 84 84 00 00 00                je 0x225a14
+00225990: 4d 8b 46 68                      mov r8, qword ptr [r14 + 0x68]
+00225994: 4d 85 c0                         test r8, r8
+00225997: 74 7b                            je 0x225a14
+00225999: 41 38 70 10                      cmp byte ptr [r8 + 0x10], sil
+0022599d: 74 0d                            je 0x2259ac
+0022599f: 49 8b 40 58                      mov rax, qword ptr [r8 + 0x58]
+002259a3: 44 8b b0 34 08 00 00             mov r14d, dword ptr [rax + 0x834]
+002259aa: eb 2b                            jmp 0x2259d7
+002259ac: 49 63 50 64                      movsxd rdx, dword ptr [r8 + 0x64]
+002259b0: 48 85 d2                         test rdx, rdx
+002259b3: 7e 1f                            jle 0x2259d4
+002259b5: 49 8b cd                         mov rcx, r13
+002259b8: 49 8b 40 58                      mov rax, qword ptr [r8 + 0x58]
+002259bc: 0f 1f 40 00                      nop dword ptr [rax]
+002259c0: 81 38 06 01 00 00                cmp dword ptr [rax], 0x106
+002259c6: 74 46                            je 0x225a0e
+002259c8: 48 ff c1                         inc rcx
+002259cb: 48 83 c0 08                      add rax, 8
+002259cf: 48 3b ca                         cmp rcx, rdx
+002259d2: 7c ec                            jl 0x2259c0
+002259d4: 45 8b f5                         mov r14d, r13d
+002259d7: 44 89 b5 60 01 00 00             mov dword ptr [rbp + 0x160], r14d
+002259de: 48 8b 05 9b 26 13 02             mov rax, qword ptr [rip + 0x213269b]
+002259e5: 48 8b 88 80 62 00 00             mov rcx, qword ptr [rax + 0x6280]
+002259ec: 48 85 c9                         test rcx, rcx
+002259ef: 74 26                            je 0x225a17
+002259f1: 48 8b 01                         mov rax, qword ptr [rcx]
+002259f4: 4c 8d 8d 60 01 00 00             lea r9, [rbp + 0x160]
+002259fb: 48 8d 95 68 01 00 00             lea rdx, [rbp + 0x168]
+00225a02: ff 50 08                         call qword ptr [rax + 8]
+00225a05: 44 8b b5 68 01 00 00             mov r14d, dword ptr [rbp + 0x168]
+00225a0c: eb 09                            jmp 0x225a17
+00225a0e: 44 8b 70 04                      mov r14d, dword ptr [rax + 4]
+00225a12: eb c3                            jmp 0x2259d7
+00225a14: 45 8b f5                         mov r14d, r13d
+00225a17: 48 8b 4c 24 50                   mov rcx, qword ptr [rsp + 0x50]
+00225a1c: 48 85 c9                         test rcx, rcx
+00225a1f: 0f 84 27 01 00 00                je 0x225b4c
+00225a25: 48 8b 01                         mov rax, qword ptr [rcx]
+00225a28: ff 50 50                         call qword ptr [rax + 0x50]
+00225a2b: 84 c0                            test al, al
+00225a2d: 0f 84 19 01 00 00                je 0x225b4c
+00225a33: 48 8b 7c 24 50                   mov rdi, qword ptr [rsp + 0x50]
+00225a38: 48 8b 07                         mov rax, qword ptr [rdi]
+00225a3b: 48 8b cf                         mov rcx, rdi
+00225a3e: ff 50 50                         call qword ptr [rax + 0x50]
+00225a41: 84 c0                            test al, al
+00225a43: 74 77                            je 0x225abc
+00225a45: 4c 8b 47 68                      mov r8, qword ptr [rdi + 0x68]
+00225a49: 4d 85 c0                         test r8, r8
+00225a4c: 74 6e                            je 0x225abc
+00225a4e: 41 38 70 10                      cmp byte ptr [r8 + 0x10], sil
+00225a52: 74 0c                            je 0x225a60
+00225a54: 49 8b 40 58                      mov rax, qword ptr [r8 + 0x58]
+00225a58: 8b b0 4c 08 00 00                mov esi, dword ptr [rax + 0x84c]
+00225a5e: eb 29                            jmp 0x225a89
+00225a60: 49 63 50 64                      movsxd rdx, dword ptr [r8 + 0x64]
+00225a64: 48 85 d2                         test rdx, rdx
+00225a67: 7e 20                            jle 0x225a89
+00225a69: 49 8b cd                         mov rcx, r13
+00225a6c: 49 8b 40 58                      mov rax, qword ptr [r8 + 0x58]
+00225a70: 81 38 09 01 00 00                cmp dword ptr [rax], 0x109
+00225a76: 74 0e                            je 0x225a86
+00225a78: 48 ff c1                         inc rcx
+00225a7b: 48 83 c0 08                      add rax, 8
+00225a7f: 48 3b ca                         cmp rcx, rdx
+00225a82: 7c ec                            jl 0x225a70
+00225a84: eb 03                            jmp 0x225a89
+00225a86: 8b 70 04                         mov esi, dword ptr [rax + 4]
+00225a89: 89 b5 60 01 00 00                mov dword ptr [rbp + 0x160], esi
+00225a8f: 48 8b 05 ea 25 13 02             mov rax, qword ptr [rip + 0x21325ea]
+00225a96: 48 8b 88 a0 63 00 00             mov rcx, qword ptr [rax + 0x63a0]
+00225a9d: 48 85 c9                         test rcx, rcx
+00225aa0: 74 1a                            je 0x225abc
+00225aa2: 48 8b 01                         mov rax, qword ptr [rcx]
+00225aa5: 4c 8d 8d 60 01 00 00             lea r9, [rbp + 0x160]
+00225aac: 48 8d 95 68 01 00 00             lea rdx, [rbp + 0x168]
+00225ab3: ff 50 08                         call qword ptr [rax + 8]
+00225ab6: 8b b5 68 01 00 00                mov esi, dword ptr [rbp + 0x168]
+00225abc: 48 8b 07                         mov rax, qword ptr [rdi]
+00225abf: 48 8b cf                         mov rcx, rdi
+00225ac2: ff 50 50                         call qword ptr [rax + 0x50]
+00225ac5: 84 c0                            test al, al
+00225ac7: 0f 84 7c 00 00 00                je 0x225b49
+00225acd: 4c 8b 47 68                      mov r8, qword ptr [rdi + 0x68]
+00225ad1: 4d 85 c0                         test r8, r8
+00225ad4: 74 73                            je 0x225b49
+00225ad6: 45 38 68 10                      cmp byte ptr [r8 + 0x10], r13b
+00225ada: 74 0c                            je 0x225ae8
+00225adc: 49 8b 40 58                      mov rax, qword ptr [r8 + 0x58]
+00225ae0: 8b b8 44 08 00 00                mov edi, dword ptr [rax + 0x844]
+00225ae6: eb 27                            jmp 0x225b0f
+00225ae8: 49 63 50 64                      movsxd rdx, dword ptr [r8 + 0x64]
+00225aec: 48 85 d2                         test rdx, rdx
+00225aef: 7e 1b                            jle 0x225b0c
+00225af1: 49 8b cd                         mov rcx, r13
+00225af4: 49 8b 40 58                      mov rax, qword ptr [r8 + 0x58]
+00225af8: 81 38 08 01 00 00                cmp dword ptr [rax], 0x108
+00225afe: 74 44                            je 0x225b44
+00225b00: 48 ff c1                         inc rcx
+00225b03: 48 83 c0 08                      add rax, 8
+00225b07: 48 3b ca                         cmp rcx, rdx
+00225b0a: 7c ec                            jl 0x225af8
+00225b0c: 41 8b fd                         mov edi, r13d
+00225b0f: 89 bd 60 01 00 00                mov dword ptr [rbp + 0x160], edi
+00225b15: 48 8b 05 64 25 13 02             mov rax, qword ptr [rip + 0x2132564]
+00225b1c: 48 8b 88 40 63 00 00             mov rcx, qword ptr [rax + 0x6340]
+00225b23: 48 85 c9                         test rcx, rcx
+00225b26: 74 24                            je 0x225b4c
+00225b28: 48 8b 01                         mov rax, qword ptr [rcx]
+00225b2b: 4c 8d 8d 60 01 00 00             lea r9, [rbp + 0x160]
+00225b32: 48 8d 95 68 01 00 00             lea rdx, [rbp + 0x168]
+00225b39: ff 50 08                         call qword ptr [rax + 8]
+00225b3c: 8b bd 68 01 00 00                mov edi, dword ptr [rbp + 0x168]
+00225b42: eb 08                            jmp 0x225b4c
+00225b44: 8b 78 04                         mov edi, dword ptr [rax + 4]
+00225b47: eb c6                            jmp 0x225b0f
+00225b49: 41 8b fd                         mov edi, r13d
+00225b4c: 48 8d 95 60 01 00 00             lea rdx, [rbp + 0x160]
+00225b53: 48 8b 4b 08                      mov rcx, qword ptr [rbx + 8]
+00225b57: e8 04 7e 8b 00                   call 0xadd960
+00225b5c: 8b 08                            mov ecx, dword ptr [rax]
+00225b5e: b8 d3 4d 62 10                   mov eax, 0x10624dd3
+00225b63: f7 e9                            imul ecx
+00225b65: c1 fa 06                         sar edx, 6
+00225b68: 44 8b ca                         mov r9d, edx
+00225b6b: 41 c1 e9 1f                      shr r9d, 0x1f
+00225b6f: 44 03 ca                         add r9d, edx
+00225b72: 48 8b 03                         mov rax, qword ptr [rbx]
+00225b75: 48 89 44 24 60                   mov qword ptr [rsp + 0x60], rax
+00225b7a: 44 8b 43 20                      mov r8d, dword ptr [rbx + 0x20]
+00225b7e: 48 8b d0                         mov rdx, rax
+00225b81: e8 5a 34 00 00                   call 0x228fe0
+00225b86: 48 89 44 24 40                   mov qword ptr [rsp + 0x40], rax
+00225b8b: 48 85 c0                         test rax, rax
+00225b8e: 0f 84 57 13 00 00                je 0x226eeb
+00225b94: e8 e7 f0 2a 01                   call 0x14d4c80
+00225b99: f6 40 38 01                      test byte ptr [rax + 0x38], 1
+00225b9d: 74 64                            je 0x225c03
+00225b9f: 0f b6 1d 1e b5 da 01             movzx ebx, byte ptr [rip + 0x1dab51e]
+00225ba6: 88 9d 60 01 00 00                mov byte ptr [rbp + 0x160], bl
+00225bac: c6 05 11 b5 da 01 01             mov byte ptr [rip + 0x1dab511], 1
+00225bb3: 48 8b 44 24 40                   mov rax, qword ptr [rsp + 0x40]
+00225bb8: 48 8b 40 40                      mov rax, qword ptr [rax + 0x40]
+00225bbc: 41 8b d5                         mov edx, r13d
+00225bbf: 48 39 50 48                      cmp qword ptr [rax + 0x48], rdx
+00225bc3: 0f 95 c2                         setne dl
+00225bc6: 48 8b 85 58 01 00 00             mov rax, qword ptr [rbp + 0x158]
+00225bcd: 48 8b 40 08                      mov rax, qword ptr [rax + 8]
+00225bd1: 48 8b 48 40                      mov rcx, qword ptr [rax + 0x40]
+00225bd5: 45 8b cd                         mov r9d, r13d
+00225bd8: 4c 39 49 48                      cmp qword ptr [rcx + 0x48], r9
+00225bdc: 41 0f 95 c1                      setne r9b
+00225be0: 89 54 24 20                      mov dword ptr [rsp + 0x20], edx
+00225be4: 4c 8d 05 9d 35 a2 01             lea r8, [rip + 0x1a2359d]
+00225beb: ba d2 0a 00 00                   mov edx, 0xad2
+00225bf0: 48 8d 0d 61 31 a2 01             lea rcx, [rip + 0x1a23161]
+00225bf7: e8 b4 f2 2a 01                   call 0x14d4eb0
+00225bfc: 90                               nop 
+00225bfd: 88 1d c1 b4 da 01                mov byte ptr [rip + 0x1dab4c1], bl
+00225c03: e8 78 f0 2a 01                   call 0x14d4c80
+00225c08: f6 40 38 01                      test byte ptr [rax + 0x38], 1
+00225c0c: 74 3c                            je 0x225c4a
+00225c0e: 0f b6 1d af b4 da 01             movzx ebx, byte ptr [rip + 0x1dab4af]
+00225c15: 88 9d 60 01 00 00                mov byte ptr [rbp + 0x160], bl
+00225c1b: c6 05 a2 b4 da 01 01             mov byte ptr [rip + 0x1dab4a2], 1
+00225c22: 48 8b 44 24 40                   mov rax, qword ptr [rsp + 0x40]
+00225c27: 44 8b 48 14                      mov r9d, dword ptr [rax + 0x14]
+00225c2b: 4c 8d 05 4e 36 a2 01             lea r8, [rip + 0x1a2364e]
+00225c32: ba d3 0a 00 00                   mov edx, 0xad3
+00225c37: 48 8d 0d 1a 31 a2 01             lea rcx, [rip + 0x1a2311a]
+00225c3e: e8 6d f2 2a 01                   call 0x14d4eb0
+00225c43: 90                               nop 
+00225c44: 88 1d 7a b4 da 01                mov byte ptr [rip + 0x1dab47a], bl
+00225c4a: 48 8b 9d 58 01 00 00             mov rbx, qword ptr [rbp + 0x158]
+00225c51: 48 8b 13                         mov rdx, qword ptr [rbx]
+00225c54: 48 63 43 20                      movsxd rax, dword ptr [rbx + 0x20]
+00225c58: 44 8b 0d 65 88 11 02             mov r9d, dword ptr [rip + 0x2118865]
+00225c5f: 85 c0                            test eax, eax
+00225c61: 78 1a                            js 0x225c7d
+00225c63: 41 3b c1                         cmp eax, r9d
+00225c66: 7f 15                            jg 0x225c7d
+00225c68: 48 8b c8                         mov rcx, rax
+00225c6b: 48 8b 82 78 01 00 00             mov rax, qword ptr [rdx + 0x178]
+00225c72: 48 8b 0c c8                      mov rcx, qword ptr [rax + rcx*8]
+00225c76: 48 89 4c 24 70                   mov qword ptr [rsp + 0x70], rcx
+00225c7b: eb 05                            jmp 0x225c82
+00225c7d: 4c 89 6c 24 70                   mov qword ptr [rsp + 0x70], r13
+00225c82: 45 8b c5                         mov r8d, r13d
+00225c85: 44 89 ad 68 01 00 00             mov dword ptr [rbp + 0x168], r13d
+00225c8c: 8b 43 2c                         mov eax, dword ptr [rbx + 0x2c]
+00225c8f: 83 f8 01                         cmp eax, 1
+00225c92: 75 1b                            jne 0x225caf
+00225c94: 48 8b 44 24 40                   mov rax, qword ptr [rsp + 0x40]
+00225c99: 48 8b 50 20                      mov rdx, qword ptr [rax + 0x20]
+00225c9d: 48 8b 43 08                      mov rax, qword ptr [rbx + 8]
+00225ca1: 48 8b 48 20                      mov rcx, qword ptr [rax + 0x20]
+00225ca5: 44 8b 41 2c                      mov r8d, dword ptr [rcx + 0x2c]
+00225ca9: 44 2b 42 30                      sub r8d, dword ptr [rdx + 0x30]
+00225cad: eb 1d                            jmp 0x225ccc
+00225caf: 85 c0                            test eax, eax
+00225cb1: 75 20                            jne 0x225cd3
+00225cb3: 48 8b 44 24 40                   mov rax, qword ptr [rsp + 0x40]
+00225cb8: 48 8b 50 20                      mov rdx, qword ptr [rax + 0x20]
+00225cbc: 48 8b 43 08                      mov rax, qword ptr [rbx + 8]
+00225cc0: 48 8b 48 20                      mov rcx, qword ptr [rax + 0x20]
+00225cc4: 44 8b 41 24                      mov r8d, dword ptr [rcx + 0x24]
+00225cc8: 44 2b 42 28                      sub r8d, dword ptr [rdx + 0x28]
+00225ccc: 44 89 85 68 01 00 00             mov dword ptr [rbp + 0x168], r8d
+00225cd3: 48 8b 43 08                      mov rax, qword ptr [rbx + 8]
+00225cd7: 48 8b 48 20                      mov rcx, qword ptr [rax + 0x20]
+00225cdb: 48 8b 44 24 40                   mov rax, qword ptr [rsp + 0x40]
+00225ce0: 48 8b 40 20                      mov rax, qword ptr [rax + 0x20]
+00225ce4: 8b 49 1c                         mov ecx, dword ptr [rcx + 0x1c]
+00225ce7: 2b 48 20                         sub ecx, dword ptr [rax + 0x20]
+00225cea: 41 03 c8                         add ecx, r8d
+00225ced: 89 4c 24 38                      mov dword ptr [rsp + 0x38], ecx
+00225cf1: 45 8b c5                         mov r8d, r13d
+00225cf4: 45 85 c9                         test r9d, r9d
+00225cf7: 0f 8e 79 01 00 00                jle 0x225e76
+00225cfd: 41 ba 08 00 00 00                mov r10d, 8
+00225d03: 65 48 8b 04 25 58 00 00 00       mov rax, qword ptr gs:[0x58]
+00225d0c: 48 8b 08                         mov rcx, qword ptr [rax]
+00225d0f: 48 89 4c 24 68                   mov qword ptr [rsp + 0x68], rcx
+00225d14: 4c 8b 5c 24 60                   mov r11, qword ptr [rsp + 0x60]
+00225d19: 0f 1f 80 00 00 00 00             nop dword ptr [rax]
+00225d20: 41 8b c0                         mov eax, r8d
+00225d23: f7 d0                            not eax
+00225d25: 83 e0 01                         and eax, 1
+00225d28: 8d 04 45 ff ff ff ff             lea eax, [rax*2 - 1]
+00225d2f: 89 44 24 48                      mov dword ptr [rsp + 0x48], eax
+00225d33: 41 ff c0                         inc r8d
+00225d36: 44 89 85 60 01 00 00             mov dword ptr [rbp + 0x160], r8d
+00225d3d: 41 8b c0                         mov eax, r8d
+00225d40: 99                               cdq 
+00225d41: 2b c2                            sub eax, edx
+00225d43: d1 f8                            sar eax, 1
+00225d45: 89 44 24 30                      mov dword ptr [rsp + 0x30], eax
+00225d49: 41 8b 0c 0a                      mov ecx, dword ptr [r10 + rcx]
+00225d4d: 39 0d 75 4d 23 02                cmp dword ptr [rip + 0x2234d75], ecx
+00225d53: 0f 8f fd 11 00 00                jg 0x226f56
+00225d59: eb 13                            jmp 0x225d6e
+00225d5b: 4c 8b 5c 24 60                   mov r11, qword ptr [rsp + 0x60]
+00225d60: 44 8b 85 60 01 00 00             mov r8d, dword ptr [rbp + 0x160]
+00225d67: 44 8b 0d 56 87 11 02             mov r9d, dword ptr [rip + 0x2118756]
+00225d6e: 8b 4c 24 30                      mov ecx, dword ptr [rsp + 0x30]
+00225d72: 0f af 4c 24 48                   imul ecx, dword ptr [rsp + 0x48]
+00225d77: 03 0d 4f 4d 23 02                add ecx, dword ptr [rip + 0x2234d4f]
+00225d7d: 4c 63 d1                         movsxd r10, ecx
+00225d80: 49 8b 83 78 01 00 00             mov rax, qword ptr [r11 + 0x178]
+00225d87: 48 8b 54 24 40                   mov rdx, qword ptr [rsp + 0x40]
+00225d8c: 4a 39 14 d0                      cmp qword ptr [rax + r10*8], rdx
+00225d90: 74 19                            je 0x225dab
+00225d92: 45 3b c1                         cmp r8d, r9d
+00225d95: 48 8b 4c 24 68                   mov rcx, qword ptr [rsp + 0x68]
+00225d9a: 41 ba 08 00 00 00                mov r10d, 8
+00225da0: 0f 8c 7a ff ff ff                jl 0x225d20
+00225da6: e9 cb 00 00 00                   jmp 0x225e76
+00225dab: 85 c9                            test ecx, ecx
+00225dad: 0f 88 c3 00 00 00                js 0x225e76
+00225db3: 41 3b c9                         cmp ecx, r9d
+00225db6: 0f 8f ba 00 00 00                jg 0x225e76
+00225dbc: 49 8b 83 90 01 00 00             mov rax, qword ptr [r11 + 0x190]
+00225dc3: 4e 8b 04 d0                      mov r8, qword ptr [rax + r10*8]
+00225dc7: 4d 85 c0                         test r8, r8
+00225dca: 0f 84 a6 00 00 00                je 0x225e76
+00225dd0: 4d 8b 40 20                      mov r8, qword ptr [r8 + 0x20]
+00225dd4: 41 83 78 10 02                   cmp dword ptr [r8 + 0x10], 2
+00225dd9: 0f 85 97 00 00 00                jne 0x225e76
+00225ddf: 8b 43 2c                         mov eax, dword ptr [rbx + 0x2c]
+00225de2: 83 f8 01                         cmp eax, 1
+00225de5: 75 1b                            jne 0x225e02
+00225de7: 41 8b 40 30                      mov eax, dword ptr [r8 + 0x30]
+00225deb: 99                               cdq 
+00225dec: 2b c2                            sub eax, edx
+00225dee: d1 f8                            sar eax, 1
+00225df0: f7 d8                            neg eax
+00225df2: 01 85 68 01 00 00                add dword ptr [rbp + 0x168], eax
+00225df8: 41 8b 40 20                      mov eax, dword ptr [r8 + 0x20]
+00225dfc: 41 03 40 30                      add eax, dword ptr [r8 + 0x30]
+00225e00: eb 1d                            jmp 0x225e1f
+00225e02: 85 c0                            test eax, eax
+00225e04: 75 24                            jne 0x225e2a
+00225e06: 41 8b 40 28                      mov eax, dword ptr [r8 + 0x28]
+00225e0a: 99                               cdq 
+00225e0b: 2b c2                            sub eax, edx
+00225e0d: d1 f8                            sar eax, 1
+00225e0f: f7 d8                            neg eax
+00225e11: 01 85 68 01 00 00                add dword ptr [rbp + 0x168], eax
+00225e17: 41 8b 40 20                      mov eax, dword ptr [r8 + 0x20]
+00225e1b: 41 03 40 28                      add eax, dword ptr [r8 + 0x28]
+00225e1f: 99                               cdq 
+00225e20: 2b c2                            sub eax, edx
+00225e22: d1 f8                            sar eax, 1
+00225e24: f7 d8                            neg eax
+00225e26: 01 44 24 38                      add dword ptr [rsp + 0x38], eax
+00225e2a: e8 51 ee 2a 01                   call 0x14d4c80
+00225e2f: f6 40 38 01                      test byte ptr [rax + 0x38], 1
+00225e33: 74 41                            je 0x225e76
+00225e35: 0f b6 1d 88 b2 da 01             movzx ebx, byte ptr [rip + 0x1dab288]
+00225e3c: 88 9d 60 01 00 00                mov byte ptr [rbp + 0x160], bl
+00225e42: c6 05 7b b2 da 01 01             mov byte ptr [rip + 0x1dab27b], 1
+00225e49: 44 8b 8d 68 01 00 00             mov r9d, dword ptr [rbp + 0x168]
+00225e50: 4c 8d 05 19 34 a2 01             lea r8, [rip + 0x1a23419]
+00225e57: ba f8 0a 00 00                   mov edx, 0xaf8
+00225e5c: 48 8d 0d f5 2e a2 01             lea rcx, [rip + 0x1a22ef5]
+00225e63: e8 48 f0 2a 01                   call 0x14d4eb0
+00225e68: 90                               nop 
+00225e69: 88 1d 55 b2 da 01                mov byte ptr [rip + 0x1dab255], bl
+00225e6f: 48 8b 9d 58 01 00 00             mov rbx, qword ptr [rbp + 0x158]
+00225e76: 8b 43 24                         mov eax, dword ptr [rbx + 0x24]
+00225e79: 8b 95 68 01 00 00                mov edx, dword ptr [rbp + 0x168]
+00225e7f: 03 d0                            add edx, eax
+00225e81: 01 44 24 38                      add dword ptr [rsp + 0x38], eax
+00225e85: 48 8b 85 50 01 00 00             mov rax, qword ptr [rbp + 0x150]
+00225e8c: 8b 40 18                         mov eax, dword ptr [rax + 0x18]
+00225e8f: 83 c0 02                         add eax, 2
+00225e92: 03 d0                            add edx, eax
+00225e94: b8 15 00 00 00                   mov eax, 0x15
+00225e99: 79 05                            jns 0x225ea0
+00225e9b: 41 8b d5                         mov edx, r13d
+00225e9e: eb 05                            jmp 0x225ea5
+00225ea0: 3b d0                            cmp edx, eax
+00225ea2: 0f 4f d0                         cmovg edx, eax
+00225ea5: 69 c2 e8 03 00 00                imul eax, edx, 0x3e8
+00225eab: 48 63 c8                         movsxd rcx, eax
+00225eae: 48 6b d1 19                      imul rdx, rcx, 0x19
+00225eb2: 48 b8 cf f7 53 e3 a5 9b c4 20    movabs rax, 0x20c49ba5e353f7cf
+00225ebc: 48 f7 ea                         imul rdx
+00225ebf: 48 c1 fa 07                      sar rdx, 7
+00225ec3: 48 8b c2                         mov rax, rdx
+00225ec6: 48 c1 e8 3f                      shr rax, 0x3f
+00225eca: 48 03 c2                         add rax, rdx
+00225ecd: 83 c0 19                         add eax, 0x19
+00225ed0: 48 89 44 24 30                   mov qword ptr [rsp + 0x30], rax
+00225ed5: e8 a6 ed 2a 01                   call 0x14d4c80
+00225eda: f6 40 38 01                      test byte ptr [rax + 0x38], 1
+00225ede: 74 3f                            je 0x225f1f
+00225ee0: 0f b6 1d dd b1 da 01             movzx ebx, byte ptr [rip + 0x1dab1dd]
+00225ee7: 88 9d 60 01 00 00                mov byte ptr [rbp + 0x160], bl
+00225eed: c6 05 d0 b1 da 01 01             mov byte ptr [rip + 0x1dab1d0], 1
+00225ef4: 44 8b 4c 24 30                   mov r9d, dword ptr [rsp + 0x30]
+00225ef9: 4c 8d 05 b0 33 a2 01             lea r8, [rip + 0x1a233b0]
+00225f00: ba ff 0a 00 00                   mov edx, 0xaff
+00225f05: 48 8d 0d 4c 2e a2 01             lea rcx, [rip + 0x1a22e4c]
+00225f0c: e8 9f ef 2a 01                   call 0x14d4eb0
+00225f11: 90                               nop 
+00225f12: 88 1d ac b1 da 01                mov byte ptr [rip + 0x1dab1ac], bl
+00225f18: 48 8b 9d 58 01 00 00             mov rbx, qword ptr [rbp + 0x158]
+00225f1f: 48 8b 53 08                      mov rdx, qword ptr [rbx + 8]
+00225f23: 48 8b 8d 50 01 00 00             mov rcx, qword ptr [rbp + 0x150]
+00225f2a: e8 41 f7 ff ff                   call 0x225670
+00225f2f: 84 c0                            test al, al
+00225f31: 74 3f                            je 0x225f72
+00225f33: 8b 05 43 85 11 02                mov eax, dword ptr [rip + 0x2118543]
+00225f39: 05 e8 03 00 00                   add eax, 0x3e8
+00225f3e: 48 63 c8                         movsxd rcx, eax
+00225f41: 48 63 44 24 30                   movsxd rax, dword ptr [rsp + 0x30]
+00225f46: 48 0f af c8                      imul rcx, rax
+00225f4a: 49 ba cf f7 53 e3 a5 9b c4 20    movabs r10, 0x20c49ba5e353f7cf
+00225f54: 49 8b c2                         mov rax, r10
+00225f57: 48 f7 e9                         imul rcx
+00225f5a: 4c 8b c2                         mov r8, rdx
+00225f5d: 49 c1 f8 07                      sar r8, 7
+00225f61: 49 8b c0                         mov rax, r8
+00225f64: 48 c1 e8 3f                      shr rax, 0x3f
+00225f68: 4c 03 c0                         add r8, rax
+00225f6b: 4c 89 44 24 30                   mov qword ptr [rsp + 0x30], r8
+00225f70: eb 55                            jmp 0x225fc7
+00225f72: 48 8b 53 08                      mov rdx, qword ptr [rbx + 8]
+00225f76: 48 8b 8d 50 01 00 00             mov rcx, qword ptr [rbp + 0x150]
+00225f7d: e8 9e f7 ff ff                   call 0x225720
+00225f82: 49 ba cf f7 53 e3 a5 9b c4 20    movabs r10, 0x20c49ba5e353f7cf
+00225f8c: 84 c0                            test al, al
+00225f8e: 74 32                            je 0x225fc2
+00225f90: 8b 05 e2 84 11 02                mov eax, dword ptr [rip + 0x21184e2]
+00225f96: 05 e8 03 00 00                   add eax, 0x3e8
+00225f9b: 48 63 c8                         movsxd rcx, eax
+00225f9e: 48 63 44 24 30                   movsxd rax, dword ptr [rsp + 0x30]
+00225fa3: 48 0f af c8                      imul rcx, rax
+00225fa7: 49 8b c2                         mov rax, r10
+00225faa: 48 f7 e9                         imul rcx
+00225fad: 48 c1 fa 07                      sar rdx, 7
+00225fb1: 4c 8b c2                         mov r8, rdx
+00225fb4: 49 c1 e8 3f                      shr r8, 0x3f
+00225fb8: 4c 03 c2                         add r8, rdx
+00225fbb: 4c 89 44 24 30                   mov qword ptr [rsp + 0x30], r8
+00225fc0: eb 05                            jmp 0x225fc7
+00225fc2: 4c 8b 44 24 30                   mov r8, qword ptr [rsp + 0x30]
+00225fc7: 4c 8b 4b 08                      mov r9, qword ptr [rbx + 8]
+00225fcb: 49 8b 49 40                      mov rcx, qword ptr [r9 + 0x40]
+00225fcf: 48 85 c9                         test rcx, rcx
+00225fd2: 0f 84 87 01 00 00                je 0x22615f
+00225fd8: 80 b9 10 02 00 00 00             cmp byte ptr [rcx + 0x210], 0
+00225fdf: 0f 84 7a 01 00 00                je 0x22615f
+00225fe5: 48 8b 01                         mov rax, qword ptr [rcx]
+00225fe8: 48 8d 54 24 68                   lea rdx, [rsp + 0x68]
+00225fed: ff 90 38 01 00 00                call qword ptr [rax + 0x138]
+00225ff3: 48 8b 08                         mov rcx, qword ptr [rax]
+00225ff6: 48 8b 05 d3 78 11 02             mov rax, qword ptr [rip + 0x21178d3]
+00225ffd: 48 c1 e9 20                      shr rcx, 0x20
+00226001: 48 0f bf c9                      movsx rcx, cx
+00226005: 48 8b 80 18 01 00 00             mov rax, qword ptr [rax + 0x118]
+0022600c: 48 8b 0c c8                      mov rcx, qword ptr [rax + rcx*8]
+00226010: 48 81 c1 c0 28 00 00             add rcx, 0x28c0
+00226017: e8 34 77 71 00                   call 0x93d750
+0022601c: 4c 8d 40 08                      lea r8, [rax + 8]
+00226020: 41 80 78 10 00                   cmp byte ptr [r8 + 0x10], 0
+00226025: 74 0c                            je 0x226033
+00226027: 49 8b 40 58                      mov rax, qword ptr [r8 + 0x58]
+0022602b: 8b 80 ac 10 00 00                mov eax, dword ptr [rax + 0x10ac]
+00226031: eb 27                            jmp 0x22605a
+00226033: 49 63 50 64                      movsxd rdx, dword ptr [r8 + 0x64]
+00226037: 48 85 d2                         test rdx, rdx
+0022603a: 7e 1b                            jle 0x226057
+0022603c: 49 8b cd                         mov rcx, r13
+0022603f: 49 8b 40 58                      mov rax, qword ptr [r8 + 0x58]
+00226043: 81 38 15 02 00 00                cmp dword ptr [rax], 0x215
+00226049: 74 4b                            je 0x226096
+0022604b: 48 ff c1                         inc rcx
+0022604e: 48 83 c0 08                      add rax, 8
+00226052: 48 3b ca                         cmp rcx, rdx
+00226055: 7c ec                            jl 0x226043
+00226057: 41 8b c5                         mov eax, r13d
+0022605a: 89 85 68 01 00 00                mov dword ptr [rbp + 0x168], eax
+00226060: 4c 8b 0d 19 20 13 02             mov r9, qword ptr [rip + 0x2132019]
+00226067: 49 8b 89 20 c8 00 00             mov rcx, qword ptr [r9 + 0xc820]
+0022606e: 48 85 c9                         test rcx, rcx
+00226071: 74 28                            je 0x22609b
+00226073: 48 8b 01                         mov rax, qword ptr [rcx]
+00226076: 4c 8d 8d 68 01 00 00             lea r9, [rbp + 0x168]
+0022607d: 48 8d 95 60 01 00 00             lea rdx, [rbp + 0x160]
+00226084: ff 50 08                         call qword ptr [rax + 8]
+00226087: 4c 8b 0d f2 1f 13 02             mov r9, qword ptr [rip + 0x2131ff2]
+0022608e: 8b 85 60 01 00 00                mov eax, dword ptr [rbp + 0x160]
+00226094: eb 0b                            jmp 0x2260a1
+00226096: 8b 40 04                         mov eax, dword ptr [rax + 4]
+00226099: eb bf                            jmp 0x22605a
+0022609b: 89 85 60 01 00 00                mov dword ptr [rbp + 0x160], eax
+002260a1: 8d 98 e8 03 00 00                lea ebx, [rax + 0x3e8]
+002260a7: 48 8b 85 50 01 00 00             mov rax, qword ptr [rbp + 0x150]
+002260ae: 48 8b 40 10                      mov rax, qword ptr [rax + 0x10]
+002260b2: 4c 8b 40 30                      mov r8, qword ptr [rax + 0x30]
+002260b6: 49 81 c0 98 09 00 00             add r8, 0x998
+002260bd: 41 80 78 10 00                   cmp byte ptr [r8 + 0x10], 0
+002260c2: 74 0c                            je 0x2260d0
+002260c4: 49 8b 40 58                      mov rax, qword ptr [r8 + 0x58]
+002260c8: 8b 80 b4 10 00 00                mov eax, dword ptr [rax + 0x10b4]
+002260ce: eb 2b                            jmp 0x2260fb
+002260d0: 49 63 50 64                      movsxd rdx, dword ptr [r8 + 0x64]
+002260d4: 48 85 d2                         test rdx, rdx
+002260d7: 7e 1f                            jle 0x2260f8
+002260d9: 49 8b cd                         mov rcx, r13
+002260dc: 49 8b 40 58                      mov rax, qword ptr [r8 + 0x58]
+002260e0: 81 38 16 02 00 00                cmp dword ptr [rax], 0x216
+002260e6: 0f 84 ad 01 00 00                je 0x226299
+002260ec: 48 ff c1                         inc rcx
+002260ef: 48 83 c0 08                      add rax, 8
+002260f3: 48 3b ca                         cmp rcx, rdx
+002260f6: 7c e8                            jl 0x2260e0
+002260f8: 41 8b c5                         mov eax, r13d
+002260fb: 89 85 68 01 00 00                mov dword ptr [rbp + 0x168], eax
+00226101: 49 8b 89 80 c8 00 00             mov rcx, qword ptr [r9 + 0xc880]
+00226108: 48 85 c9                         test rcx, rcx
+0022610b: 74 16                            je 0x226123
+0022610d: 48 8b 01                         mov rax, qword ptr [rcx]
+00226110: 4c 8d 8d 68 01 00 00             lea r9, [rbp + 0x168]
+00226117: 48 8d 54 24 48                   lea rdx, [rsp + 0x48]
+0022611c: ff 50 08                         call qword ptr [rax + 8]
+0022611f: 8b 44 24 48                      mov eax, dword ptr [rsp + 0x48]
+00226123: 03 c3                            add eax, ebx
+00226125: 48 63 c8                         movsxd rcx, eax
+00226128: 48 63 44 24 30                   movsxd rax, dword ptr [rsp + 0x30]
+0022612d: 48 0f af c8                      imul rcx, rax
+00226131: 49 ba cf f7 53 e3 a5 9b c4 20    movabs r10, 0x20c49ba5e353f7cf
+0022613b: 49 8b c2                         mov rax, r10
+0022613e: 48 f7 e9                         imul rcx
+00226141: 48 c1 fa 07                      sar rdx, 7
+00226145: 4c 8b c2                         mov r8, rdx
+00226148: 49 c1 e8 3f                      shr r8, 0x3f
+0022614c: 4c 03 c2                         add r8, rdx
+0022614f: 4c 89 44 24 30                   mov qword ptr [rsp + 0x30], r8
+00226154: 48 8b 9d 58 01 00 00             mov rbx, qword ptr [rbp + 0x158]
+0022615b: 4c 8b 4b 08                      mov r9, qword ptr [rbx + 8]
+0022615f: 49 8b 41 50                      mov rax, qword ptr [r9 + 0x50]
+00226163: 48 c1 e8 20                      shr rax, 0x20
+00226167: 98                               cwde 
+00226168: 3b 05 6e 77 11 02                cmp eax, dword ptr [rip + 0x211776e]
+0022616e: 75 62                            jne 0x2261d2
+00226170: 48 8b 85 50 01 00 00             mov rax, qword ptr [rbp + 0x150]
+00226177: 48 8b 40 10                      mov rax, qword ptr [rax + 0x10]
+0022617b: 48 8b 48 30                      mov rcx, qword ptr [rax + 0x30]
+0022617f: 69 81 94 05 00 00 e8 03 00 00    imul eax, dword ptr [rcx + 0x594], 0x3e8
+00226189: 48 63 c8                         movsxd rcx, eax
+0022618c: 48 63 05 ed 82 11 02             movsxd rax, dword ptr [rip + 0x21182ed]
+00226193: 48 0f af c8                      imul rcx, rax
+00226197: 49 8b c2                         mov rax, r10
+0022619a: 48 f7 e9                         imul rcx
+0022619d: 48 c1 fa 07                      sar rdx, 7
+002261a1: 48 8b c2                         mov rax, rdx
+002261a4: 48 c1 e8 3f                      shr rax, 0x3f
+002261a8: 48 03 c2                         add rax, rdx
+002261ab: 05 e8 03 00 00                   add eax, 0x3e8
+002261b0: 48 63 d0                         movsxd rdx, eax
+002261b3: 49 63 c0                         movsxd rax, r8d
+002261b6: 48 0f af d0                      imul rdx, rax
+002261ba: 49 8b c2                         mov rax, r10
+002261bd: 48 f7 ea                         imul rdx
+002261c0: 48 c1 fa 07                      sar rdx, 7
+002261c4: 48 8b c2                         mov rax, rdx
+002261c7: 48 c1 e8 3f                      shr rax, 0x3f
+002261cb: 48 03 d0                         add rdx, rax
+002261ce: 89 54 24 30                      mov dword ptr [rsp + 0x30], edx
+002261d2: 83 7b 2c 01                      cmp dword ptr [rbx + 0x2c], 1
+002261d6: 41 0f 94 c0                      sete r8b
+002261da: 48 8d 54 24 58                   lea rdx, [rsp + 0x58]
+002261df: 49 8b c9                         mov rcx, r9
+002261e2: e8 29 91 8b 00                   call 0xadf310
+002261e7: 48 8d 95 60 01 00 00             lea rdx, [rbp + 0x160]
+002261ee: 48 8b 4c 24 40                   mov rcx, qword ptr [rsp + 0x40]
+002261f3: e8 48 8e 8b 00                   call 0xadf040
+002261f8: 4c 8b 44 24 40                   mov r8, qword ptr [rsp + 0x40]
+002261fd: 48 8d 95 68 01 00 00             lea rdx, [rbp + 0x168]
+00226204: 48 8b 4c 24 60                   mov rcx, qword ptr [rsp + 0x60]
+00226209: e8 e2 f2 ff ff                   call 0x2254f0
+0022620e: 48 8b 15 bb 76 11 02             mov rdx, qword ptr [rip + 0x21176bb]
+00226215: 48 8b 85 60 01 00 00             mov rax, qword ptr [rbp + 0x160]
+0022621c: 48 c1 e8 20                      shr rax, 0x20
+00226220: 48 0f bf c8                      movsx rcx, ax
+00226224: 48 8b 82 18 01 00 00             mov rax, qword ptr [rdx + 0x118]
+0022622b: 48 8b 0c c8                      mov rcx, qword ptr [rax + rcx*8]
+0022622f: 48 8b 85 50 01 00 00             mov rax, qword ptr [rbp + 0x150]
+00226236: 48 8b 40 10                      mov rax, qword ptr [rax + 0x10]
+0022623a: 4c 89 6c 24 20                   mov qword ptr [rsp + 0x20], r13
+0022623f: 4c 8b 4c 24 40                   mov r9, qword ptr [rsp + 0x40]
+00226244: 4c 8b 40 30                      mov r8, qword ptr [rax + 0x30]
+00226248: 48 8d 95 60 01 00 00             lea rdx, [rbp + 0x160]
+0022624f: e8 6c 15 1a 00                   call 0x3c77c0
+00226254: 8b 85 68 01 00 00                mov eax, dword ptr [rbp + 0x168]
+0022625a: 49 b8 cf f7 53 e3 a5 9b c4 20    movabs r8, 0x20c49ba5e353f7cf
+00226264: 85 c0                            test eax, eax
+00226266: 74 39                            je 0x2262a1
+00226268: 05 e8 03 00 00                   add eax, 0x3e8
+0022626d: 48 63 c8                         movsxd rcx, eax
+00226270: 48 63 85 60 01 00 00             movsxd rax, dword ptr [rbp + 0x160]
+00226277: 48 0f af c8                      imul rcx, rax
+0022627b: 49 8b c0                         mov rax, r8
+0022627e: 48 f7 e9                         imul rcx
+00226281: 48 8b ca                         mov rcx, rdx
+00226284: 48 c1 f9 07                      sar rcx, 7
+00226288: 48 8b c1                         mov rax, rcx
+0022628b: 48 c1 e8 3f                      shr rax, 0x3f
+0022628f: 48 03 c8                         add rcx, rax
+00226292: 48 89 4c 24 50                   mov qword ptr [rsp + 0x50], rcx
+00226297: eb 13                            jmp 0x2262ac
+00226299: 8b 40 04                         mov eax, dword ptr [rax + 4]
+0022629c: e9 5a fe ff ff                   jmp 0x2260fb
+002262a1: 8b 85 60 01 00 00                mov eax, dword ptr [rbp + 0x160]
+002262a7: 48 89 44 24 50                   mov qword ptr [rsp + 0x50], rax
+002262ac: 48 8b 44 24 40                   mov rax, qword ptr [rsp + 0x40]
+002262b1: 48 8b 40 20                      mov rax, qword ptr [rax + 0x20]
+002262b5: 83 78 10 02                      cmp dword ptr [rax + 0x10], 2
+002262b9: 48 8b 44 24 30                   mov rax, qword ptr [rsp + 0x30]
+002262be: 75 02                            jne 0x2262c2
+002262c0: 03 c0                            add eax, eax
+002262c2: 48 8b 4b 08                      mov rcx, qword ptr [rbx + 8]
+002262c6: 48 63 51 28                      movsxd rdx, dword ptr [rcx + 0x28]
+002262ca: 48 98                            cdqe 
+002262cc: 48 0f af d0                      imul rdx, rax
+002262d0: 49 8b c0                         mov rax, r8
+002262d3: 48 f7 ea                         imul rdx
+002262d6: 48 8b da                         mov rbx, rdx
+002262d9: 48 c1 fb 07                      sar rbx, 7
+002262dd: 48 8b c3                         mov rax, rbx
+002262e0: 48 c1 e8 3f                      shr rax, 0x3f
+002262e4: 48 03 d8                         add rbx, rax
+002262e7: 48 8d 95 60 01 00 00             lea rdx, [rbp + 0x160]
+002262ee: e8 8d 02 8c 00                   call 0xae6580
+002262f3: 48 63 08                         movsxd rcx, dword ptr [rax]
+002262f6: 48 63 c3                         movsxd rax, ebx
+002262f9: 48 0f af c8                      imul rcx, rax
+002262fd: 49 b9 cf f7 53 e3 a5 9b c4 20    movabs r9, 0x20c49ba5e353f7cf
+00226307: 49 8b c1                         mov rax, r9
+0022630a: 48 f7 e9                         imul rcx
+0022630d: 48 c1 fa 07                      sar rdx, 7
+00226311: 48 8b c2                         mov rax, rdx
+00226314: 48 c1 e8 3f                      shr rax, 0x3f
+00226318: 48 03 c2                         add rax, rdx
+0022631b: 4c 8b 85 58 01 00 00             mov r8, qword ptr [rbp + 0x158]
+00226322: 49 63 48 28                      movsxd rcx, dword ptr [r8 + 0x28]
+00226326: 48 98                            cdqe 
+00226328: 48 0f af c8                      imul rcx, rax
+0022632c: 49 8b c1                         mov rax, r9
+0022632f: 48 f7 e9                         imul rcx
+00226332: 48 c1 fa 07                      sar rdx, 7
+00226336: 48 8b c2                         mov rax, rdx
+00226339: 48 c1 e8 3f                      shr rax, 0x3f
+0022633d: 48 03 d0                         add rdx, rax
+00226340: 48 8b 4c 24 50                   mov rcx, qword ptr [rsp + 0x50]
+00226345: 85 c9                            test ecx, ecx
+00226347: 7e 14                            jle 0x22635d
+00226349: 48 63 c2                         movsxd rax, edx
+0022634c: 48 69 c0 e8 03 00 00             imul rax, rax, 0x3e8
+00226353: 48 63 c9                         movsxd rcx, ecx
+00226356: 48 99                            cqo 
+00226358: 48 f7 f9                         idiv rcx
+0022635b: 8b d0                            mov edx, eax
+0022635d: 48 63 4c 24 58                   movsxd rcx, dword ptr [rsp + 0x58]
+00226362: 48 63 c2                         movsxd rax, edx
+00226365: 48 0f af c8                      imul rcx, rax
+00226369: 49 8b c1                         mov rax, r9
+0022636c: 48 f7 e9                         imul rcx
+0022636f: 48 8b da                         mov rbx, rdx
+00226372: 48 c1 fb 07                      sar rbx, 7
+00226376: 48 8b c3                         mov rax, rbx
+00226379: 48 c1 e8 3f                      shr rax, 0x3f
+0022637d: 48 03 d8                         add rbx, rax
+00226380: 48 8d 95 60 01 00 00             lea rdx, [rbp + 0x160]
+00226387: 49 8b 48 08                      mov rcx, qword ptr [r8 + 8]
+0022638b: e8 f0 8d 8b 00                   call 0xadf180
+00226390: 8b 00                            mov eax, dword ptr [rax]
+00226392: 41 03 c4                         add eax, r12d
+00226395: 48 63 c8                         movsxd rcx, eax
+00226398: 48 63 c3                         movsxd rax, ebx
+0022639b: 48 0f af c8                      imul rcx, rax
+0022639f: 49 b8 cf f7 53 e3 a5 9b c4 20    movabs r8, 0x20c49ba5e353f7cf
+002263a9: 49 8b c0                         mov rax, r8
+002263ac: 48 f7 e9                         imul rcx
+002263af: 48 8b ca                         mov rcx, rdx
+002263b2: 48 c1 f9 07                      sar rcx, 7
+002263b6: 48 8b c1                         mov rax, rcx
+002263b9: 48 c1 e8 3f                      shr rax, 0x3f
+002263bd: 48 03 c8                         add rcx, rax
+002263c0: 48 89 4c 24 68                   mov qword ptr [rsp + 0x68], rcx
+002263c5: 48 8b 9d 58 01 00 00             mov rbx, qword ptr [rbp + 0x158]
+002263cc: 8b 43 2c                         mov eax, dword ptr [rbx + 0x2c]
+002263cf: 83 f8 01                         cmp eax, 1
+002263d2: 0f 85 51 02 00 00                jne 0x226629
+002263d8: 4c 8b f3                         mov r14, rbx
+002263db: 48 8b 5b 08                      mov rbx, qword ptr [rbx + 8]
+002263df: 48 8d 54 24 30                   lea rdx, [rsp + 0x30]
+002263e4: 48 8b cb                         mov rcx, rbx
+002263e7: e8 54 8c 8b 00                   call 0xadf040
+002263ec: 48 8b 08                         mov rcx, qword ptr [rax]
+002263ef: 48 8b 05 da 74 11 02             mov rax, qword ptr [rip + 0x21174da]
+002263f6: 48 c1 e9 20                      shr rcx, 0x20
+002263fa: 48 0f bf d1                      movsx rdx, cx
+002263fe: 48 8b 80 18 01 00 00             mov rax, qword ptr [rax + 0x118]
+00226405: 48 8b 0c d0                      mov rcx, qword ptr [rax + rdx*8]
+00226409: 48 81 c1 c0 28 00 00             add rcx, 0x28c0
+00226410: e8 3b 73 71 00                   call 0x93d750
+00226415: 48 8d 48 08                      lea rcx, [rax + 8]
+00226419: 41 b8 07 01 00 00                mov r8d, 0x107
+0022641f: 48 8d 95 58 01 00 00             lea rdx, [rbp + 0x158]
+00226426: e8 a5 07 6c 00                   call 0x8e6bd0
+0022642b: 48 8d 55 80                      lea rdx, [rbp - 0x80]
+0022642f: 48 8b cb                         mov rcx, rbx
+00226432: e8 59 0d 8c 00                   call 0xae7190
+00226437: 90                               nop 
+00226438: 80 7d 90 00                      cmp byte ptr [rbp - 0x70], 0
+0022643c: 74 0c                            je 0x22644a
+0022643e: 48 8b 45 d8                      mov rax, qword ptr [rbp - 0x28]
+00226442: 8b 80 3c 08 00 00                mov eax, dword ptr [rax + 0x83c]
+00226448: eb 2d                            jmp 0x226477
+0022644a: 48 63 55 e4                      movsxd rdx, dword ptr [rbp - 0x1c]
+0022644e: 48 85 d2                         test rdx, rdx
+00226451: 7e 21                            jle 0x226474
+00226453: 49 8b cd                         mov rcx, r13
+00226456: 48 8b 45 d8                      mov rax, qword ptr [rbp - 0x28]
+0022645a: 66 0f 1f 44 00 00                nop word ptr [rax + rax]
+00226460: 81 38 07 01 00 00                cmp dword ptr [rax], 0x107
+00226466: 74 44                            je 0x2264ac
+00226468: 48 ff c1                         inc rcx
+0022646b: 48 83 c0 08                      add rax, 8
+0022646f: 48 3b ca                         cmp rcx, rdx
+00226472: 7c ec                            jl 0x226460
+00226474: 41 8b c5                         mov eax, r13d
+00226477: 89 44 24 48                      mov dword ptr [rsp + 0x48], eax
+0022647b: 48 8b 0d fe 1b 13 02             mov rcx, qword ptr [rip + 0x2131bfe]
+00226482: 48 8b 89 e0 62 00 00             mov rcx, qword ptr [rcx + 0x62e0]
+00226489: 48 85 c9                         test rcx, rcx
+0022648c: 74 23                            je 0x2264b1
+0022648e: 48 8b 01                         mov rax, qword ptr [rcx]
+00226491: 4c 8d 4c 24 48                   lea r9, [rsp + 0x48]
+00226496: 4c 8d 45 80                      lea r8, [rbp - 0x80]
+0022649a: 48 8d 95 68 01 00 00             lea rdx, [rbp + 0x168]
+002264a1: ff 50 08                         call qword ptr [rax + 8]
+002264a4: 8b 85 68 01 00 00                mov eax, dword ptr [rbp + 0x168]
+002264aa: eb 0b                            jmp 0x2264b7
+002264ac: 8b 40 04                         mov eax, dword ptr [rax + 4]
+002264af: eb c6                            jmp 0x226477
+002264b1: 89 85 68 01 00 00                mov dword ptr [rbp + 0x168], eax
+002264b7: 01 85 58 01 00 00                add dword ptr [rbp + 0x158], eax
+002264bd: 48 8d 4d 80                      lea rcx, [rbp - 0x80]
+002264c1: e8 aa de e6 ff                   call 0x94370
+002264c6: 44 03 bd 58 01 00 00             add r15d, dword ptr [rbp + 0x158]
+002264cd: 48 8d 54 24 48                   lea rdx, [rsp + 0x48]
+002264d2: 48 8b 4c 24 40                   mov rcx, qword ptr [rsp + 0x40]
+002264d7: e8 64 8b 8b 00                   call 0xadf040
+002264dc: 48 8b 08                         mov rcx, qword ptr [rax]
+002264df: 48 8b 05 ea 73 11 02             mov rax, qword ptr [rip + 0x21173ea]
+002264e6: 48 c1 e9 20                      shr rcx, 0x20
+002264ea: 48 0f bf c9                      movsx rcx, cx
+002264ee: 48 8b 80 18 01 00 00             mov rax, qword ptr [rax + 0x118]
+002264f5: 48 8b 0c c8                      mov rcx, qword ptr [rax + rcx*8]
+002264f9: 48 81 c1 c0 28 00 00             add rcx, 0x28c0
+00226500: e8 4b 72 71 00                   call 0x93d750
+00226505: 48 8d 48 08                      lea rcx, [rax + 8]
+00226509: 41 b8 09 01 00 00                mov r8d, 0x109
+0022650f: 48 8d 95 60 01 00 00             lea rdx, [rbp + 0x160]
+00226516: e8 b5 06 6c 00                   call 0x8e6bd0
+0022651b: 48 8d 55 40                      lea rdx, [rbp + 0x40]
+0022651f: 48 8b 4c 24 40                   mov rcx, qword ptr [rsp + 0x40]
+00226524: e8 67 0c 8c 00                   call 0xae7190
+00226529: 90                               nop 
+0022652a: 80 7d 50 00                      cmp byte ptr [rbp + 0x50], 0
+0022652e: 74 0f                            je 0x22653f
+00226530: 48 8b 85 98 00 00 00             mov rax, qword ptr [rbp + 0x98]
+00226537: 8b 80 4c 08 00 00                mov eax, dword ptr [rax + 0x84c]
+0022653d: eb 2d                            jmp 0x22656c
+0022653f: 48 63 95 a4 00 00 00             movsxd rdx, dword ptr [rbp + 0xa4]
+00226546: 48 85 d2                         test rdx, rdx
+00226549: 7e 1e                            jle 0x226569
+0022654b: 49 8b cd                         mov rcx, r13
+0022654e: 48 8b 85 98 00 00 00             mov rax, qword ptr [rbp + 0x98]
+00226555: 81 38 09 01 00 00                cmp dword ptr [rax], 0x109
+0022655b: 74 48                            je 0x2265a5
+0022655d: 48 ff c1                         inc rcx
+00226560: 48 83 c0 08                      add rax, 8
+00226564: 48 3b ca                         cmp rcx, rdx
+00226567: 7c ec                            jl 0x226555
+00226569: 41 8b c5                         mov eax, r13d
+0022656c: 89 85 68 01 00 00                mov dword ptr [rbp + 0x168], eax
+00226572: 48 8b 0d 07 1b 13 02             mov rcx, qword ptr [rip + 0x2131b07]
+00226579: 48 8b 89 a0 63 00 00             mov rcx, qword ptr [rcx + 0x63a0]
+00226580: 48 85 c9                         test rcx, rcx
+00226583: 74 25                            je 0x2265aa
+00226585: 48 8b 01                         mov rax, qword ptr [rcx]
+00226588: 4c 8d 8d 68 01 00 00             lea r9, [rbp + 0x168]
+0022658f: 4c 8d 45 40                      lea r8, [rbp + 0x40]
+00226593: 48 8d 95 58 01 00 00             lea rdx, [rbp + 0x158]
+0022659a: ff 50 08                         call qword ptr [rax + 8]
+0022659d: 8b 85 58 01 00 00                mov eax, dword ptr [rbp + 0x158]
+002265a3: eb 0b                            jmp 0x2265b0
+002265a5: 8b 40 04                         mov eax, dword ptr [rax + 4]
+002265a8: eb c2                            jmp 0x22656c
+002265aa: 89 85 58 01 00 00                mov dword ptr [rbp + 0x158], eax
+002265b0: 01 85 60 01 00 00                add dword ptr [rbp + 0x160], eax
+002265b6: 48 8d 4d 40                      lea rcx, [rbp + 0x40]
+002265ba: e8 b1 dd e6 ff                   call 0x94370
+002265bf: 03 b5 60 01 00 00                add esi, dword ptr [rbp + 0x160]
+002265c5: b8 4a fc ff ff                   mov eax, 0xfffffc4a
+002265ca: 3b f0                            cmp esi, eax
+002265cc: 0f 4c f0                         cmovl esi, eax
+002265cf: 8d 86 e8 03 00 00                lea eax, [rsi + 0x3e8]
+002265d5: 48 63 c8                         movsxd rcx, eax
+002265d8: 48 63 44 24 68                   movsxd rax, dword ptr [rsp + 0x68]
+002265dd: 48 0f af c8                      imul rcx, rax
+002265e1: 49 b8 cf f7 53 e3 a5 9b c4 20    movabs r8, 0x20c49ba5e353f7cf
+002265eb: 49 8b c0                         mov rax, r8
+002265ee: 48 f7 e9                         imul rcx
+002265f1: 48 c1 fa 07                      sar rdx, 7
+002265f5: 48 8b c2                         mov rax, rdx
+002265f8: 48 c1 e8 3f                      shr rax, 0x3f
+002265fc: 48 03 d0                         add rdx, rax
+002265ff: 41 8d 87 e8 03 00 00             lea eax, [r15 + 0x3e8]
+00226606: 48 63 c8                         movsxd rcx, eax
+00226609: 48 63 c2                         movsxd rax, edx
+0022660c: 48 0f af c8                      imul rcx, rax
+00226610: 49 8b c0                         mov rax, r8
+00226613: 48 f7 e9                         imul rcx
+00226616: 48 c1 fa 07                      sar rdx, 7
+0022661a: 48 8b ca                         mov rcx, rdx
+0022661d: 48 c1 e9 3f                      shr rcx, 0x3f
+00226621: 48 03 ca                         add rcx, rdx
+00226624: e9 58 02 00 00                   jmp 0x226881
+00226629: 85 c0                            test eax, eax
+0022662b: 0f 85 49 02 00 00                jne 0x22687a
+00226631: 48 8d 54 24 78                   lea rdx, [rsp + 0x78]
+00226636: 4c 8b 7c 24 40                   mov r15, qword ptr [rsp + 0x40]
+0022663b: 49 8b cf                         mov rcx, r15
+0022663e: e8 fd 89 8b 00                   call 0xadf040
+00226643: 48 8b 08                         mov rcx, qword ptr [rax]
+00226646: 48 8b 05 83 72 11 02             mov rax, qword ptr [rip + 0x2117283]
+0022664d: 48 c1 e9 20                      shr rcx, 0x20
+00226651: 48 0f bf c9                      movsx rcx, cx
+00226655: 48 8b 80 18 01 00 00             mov rax, qword ptr [rax + 0x118]
+0022665c: 48 8b 0c c8                      mov rcx, qword ptr [rax + rcx*8]
+00226660: 48 81 c1 c0 28 00 00             add rcx, 0x28c0
+00226667: e8 e4 70 71 00                   call 0x93d750
+0022666c: 48 8d 48 08                      lea rcx, [rax + 8]
+00226670: 41 b8 08 01 00 00                mov r8d, 0x108
+00226676: 48 8d 95 60 01 00 00             lea rdx, [rbp + 0x160]
+0022667d: e8 4e 05 6c 00                   call 0x8e6bd0
+00226682: 48 8d 55 40                      lea rdx, [rbp + 0x40]
+00226686: 49 8b cf                         mov rcx, r15
+00226689: e8 02 0b 8c 00                   call 0xae7190
+0022668e: 90                               nop 
+0022668f: 80 7d 50 00                      cmp byte ptr [rbp + 0x50], 0
+00226693: 74 0f                            je 0x2266a4
+00226695: 48 8b 85 98 00 00 00             mov rax, qword ptr [rbp + 0x98]
+0022669c: 8b 80 44 08 00 00                mov eax, dword ptr [rax + 0x844]
+002266a2: eb 33                            jmp 0x2266d7
+002266a4: 48 63 95 a4 00 00 00             movsxd rdx, dword ptr [rbp + 0xa4]
+002266ab: 48 85 d2                         test rdx, rdx
+002266ae: 7e 24                            jle 0x2266d4
+002266b0: 49 8b cd                         mov rcx, r13
+002266b3: 48 8b 85 98 00 00 00             mov rax, qword ptr [rbp + 0x98]
+002266ba: 66 0f 1f 44 00 00                nop word ptr [rax + rax]
+002266c0: 81 38 08 01 00 00                cmp dword ptr [rax], 0x108
+002266c6: 74 40                            je 0x226708
+002266c8: 48 ff c1                         inc rcx
+002266cb: 48 83 c0 08                      add rax, 8
+002266cf: 48 3b ca                         cmp rcx, rdx
+002266d2: 7c ec                            jl 0x2266c0
+002266d4: 41 8b c5                         mov eax, r13d
+002266d7: 89 44 24 48                      mov dword ptr [rsp + 0x48], eax
+002266db: 48 8b 0d 9e 19 13 02             mov rcx, qword ptr [rip + 0x213199e]
+002266e2: 48 8b 89 40 63 00 00             mov rcx, qword ptr [rcx + 0x6340]
+002266e9: 48 85 c9                         test rcx, rcx
+002266ec: 74 1f                            je 0x22670d
+002266ee: 48 8b 01                         mov rax, qword ptr [rcx]
+002266f1: 4c 8d 4c 24 48                   lea r9, [rsp + 0x48]
+002266f6: 4c 8d 45 40                      lea r8, [rbp + 0x40]
+002266fa: 48 8d 54 24 30                   lea rdx, [rsp + 0x30]
+002266ff: ff 50 08                         call qword ptr [rax + 8]
+00226702: 8b 44 24 30                      mov eax, dword ptr [rsp + 0x30]
+00226706: eb 09                            jmp 0x226711
+00226708: 8b 40 04                         mov eax, dword ptr [rax + 4]
+0022670b: eb ca                            jmp 0x2266d7
+0022670d: 89 44 24 30                      mov dword ptr [rsp + 0x30], eax
+00226711: 01 85 60 01 00 00                add dword ptr [rbp + 0x160], eax
+00226717: 48 8d 4d 40                      lea rcx, [rbp + 0x40]
+0022671b: e8 50 dc e6 ff                   call 0x94370
+00226720: 03 bd 60 01 00 00                add edi, dword ptr [rbp + 0x160]
+00226726: 48 8b 5b 08                      mov rbx, qword ptr [rbx + 8]
+0022672a: 48 8d 54 24 78                   lea rdx, [rsp + 0x78]
+0022672f: 48 8b cb                         mov rcx, rbx
+00226732: e8 09 89 8b 00                   call 0xadf040
+00226737: 48 8b 08                         mov rcx, qword ptr [rax]
+0022673a: 48 8b 05 8f 71 11 02             mov rax, qword ptr [rip + 0x211718f]
+00226741: 48 c1 e9 20                      shr rcx, 0x20
+00226745: 48 0f bf d1                      movsx rdx, cx
+00226749: 48 8b 80 18 01 00 00             mov rax, qword ptr [rax + 0x118]
+00226750: 48 8b 0c d0                      mov rcx, qword ptr [rax + rdx*8]
+00226754: 48 81 c1 c0 28 00 00             add rcx, 0x28c0
+0022675b: e8 f0 6f 71 00                   call 0x93d750
+00226760: 48 8d 48 08                      lea rcx, [rax + 8]
+00226764: 41 b8 06 01 00 00                mov r8d, 0x106
+0022676a: 48 8d 95 68 01 00 00             lea rdx, [rbp + 0x168]
+00226771: e8 5a 04 6c 00                   call 0x8e6bd0
+00226776: 48 8d 55 80                      lea rdx, [rbp - 0x80]
+0022677a: 48 8b cb                         mov rcx, rbx
+0022677d: e8 0e 0a 8c 00                   call 0xae7190
+00226782: 90                               nop 
+00226783: 80 7d 90 00                      cmp byte ptr [rbp - 0x70], 0
+00226787: 74 0c                            je 0x226795
+00226789: 48 8b 45 d8                      mov rax, qword ptr [rbp - 0x28]
+0022678d: 8b 80 34 08 00 00                mov eax, dword ptr [rax + 0x834]
+00226793: eb 27                            jmp 0x2267bc
+00226795: 48 63 55 e4                      movsxd rdx, dword ptr [rbp - 0x1c]
+00226799: 48 85 d2                         test rdx, rdx
+0022679c: 7e 1b                            jle 0x2267b9
+0022679e: 49 8b cd                         mov rcx, r13
+002267a1: 48 8b 45 d8                      mov rax, qword ptr [rbp - 0x28]
+002267a5: 81 38 06 01 00 00                cmp dword ptr [rax], 0x106
+002267ab: 74 44                            je 0x2267f1
+002267ad: 48 ff c1                         inc rcx
+002267b0: 48 83 c0 08                      add rax, 8
+002267b4: 48 3b ca                         cmp rcx, rdx
+002267b7: 7c ec                            jl 0x2267a5
+002267b9: 41 8b c5                         mov eax, r13d
+002267bc: 89 44 24 48                      mov dword ptr [rsp + 0x48], eax
+002267c0: 48 8b 0d b9 18 13 02             mov rcx, qword ptr [rip + 0x21318b9]
+002267c7: 48 8b 89 80 62 00 00             mov rcx, qword ptr [rcx + 0x6280]
+002267ce: 48 85 c9                         test rcx, rcx
+002267d1: 74 23                            je 0x2267f6
+002267d3: 48 8b 01                         mov rax, qword ptr [rcx]
+002267d6: 4c 8d 4c 24 48                   lea r9, [rsp + 0x48]
+002267db: 4c 8d 45 80                      lea r8, [rbp - 0x80]
+002267df: 48 8d 95 60 01 00 00             lea rdx, [rbp + 0x160]
+002267e6: ff 50 08                         call qword ptr [rax + 8]
+002267e9: 8b 85 60 01 00 00                mov eax, dword ptr [rbp + 0x160]
+002267ef: eb 0b                            jmp 0x2267fc
+002267f1: 8b 40 04                         mov eax, dword ptr [rax + 4]
+002267f4: eb c6                            jmp 0x2267bc
+002267f6: 89 85 60 01 00 00                mov dword ptr [rbp + 0x160], eax
+002267fc: 01 85 68 01 00 00                add dword ptr [rbp + 0x168], eax
+00226802: 48 8d 4d 80                      lea rcx, [rbp - 0x80]
+00226806: e8 65 db e6 ff                   call 0x94370
+0022680b: 44 03 b5 68 01 00 00             add r14d, dword ptr [rbp + 0x168]
+00226812: b8 4a fc ff ff                   mov eax, 0xfffffc4a
+00226817: 3b f8                            cmp edi, eax
+00226819: 0f 4c f8                         cmovl edi, eax
+0022681c: 8d 87 e8 03 00 00                lea eax, [rdi + 0x3e8]
+00226822: 48 63 c8                         movsxd rcx, eax
+00226825: 48 63 44 24 68                   movsxd rax, dword ptr [rsp + 0x68]
+0022682a: 48 0f af c8                      imul rcx, rax
+0022682e: 49 b8 cf f7 53 e3 a5 9b c4 20    movabs r8, 0x20c49ba5e353f7cf
+00226838: 49 8b c0                         mov rax, r8
+0022683b: 48 f7 e9                         imul rcx
+0022683e: 48 c1 fa 07                      sar rdx, 7
+00226842: 48 8b c2                         mov rax, rdx
+00226845: 48 c1 e8 3f                      shr rax, 0x3f
+00226849: 48 03 d0                         add rdx, rax
+0022684c: 41 8d 86 e8 03 00 00             lea eax, [r14 + 0x3e8]
+00226853: 48 63 c8                         movsxd rcx, eax
+00226856: 48 63 c2                         movsxd rax, edx
+00226859: 48 0f af c8                      imul rcx, rax
+0022685d: 49 8b c0                         mov rax, r8
+00226860: 48 f7 e9                         imul rcx
+00226863: 48 c1 fa 07                      sar rdx, 7
+00226867: 48 8b ca                         mov rcx, rdx
+0022686a: 48 c1 e9 3f                      shr rcx, 0x3f
+0022686e: 48 03 ca                         add rcx, rdx
+00226871: 4c 8b b5 58 01 00 00             mov r14, qword ptr [rbp + 0x158]
+00226878: eb 0c                            jmp 0x226886
+0022687a: 4c 8b b5 58 01 00 00             mov r14, qword ptr [rbp + 0x158]
+00226881: 4c 8b 7c 24 40                   mov r15, qword ptr [rsp + 0x40]
+00226886: 48 63 c1                         movsxd rax, ecx
+00226889: 48 69 c8 c8 00 00 00             imul rcx, rax, 0xc8
+00226890: 49 8b c0                         mov rax, r8
+00226893: 48 f7 e9                         imul rcx
+00226896: 48 8b ca                         mov rcx, rdx
+00226899: 48 c1 f9 07                      sar rcx, 7
+0022689d: 48 8b c1                         mov rax, rcx
+002268a0: 48 c1 e8 3f                      shr rax, 0x3f
+002268a4: 48 03 c8                         add rcx, rax
+002268a7: 48 89 8d 60 01 00 00             mov qword ptr [rbp + 0x160], rcx
+002268ae: 49 8b 46 08                      mov rax, qword ptr [r14 + 8]
+002268b2: 48 8b 78 50                      mov rdi, qword ptr [rax + 0x50]
+002268b6: 48 8b 48 40                      mov rcx, qword ptr [rax + 0x40]
+002268ba: 48 85 c9                         test rcx, rcx
+002268bd: 74 64                            je 0x226923
+002268bf: 48 8b 01                         mov rax, qword ptr [rcx]
+002268c2: ff 90 90 00 00 00                call qword ptr [rax + 0x90]
+002268c8: 84 c0                            test al, al
+002268ca: 74 4d                            je 0x226919
+002268cc: 49 8b 46 08                      mov rax, qword ptr [r14 + 8]
+002268d0: 48 8b 48 40                      mov rcx, qword ptr [rax + 0x40]
+002268d4: 48 8b 01                         mov rax, qword ptr [rcx]
+002268d7: ff 50 68                         call qword ptr [rax + 0x68]
+002268da: 48 85 c0                         test rax, rax
+002268dd: 74 3a                            je 0x226919
+002268df: 49 8b 46 08                      mov rax, qword ptr [r14 + 8]
+002268e3: 48 8b 48 40                      mov rcx, qword ptr [rax + 0x40]
+002268e7: 48 8b 01                         mov rax, qword ptr [rcx]
+002268ea: ff 50 68                         call qword ptr [rax + 0x68]
+002268ed: 48 8b c8                         mov rcx, rax
+002268f0: e8 0b 22 f8 ff                   call 0x1a8b00
+002268f5: 84 c0                            test al, al
+002268f7: 74 20                            je 0x226919
+002268f9: 49 8b 46 08                      mov rax, qword ptr [r14 + 8]
+002268fd: 48 8b 48 40                      mov rcx, qword ptr [rax + 0x40]
+00226901: 48 8b 01                         mov rax, qword ptr [rcx]
+00226904: ff 50 68                         call qword ptr [rax + 0x68]
+00226907: 48 8d 95 68 01 00 00             lea rdx, [rbp + 0x168]
+0022690e: 48 8b c8                         mov rcx, rax
+00226911: e8 5a 22 f8 ff                   call 0x1a8b70
+00226916: 48 8b 38                         mov rdi, qword ptr [rax]
+00226919: 49 b8 cf f7 53 e3 a5 9b c4 20    movabs r8, 0x20c49ba5e353f7cf
+00226923: 48 8b 9d 50 01 00 00             mov rbx, qword ptr [rbp + 0x150]
+0022692a: 8b 4c 24 38                      mov ecx, dword ptr [rsp + 0x38]
+0022692e: 83 c1 02                         add ecx, 2
+00226931: 03 4b 18                         add ecx, dword ptr [rbx + 0x18]
+00226934: 79 05                            jns 0x22693b
+00226936: 41 8b cd                         mov ecx, r13d
+00226939: eb 0b                            jmp 0x226946
+0022693b: 83 f9 15                         cmp ecx, 0x15
+0022693e: b8 15 00 00 00                   mov eax, 0x15
+00226943: 0f 4f c8                         cmovg ecx, eax
+00226946: 69 c1 e8 03 00 00                imul eax, ecx, 0x3e8
+0022694c: 48 63 c8                         movsxd rcx, eax
+0022694f: 48 6b d1 19                      imul rdx, rcx, 0x19
+00226953: 49 8b c0                         mov rax, r8
+00226956: 48 f7 ea                         imul rdx
+00226959: 48 c1 fa 07                      sar rdx, 7
+0022695d: 48 8b f2                         mov rsi, rdx
+00226960: 48 c1 ee 3f                      shr rsi, 0x3f
+00226964: 48 03 f2                         add rsi, rdx
+00226967: 83 c6 19                         add esi, 0x19
+0022696a: e8 11 e3 2a 01                   call 0x14d4c80
+0022696f: f6 40 38 01                      test byte ptr [rax + 0x38], 1
+00226973: 74 3d                            je 0x2269b2
+00226975: 0f b6 1d 48 a7 da 01             movzx ebx, byte ptr [rip + 0x1daa748]
+0022697c: 88 9d 58 01 00 00                mov byte ptr [rbp + 0x158], bl
+00226982: c6 05 3b a7 da 01 01             mov byte ptr [rip + 0x1daa73b], 1
+00226989: 44 8b ce                         mov r9d, esi
+0022698c: 4c 8d 05 05 29 a2 01             lea r8, [rip + 0x1a22905]
+00226993: ba 5a 0b 00 00                   mov edx, 0xb5a
+00226998: 48 8d 0d b9 23 a2 01             lea rcx, [rip + 0x1a223b9]
+0022699f: e8 0c e5 2a 01                   call 0x14d4eb0
+002269a4: 90                               nop 
+002269a5: 88 1d 19 a7 da 01                mov byte ptr [rip + 0x1daa719], bl
+002269ab: 48 8b 9d 50 01 00 00             mov rbx, qword ptr [rbp + 0x150]
+002269b2: 49 8b 46 08                      mov rax, qword ptr [r14 + 8]
+002269b6: 48 8b 40 40                      mov rax, qword ptr [rax + 0x40]
+002269ba: 48 85 c0                         test rax, rax
+002269bd: 74 73                            je 0x226a32
+002269bf: 48 83 78 48 00                   cmp qword ptr [rax + 0x48], 0
+002269c4: 74 6c                            je 0x226a32
+002269c6: 48 8b 05 03 6f 11 02             mov rax, qword ptr [rip + 0x2116f03]
+002269cd: 48 c1 ef 20                      shr rdi, 0x20
+002269d1: 48 0f bf cf                      movsx rcx, di
+002269d5: 48 8b 80 18 01 00 00             mov rax, qword ptr [rax + 0x118]
+002269dc: 48 8b 0c c8                      mov rcx, qword ptr [rax + rcx*8]
+002269e0: 48 63 99 78 98 00 00             movsxd rbx, dword ptr [rcx + 0x9878]
+002269e7: f3 0f 10 0d 91 ad b9 01          movss xmm1, dword ptr [rip + 0x1b9ad91]
+002269ef: 48 8d 8d 58 01 00 00             lea rcx, [rbp + 0x158]
+002269f6: e8 55 91 ea ff                   call 0xcfb50
+002269fb: 48 63 8d 58 01 00 00             movsxd rcx, dword ptr [rbp + 0x158]
+00226a02: 85 c9                            test ecx, ecx
+00226a04: 75 08                            jne 0x226a0e
+00226a06: 8d 41 ff                         lea eax, [rcx - 1]
+00226a09: e9 a2 00 00 00                   jmp 0x226ab0
+00226a0e: 8d 83 73 93 18 00                lea eax, [rbx + 0x189373]
+00226a14: 3d 0d 58 39 00                   cmp eax, 0x39580d
+00226a19: 77 0e                            ja 0x226a29
+00226a1b: 69 c3 e8 03 00 00                imul eax, ebx, 0x3e8
+00226a21: 99                               cdq 
+00226a22: f7 f9                            idiv ecx
+00226a24: e9 87 00 00 00                   jmp 0x226ab0
+00226a29: 48 69 c3 e8 03 00 00             imul rax, rbx, 0x3e8
+00226a30: eb 79                            jmp 0x226aab
+00226a32: 4c 8b 83 08 01 00 00             mov r8, qword ptr [rbx + 0x108]
+00226a39: 48 8b 93 00 01 00 00             mov rdx, qword ptr [rbx + 0x100]
+00226a40: 49 3b d0                         cmp rdx, r8
+00226a43: 74 1e                            je 0x226a63
+00226a45: 48 8b 4a 10                      mov rcx, qword ptr [rdx + 0x10]
+00226a49: 48 c1 e9 20                      shr rcx, 0x20
+00226a4d: 48 8b c7                         mov rax, rdi
+00226a50: 48 c1 e8 20                      shr rax, 0x20
+00226a54: 66 3b c8                         cmp cx, ax
+00226a57: 74 06                            je 0x226a5f
+00226a59: 48 83 c2 20                      add rdx, 0x20
+00226a5d: eb e1                            jmp 0x226a40
+00226a5f: 44 8b 6a 18                      mov r13d, dword ptr [rdx + 0x18]
+00226a63: f3 0f 10 0d 15 ad b9 01          movss xmm1, dword ptr [rip + 0x1b9ad15]
+00226a6b: 48 8d 8d 58 01 00 00             lea rcx, [rbp + 0x158]
+00226a72: e8 d9 90 ea ff                   call 0xcfb50
+00226a77: 48 63 8d 58 01 00 00             movsxd rcx, dword ptr [rbp + 0x158]
+00226a7e: 85 c9                            test ecx, ecx
+00226a80: 75 05                            jne 0x226a87
+00226a82: 8d 41 ff                         lea eax, [rcx - 1]
+00226a85: eb 29                            jmp 0x226ab0
+00226a87: 41 8d 85 73 93 18 00             lea eax, [r13 + 0x189373]
+00226a8e: 3d 0d 58 39 00                   cmp eax, 0x39580d
+00226a93: 77 0c                            ja 0x226aa1
+00226a95: 41 69 c5 e8 03 00 00             imul eax, r13d, 0x3e8
+00226a9c: 99                               cdq 
+00226a9d: f7 f9                            idiv ecx
+00226a9f: eb 0f                            jmp 0x226ab0
+00226aa1: 49 63 c5                         movsxd rax, r13d
+00226aa4: 48 69 c0 e8 03 00 00             imul rax, rax, 0x3e8
+00226aab: 48 99                            cqo 
+00226aad: 48 f7 f9                         idiv rcx
+00226ab0: 48 63 c8                         movsxd rcx, eax
+00226ab3: 48 63 c6                         movsxd rax, esi
+00226ab6: 48 0f af c8                      imul rcx, rax
+00226aba: 49 bd cf f7 53 e3 a5 9b c4 20    movabs r13, 0x20c49ba5e353f7cf
+00226ac4: 49 8b c5                         mov rax, r13
+00226ac7: 48 f7 e9                         imul rcx
+00226aca: 48 8b ca                         mov rcx, rdx
+00226acd: 48 c1 f9 07                      sar rcx, 7
+00226ad1: 48 8b c1                         mov rax, rcx
+00226ad4: 48 c1 e8 3f                      shr rax, 0x3f
+00226ad8: 48 03 c8                         add rcx, rax
+00226adb: 4d 8b 46 08                      mov r8, qword ptr [r14 + 8]
+00226adf: 49 63 50 28                      movsxd rdx, dword ptr [r8 + 0x28]
+00226ae3: 48 63 c1                         movsxd rax, ecx
+00226ae6: 48 0f af d0                      imul rdx, rax
+00226aea: 49 8b c5                         mov rax, r13
+00226aed: 48 f7 ea                         imul rdx
+00226af0: 48 8b da                         mov rbx, rdx
+00226af3: 48 c1 fb 07                      sar rbx, 7
+00226af7: 48 8b c3                         mov rax, rbx
+00226afa: 48 c1 e8 3f                      shr rax, 0x3f
+00226afe: 48 03 d8                         add rbx, rax
+00226b01: 48 8d 95 58 01 00 00             lea rdx, [rbp + 0x158]
+00226b08: 49 8b c8                         mov rcx, r8
+00226b0b: e8 70 fa 8b 00                   call 0xae6580
+00226b10: 48 63 08                         movsxd rcx, dword ptr [rax]
+00226b13: 48 63 c3                         movsxd rax, ebx
+00226b16: 48 0f af c8                      imul rcx, rax
+00226b1a: 49 8b c5                         mov rax, r13
+00226b1d: 48 f7 e9                         imul rcx
+00226b20: 48 c1 fa 07                      sar rdx, 7
+00226b24: 48 8b c2                         mov rax, rdx
+00226b27: 48 c1 e8 3f                      shr rax, 0x3f
+00226b2b: 48 03 c2                         add rax, rdx
+00226b2e: 49 63 4e 28                      movsxd rcx, dword ptr [r14 + 0x28]
+00226b32: 48 98                            cdqe 
+00226b34: 48 0f af c8                      imul rcx, rax
+00226b38: 49 8b c5                         mov rax, r13
+00226b3b: 48 f7 e9                         imul rcx
+00226b3e: 48 8b da                         mov rbx, rdx
+00226b41: 48 c1 fb 07                      sar rbx, 7
+00226b45: 48 8b c3                         mov rax, rbx
+00226b48: 48 c1 e8 3f                      shr rax, 0x3f
+00226b4c: 48 03 d8                         add rbx, rax
+00226b4f: 48 8b 4c 24 50                   mov rcx, qword ptr [rsp + 0x50]
+00226b54: 85 c9                            test ecx, ecx
+00226b56: 7e 14                            jle 0x226b6c
+00226b58: 48 63 c3                         movsxd rax, ebx
+00226b5b: 48 69 c0 e8 03 00 00             imul rax, rax, 0x3e8
+00226b62: 48 63 c9                         movsxd rcx, ecx
+00226b65: 48 99                            cqo 
+00226b67: 48 f7 f9                         idiv rcx
+00226b6a: 8b d8                            mov ebx, eax
+00226b6c: 48 8d 95 58 01 00 00             lea rdx, [rbp + 0x158]
+00226b73: 49 8b 4e 08                      mov rcx, qword ptr [r14 + 8]
+00226b77: e8 04 86 8b 00                   call 0xadf180
+00226b7c: 8b 00                            mov eax, dword ptr [rax]
+00226b7e: 41 03 c4                         add eax, r12d
+00226b81: 48 63 c8                         movsxd rcx, eax
+00226b84: 48 63 c3                         movsxd rax, ebx
+00226b87: 48 0f af c8                      imul rcx, rax
+00226b8b: 49 8b c5                         mov rax, r13
+00226b8e: 48 f7 e9                         imul rcx
+00226b91: 48 c1 fa 07                      sar rdx, 7
+00226b95: 48 8b c2                         mov rax, rdx
+00226b98: 48 c1 e8 3f                      shr rax, 0x3f
+00226b9c: 48 03 d0                         add rdx, rax
+00226b9f: 48 63 ca                         movsxd rcx, edx
+00226ba2: 48 63 44 24 58                   movsxd rax, dword ptr [rsp + 0x58]
+00226ba7: 48 0f af c8                      imul rcx, rax
+00226bab: 49 8b c5                         mov rax, r13
+00226bae: 48 f7 e9                         imul rcx
+00226bb1: 4c 8b d2                         mov r10, rdx
+00226bb4: 49 c1 fa 07                      sar r10, 7
+00226bb8: 49 8b c2                         mov rax, r10
+00226bbb: 48 c1 e8 3f                      shr rax, 0x3f
+00226bbf: 4c 03 d0                         add r10, rax
+00226bc2: 4d 8b 46 08                      mov r8, qword ptr [r14 + 8]
+00226bc6: 49 8b 4f 10                      mov rcx, qword ptr [r15 + 0x10]
+00226bca: 49 89 48 58                      mov qword ptr [r8 + 0x58], rcx
+00226bce: 48 83 7c 24 70 00                cmp qword ptr [rsp + 0x70], 0
+00226bd4: 75 7a                            jne 0x226c50
+00226bd6: 49 8b 4e 08                      mov rcx, qword ptr [r14 + 8]
+00226bda: e8 91 94 8b 00                   call 0xae0070
+00226bdf: 69 d0 e8 03 00 00                imul edx, eax, 0x3e8
+00226be5: 8d 8a 73 93 18 00                lea ecx, [rdx + 0x189373]
+00226beb: 81 f9 0d 58 39 00                cmp ecx, 0x39580d
+00226bf1: 77 19                            ja 0x226c0c
+00226bf3: 69 ca e8 03 00 00                imul ecx, edx, 0x3e8
+00226bf9: b8 d3 4d 62 10                   mov eax, 0x10624dd3
+00226bfe: f7 e9                            imul ecx
+00226c00: c1 fa 08                         sar edx, 8
+00226c03: 8b c2                            mov eax, edx
+00226c05: c1 e8 1f                         shr eax, 0x1f
+00226c08: 03 d0                            add edx, eax
+00226c0a: eb 1e                            jmp 0x226c2a
+00226c0c: 48 63 c2                         movsxd rax, edx
+00226c0f: 48 69 c8 e8 03 00 00             imul rcx, rax, 0x3e8
+00226c16: 49 8b c5                         mov rax, r13
+00226c19: 48 f7 e9                         imul rcx
+00226c1c: 48 c1 fa 09                      sar rdx, 9
+00226c20: 48 8b c2                         mov rax, rdx
+00226c23: 48 c1 e8 3f                      shr rax, 0x3f
+00226c27: 48 03 d0                         add rdx, rax
+00226c2a: 48 63 ca                         movsxd rcx, edx
+00226c2d: 48 8b 85 60 01 00 00             mov rax, qword ptr [rbp + 0x160]
+00226c34: 48 98                            cdqe 
+00226c36: 48 0f af c8                      imul rcx, rax
+00226c3a: 49 8b c5                         mov rax, r13
+00226c3d: 48 f7 e9                         imul rcx
+00226c40: 48 c1 fa 07                      sar rdx, 7
+00226c44: 4c 8b ca                         mov r9, rdx
+00226c47: 49 c1 e9 3f                      shr r9, 0x3f
+00226c4b: 4c 03 ca                         add r9, rdx
+00226c4e: eb 07                            jmp 0x226c57
+00226c50: 4c 8b 8d 60 01 00 00             mov r9, qword ptr [rbp + 0x160]
+00226c57: 48 8b 85 50 01 00 00             mov rax, qword ptr [rbp + 0x150]
+00226c5e: 48 8b 40 10                      mov rax, qword ptr [rax + 0x10]
+00226c62: 69 48 3c e8 03 00 00             imul ecx, dword ptr [rax + 0x3c], 0x3e8
+00226c69: 48 63 d1                         movsxd rdx, ecx
+00226c6c: 48 63 05 11 78 11 02             movsxd rax, dword ptr [rip + 0x2117811]
+00226c73: 48 0f af d0                      imul rdx, rax
+00226c77: 49 8b c5                         mov rax, r13
+00226c7a: 48 f7 ea                         imul rdx
+00226c7d: 48 c1 fa 07                      sar rdx, 7
+00226c81: 48 8b c2                         mov rax, rdx
+00226c84: 48 c1 e8 3f                      shr rax, 0x3f
+00226c88: 48 03 c2                         add rax, rdx
+00226c8b: 05 e8 03 00 00                   add eax, 0x3e8
+00226c90: 4c 63 c0                         movsxd r8, eax
+00226c93: 49 63 c9                         movsxd rcx, r9d
+00226c96: 49 0f af c8                      imul rcx, r8
+00226c9a: 49 8b c5                         mov rax, r13
+00226c9d: 48 f7 e9                         imul rcx
+00226ca0: 48 8b f2                         mov rsi, rdx
+00226ca3: 48 c1 fe 07                      sar rsi, 7
+00226ca7: 48 8b c6                         mov rax, rsi
+00226caa: 48 c1 e8 3f                      shr rax, 0x3f
+00226cae: 48 03 f0                         add rsi, rax
+00226cb1: 49 63 ca                         movsxd rcx, r10d
+00226cb4: 49 0f af c8                      imul rcx, r8
+00226cb8: 49 8b c5                         mov rax, r13
+00226cbb: 48 f7 e9                         imul rcx
+00226cbe: 48 8b da                         mov rbx, rdx
+00226cc1: 48 c1 fb 07                      sar rbx, 7
+00226cc5: 48 8b c3                         mov rax, rbx
+00226cc8: 48 c1 e8 3f                      shr rax, 0x3f
+00226ccc: 48 03 d8                         add rbx, rax
+00226ccf: 48 8d 54 24 78                   lea rdx, [rsp + 0x78]
+00226cd4: 49 8b cf                         mov rcx, r15
+00226cd7: e8 64 83 8b 00                   call 0xadf040
+00226cdc: 48 8b 08                         mov rcx, qword ptr [rax]
+00226cdf: 48 8b 05 ea 6b 11 02             mov rax, qword ptr [rip + 0x2116bea]
+00226ce6: 48 c1 e9 20                      shr rcx, 0x20
+00226cea: 48 0f bf c9                      movsx rcx, cx
+00226cee: 48 8b 80 18 01 00 00             mov rax, qword ptr [rax + 0x118]
+00226cf5: 48 8b 0c c8                      mov rcx, qword ptr [rax + rcx*8]
+00226cf9: 48 81 c1 c0 28 00 00             add rcx, 0x28c0
+00226d00: e8 4b 6a 71 00                   call 0x93d750
+00226d05: 48 8d 48 08                      lea rcx, [rax + 8]
+00226d09: 41 b8 d5 01 00 00                mov r8d, 0x1d5
+00226d0f: 48 8d 95 58 01 00 00             lea rdx, [rbp + 0x158]
+00226d16: e8 b5 fe 6b 00                   call 0x8e6bd0
+00226d1b: 48 8d 55 40                      lea rdx, [rbp + 0x40]
+00226d1f: 49 8b cf                         mov rcx, r15
+00226d22: e8 69 04 8c 00                   call 0xae7190
+00226d27: 90                               nop 
+00226d28: 41 b8 d5 01 00 00                mov r8d, 0x1d5
+00226d2e: 48 8d 95 68 01 00 00             lea rdx, [rbp + 0x168]
+00226d35: 48 8d 4d 40                      lea rcx, [rbp + 0x40]
+00226d39: e8 92 fe 6b 00                   call 0x8e6bd0
+00226d3e: 8b 08                            mov ecx, dword ptr [rax]
+00226d40: 01 8d 58 01 00 00                add dword ptr [rbp + 0x158], ecx
+00226d46: 48 8d 4d 40                      lea rcx, [rbp + 0x40]
+00226d4a: e8 21 d6 e6 ff                   call 0x94370
+00226d4f: 8b 85 58 01 00 00                mov eax, dword ptr [rbp + 0x158]
+00226d55: 05 e8 03 00 00                   add eax, 0x3e8
+00226d5a: 48 63 c8                         movsxd rcx, eax
+00226d5d: 48 63 c3                         movsxd rax, ebx
+00226d60: 48 0f af c8                      imul rcx, rax
+00226d64: 49 8b c5                         mov rax, r13
+00226d67: 48 f7 e9                         imul rcx
+00226d6a: 48 8b fa                         mov rdi, rdx
+00226d6d: 48 c1 ff 07                      sar rdi, 7
+00226d71: 48 8b c7                         mov rax, rdi
+00226d74: 48 c1 e8 3f                      shr rax, 0x3f
+00226d78: 48 03 f8                         add rdi, rax
+00226d7b: 49 8b 5e 08                      mov rbx, qword ptr [r14 + 8]
+00226d7f: 48 8d 95 68 01 00 00             lea rdx, [rbp + 0x168]
+00226d86: 48 8b cb                         mov rcx, rbx
+00226d89: e8 b2 82 8b 00                   call 0xadf040
+00226d8e: 48 8b 08                         mov rcx, qword ptr [rax]
+00226d91: 48 8b 05 38 6b 11 02             mov rax, qword ptr [rip + 0x2116b38]
+00226d98: 48 c1 e9 20                      shr rcx, 0x20
+00226d9c: 48 0f bf c9                      movsx rcx, cx
+00226da0: 48 8b 80 18 01 00 00             mov rax, qword ptr [rax + 0x118]
+00226da7: 48 8b 0c c8                      mov rcx, qword ptr [rax + rcx*8]
+00226dab: 48 81 c1 c0 28 00 00             add rcx, 0x28c0
+00226db2: e8 99 69 71 00                   call 0x93d750
+00226db7: 48 8d 48 08                      lea rcx, [rax + 8]
+00226dbb: 41 b8 df 01 00 00                mov r8d, 0x1df
+00226dc1: 48 8d 95 60 01 00 00             lea rdx, [rbp + 0x160]
+00226dc8: e8 03 fe 6b 00                   call 0x8e6bd0
+00226dcd: 48 8d 55 80                      lea rdx, [rbp - 0x80]
+00226dd1: 48 8b cb                         mov rcx, rbx
+00226dd4: e8 b7 03 8c 00                   call 0xae7190
+00226dd9: 90                               nop 
+00226dda: 41 b8 df 01 00 00                mov r8d, 0x1df
+00226de0: 48 8d 95 58 01 00 00             lea rdx, [rbp + 0x158]
+00226de7: 48 8d 4d 80                      lea rcx, [rbp - 0x80]
+00226deb: e8 e0 fd 6b 00                   call 0x8e6bd0
+00226df0: 8b 08                            mov ecx, dword ptr [rax]
+00226df2: 01 8d 60 01 00 00                add dword ptr [rbp + 0x160], ecx
+00226df8: 48 8d 4d 80                      lea rcx, [rbp - 0x80]
+00226dfc: e8 6f d5 e6 ff                   call 0x94370
+00226e01: 8b 85 60 01 00 00                mov eax, dword ptr [rbp + 0x160]
+00226e07: 05 e8 03 00 00                   add eax, 0x3e8
+00226e0c: 48 63 c8                         movsxd rcx, eax
+00226e0f: 48 63 c7                         movsxd rax, edi
+00226e12: 48 0f af c8                      imul rcx, rax
+00226e16: 49 8b c5                         mov rax, r13
+00226e19: 48 f7 e9                         imul rcx
+00226e1c: 48 8b da                         mov rbx, rdx
+00226e1f: 48 c1 fb 07                      sar rbx, 7
+00226e23: 48 8b c3                         mov rax, rbx
+00226e26: 48 c1 e8 3f                      shr rax, 0x3f
+00226e2a: 48 03 d8                         add rbx, rax
+00226e2d: 89 9d 58 01 00 00                mov dword ptr [rbp + 0x158], ebx
+00226e33: 89 b5 60 01 00 00                mov dword ptr [rbp + 0x160], esi
+00226e39: 4c 8d 85 58 01 00 00             lea r8, [rbp + 0x158]
+00226e40: 48 8d 95 60 01 00 00             lea rdx, [rbp + 0x160]
+00226e47: 49 8b cf                         mov rcx, r15
+00226e4a: e8 81 6a 8b 00                   call 0xadd8d0
+00226e4f: 49 63 46 20                      movsxd rax, dword ptr [r14 + 0x20]
+00226e53: 85 c0                            test eax, eax
+00226e55: 0f 88 e7 00 00 00                js 0x226f42
+00226e5b: 3b 05 63 76 11 02                cmp eax, dword ptr [rip + 0x2117663]
+00226e61: 0f 8f db 00 00 00                jg 0x226f42
+00226e67: 48 8b c8                         mov rcx, rax
+00226e6a: 48 8b 44 24 60                   mov rax, qword ptr [rsp + 0x60]
+00226e6f: 48 8b 80 90 01 00 00             mov rax, qword ptr [rax + 0x190]
+00226e76: 4c 8b 0c c8                      mov r9, qword ptr [rax + rcx*8]
+00226e7a: 4d 85 c9                         test r9, r9
+00226e7d: 0f 84 bf 00 00 00                je 0x226f42
+00226e83: 48 63 d3                         movsxd rdx, ebx
+00226e86: 48 63 0d db 75 11 02             movsxd rcx, dword ptr [rip + 0x21175db]
+00226e8d: 48 0f af d1                      imul rdx, rcx
+00226e91: 49 8b c5                         mov rax, r13
+00226e94: 48 f7 ea                         imul rdx
+00226e97: 48 c1 fa 07                      sar rdx, 7
+00226e9b: 48 8b ca                         mov rcx, rdx
+00226e9e: 48 c1 e9 3f                      shr rcx, 0x3f
+00226ea2: 48 03 d1                         add rdx, rcx
+00226ea5: 89 95 58 01 00 00                mov dword ptr [rbp + 0x158], edx
+00226eab: 4c 63 05 b2 75 11 02             movsxd r8, dword ptr [rip + 0x21175b2]
+00226eb2: 48 63 d6                         movsxd rdx, esi
+00226eb5: 4c 0f af c2                      imul r8, rdx
+00226eb9: 49 8b c5                         mov rax, r13
+00226ebc: 49 f7 e8                         imul r8
+00226ebf: 48 c1 fa 07                      sar rdx, 7
+00226ec3: 48 8b c2                         mov rax, rdx
+00226ec6: 48 c1 e8 3f                      shr rax, 0x3f
+00226eca: 48 03 d0                         add rdx, rax
+00226ecd: 89 95 60 01 00 00                mov dword ptr [rbp + 0x160], edx
+00226ed3: 4c 8d 85 58 01 00 00             lea r8, [rbp + 0x158]
+00226eda: 48 8d 95 60 01 00 00             lea rdx, [rbp + 0x160]
+00226ee1: 49 8b c9                         mov rcx, r9
+00226ee4: e8 e7 69 8b 00                   call 0xadd8d0
+00226ee9: eb 57                            jmp 0x226f42
+00226eeb: e8 90 dd 2a 01                   call 0x14d4c80
+00226ef0: f6 40 38 01                      test byte ptr [rax + 0x38], 1
+00226ef4: 74 3a                            je 0x226f30
+00226ef6: 0f b6 1d c7 a1 da 01             movzx ebx, byte ptr [rip + 0x1daa1c7]
+00226efd: 88 9d 60 01 00 00                mov byte ptr [rbp + 0x160], bl
+00226f03: c6 05 ba a1 da 01 01             mov byte ptr [rip + 0x1daa1ba], 1
+00226f0a: 4c 8d 05 2f 23 a2 01             lea r8, [rip + 0x1a2232f]
+00226f11: ba 85 0b 00 00                   mov edx, 0xb85
+00226f16: 48 8d 0d 3b 1e a2 01             lea rcx, [rip + 0x1a21e3b]
+00226f1d: e8 8e df 2a 01                   call 0x14d4eb0
+00226f22: 90                               nop 
+00226f23: 88 1d 9b a1 da 01                mov byte ptr [rip + 0x1daa19b], bl
+00226f29: 48 8b 9d 58 01 00 00             mov rbx, qword ptr [rbp + 0x158]
+00226f30: 4c 89 ad 58 01 00 00             mov qword ptr [rbp + 0x158], r13
+00226f37: 48 8b 4b 08                      mov rcx, qword ptr [rbx + 8]
+00226f3b: 49 8b c5                         mov rax, r13
+00226f3e: 48 89 41 58                      mov qword ptr [rcx + 0x58], rax
+00226f42: 48 81 c4 08 02 00 00             add rsp, 0x208
+00226f49: 41 5f                            pop r15
+00226f4b: 41 5e                            pop r14
+00226f4d: 41 5d                            pop r13
+00226f4f: 41 5c                            pop r12
+00226f51: 5f                               pop rdi
+00226f52: 5e                               pop rsi
+00226f53: 5b                               pop rbx
+00226f54: 5d                               pop rbp
+00226f55: c3                               ret 
+00226f56: 48 8d 0d 6b 3b 23 02             lea rcx, [rip + 0x2233b6b]
+00226f5d: e8 12 c0 80 01                   call 0x1a32f74
+00226f62: 83 3d 5f 3b 23 02 ff             cmp dword ptr [rip + 0x2233b5f], -1
+00226f69: 0f 85 ec ed ff ff                jne 0x225d5b
+00226f6f: 8b 05 4f 75 11 02                mov eax, dword ptr [rip + 0x211754f]
+00226f75: 99                               cdq 
+00226f76: 2b c2                            sub eax, edx
+00226f78: d1 f8                            sar eax, 1
+00226f7a: ff c0                            inc eax
+00add8d0: 48 89 5c 24 10                   mov qword ptr [rsp + 0x10], rbx
+00add8d5: 48 89 74 24 18                   mov qword ptr [rsp + 0x18], rsi
+00add8da: 48 89 7c 24 20                   mov qword ptr [rsp + 0x20], rdi
+00add8df: 41 56                            push r14
+00add8e1: 48 83 ec 30                      sub rsp, 0x30
+00add8e5: 49 8b f0                         mov rsi, r8
+00add8e8: 4c 8b f2                         mov r14, rdx
+00add8eb: 48 8b f9                         mov rdi, rcx
+00add8ee: e8 8d 73 9f 00                   call 0x14d4c80
+00add8f3: f6 40 38 01                      test byte ptr [rax + 0x38], 1
+00add8f7: 74 42                            je 0xadd93b
+00add8f9: 0f b6 1d c4 37 4f 01             movzx ebx, byte ptr [rip + 0x14f37c4]

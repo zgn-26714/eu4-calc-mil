@@ -9,70 +9,7 @@
       '<span class="morale-actual">内部实际：' + actual + '</span></span>';
   }
   function renderSimResults(dom, result, attacker, defender) {
-    // Summary cards
-    var winnerClass = result.winner === "attacker" ? "win" : (result.winner === "defender" ? "lose" : "draw");
-    var attClass = result.winner === "attacker" ? "win" : (result.winner === "defender" ? "lose" : "draw");
-    var defClass = result.winner === "defender" ? "win" : (result.winner === "attacker" ? "lose" : "draw");
-
-    var winnerLabel = result.winner === "attacker" ? "进攻方" : (result.winner === "defender" ? "防守方" : "平局");
-    if (result.winReason) {
-      winnerLabel += "（" + result.winReason + "）";
-    }
-    var attBreakLabel = result.attackerMoraleBreakDay === null ? "未溃败" : ("第" + result.attackerMoraleBreakDay + "天");
-    var defBreakLabel = result.defenderMoraleBreakDay === null ? "未溃败" : ("第" + result.defenderMoraleBreakDay + "天");
-
-    var attMoralePct = result.initialAttackerMorale > 0 ? (result.finalAttackerMorale / result.initialAttackerMorale * 100).toFixed(0) : 0;
-    var defMoralePct = result.initialDefenderMorale > 0 ? (result.finalDefenderMorale / result.initialDefenderMorale * 100).toFixed(0) : 0;
-
-    dom.simSummary.innerHTML =
-      '<div class="sim-summary-item">' +
-        '<span class="label">获胜方</span>' +
-        '<span class="value ' + winnerClass + '">' + winnerLabel + '</span>' +
-      '</div>' +
-      '<div class="sim-summary-item">' +
-        '<span class="label">总天数</span>' +
-        '<span class="value">' + result.totalDays + '</span>' +
-      '</div>' +
-      '<div class="sim-summary-item">' +
-        '<span class="label">攻方初始兵力</span>' +
-        '<span class="value">' + result.initialAttackerStrength + '</span>' +
-      '</div>' +
-      '<div class="sim-summary-item">' +
-        '<span class="label">攻方剩余兵力</span>' +
-        '<span class="value ' + attClass + '">' + result.finalAttackerStrength.toFixed(2) + '</span>' +
-      '</div>' +
-      '<div class="sim-summary-item">' +
-        '<span class="label">攻方初始士气</span>' +
-        '<span class="value">' + result.initialAttackerMorale.toFixed(2) + '</span>' +
-      '</div>' +
-      '<div class="sim-summary-item">' +
-        '<span class="label">攻方剩余士气</span>' +
-        '<span class="value ' + attClass + '">' + renderMoraleValues(result.finalAttackerMorale, result.finalAttackerStrength, result.attRegiments) + '（' + attMoralePct + '%）</span>' +
-      '</div>' +
-      '<div class="sim-summary-item">' +
-        '<span class="label">攻方溃败日</span>' +
-        '<span class="value ' + attClass + '">' + attBreakLabel + '</span>' +
-      '</div>' +
-      '<div class="sim-summary-item">' +
-        '<span class="label">守方初始兵力</span>' +
-        '<span class="value">' + result.initialDefenderStrength + '</span>' +
-      '</div>' +
-      '<div class="sim-summary-item">' +
-        '<span class="label">守方剩余兵力</span>' +
-        '<span class="value ' + defClass + '">' + result.finalDefenderStrength.toFixed(2) + '</span>' +
-      '</div>' +
-      '<div class="sim-summary-item">' +
-        '<span class="label">守方初始士气</span>' +
-        '<span class="value">' + result.initialDefenderMorale.toFixed(2) + '</span>' +
-      '</div>' +
-      '<div class="sim-summary-item">' +
-        '<span class="label">守方剩余士气</span>' +
-        '<span class="value ' + defClass + '">' + renderMoraleValues(result.finalDefenderMorale, result.finalDefenderStrength, result.defRegiments) + '（' + defMoralePct + '%）</span>' +
-      '</div>' +
-      '<div class="sim-summary-item">' +
-        '<span class="label">守方溃败日</span>' +
-        '<span class="value ' + defClass + '">' + defBreakLabel + '</span>' +
-      '</div>';
+    M['simulation/report'].renderOverview(dom, result, attacker, defender);
 
     // Table rows
     var rows = "";
@@ -223,6 +160,7 @@
     }
 
     tbody.innerHTML = rows;
+    if (tbody.lastElementChild) tbody.lastElementChild.classList.add('replay-current-row');
   }
 
 

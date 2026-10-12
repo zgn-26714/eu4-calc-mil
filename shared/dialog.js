@@ -3,6 +3,42 @@
 
   function initDialogDom(elements) {
     dom = elements;
+    initModalAccessibility();
+  }
+
+  function initModalAccessibility() {
+    var active = null;
+    var returnFocus = null;
+    var shell = document.querySelector('.app-shell');
+    var modals = Array.from(document.querySelectorAll('.confirm-dialog, .chart-lightbox'));
+    function focusable(modal) {
+      return Array.from(modal.querySelectorAll('button:not(:disabled), select:not(:disabled), input:not(:disabled), [tabindex="0"]')).filter(function(node) { return node.getClientRects().length; });
+    }
+    function sync() {
+      var visible = modals.filter(function(modal) { return modal.getAttribute('aria-hidden') === 'false'; }).pop() || null;
+      if (visible === active) return;
+      if (visible) {
+        if (!active) returnFocus = document.activeElement;
+        active = visible; shell.inert = true;
+        var panel = active.querySelector('[role="dialog"], [role="alertdialog"]');
+        panel.tabIndex = -1;
+        (focusable(active)[0] || panel).focus();
+      } else {
+        active = null; shell.inert = false;
+        if (returnFocus && returnFocus.isConnected && returnFocus.getClientRects().length) returnFocus.focus();
+        returnFocus = null;
+      }
+    }
+    var observer = new MutationObserver(sync);
+    modals.forEach(function(modal) { observer.observe(modal, {attributes:true, attributeFilter:['aria-hidden']}); });
+    document.addEventListener('keydown', function(event) {
+      if (!active || event.key !== 'Tab') return;
+      var items = focusable(active);
+      if (!items.length) { event.preventDefault(); return; }
+      var first = items[0], last = items[items.length - 1];
+      if (event.shiftKey && (document.activeElement === first || !active.contains(document.activeElement))) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && (document.activeElement === last || !active.contains(document.activeElement))) { event.preventDefault(); first.focus(); }
+    });
   }
 
   function openChartLightbox(title, contentHtml) {
@@ -21,7 +57,8 @@
     document.body.style.overflow = "";
   }
 
-  function openErrorDialog(message) {
+  function openErrorDialog(message, title) {
+    document.querySelector('#error-dialog-title').textContent = title || "输入有误";
     dom.errorDialogMessage.textContent = message || "请检查输入内容。";
     dom.errorDialog.style.display = "";
     dom.errorDialog.setAttribute("aria-hidden", "false");

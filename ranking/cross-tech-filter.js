@@ -91,6 +91,30 @@
     var groupMenu = document.getElementById("cross-tech-filter-group-menu");
     var clearBtn = document.getElementById("cross-tech-clear-filter");
 
+    function setMenu(button, menu, open) {
+      menu.style.display = open ? "" : "none";
+      button.setAttribute("aria-expanded", String(open));
+      if (open) {
+        menu.style.left = "0px"; menu.style.right = "auto";
+        var rect = menu.getBoundingClientRect();
+        menu.style.left = Math.max(12 - rect.left, Math.min(0, window.innerWidth - 12 - rect.right)) + "px";
+      }
+    }
+    function closeMenus() { setMenu(typeBtn, typeMenu, false); setMenu(groupBtn, groupMenu, false); }
+    [[typeBtn, typeMenu, "筛选兵种类型"], [groupBtn, groupMenu, "筛选兵种组"]].forEach(function(pair) {
+      var button = pair[0], menu = pair[1];
+      button.setAttribute("aria-label", pair[2]);
+      button.setAttribute("aria-controls", menu.id);
+      button.setAttribute("aria-expanded", "false");
+      menu.setAttribute("role", "group"); menu.setAttribute("aria-label", pair[2]);
+      button.addEventListener("keydown", function(event) {
+        if (event.key === "ArrowDown") { event.preventDefault(); closeMenus(); setMenu(button, menu, true); menu.querySelector("input").focus(); }
+      });
+      menu.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") { event.preventDefault(); closeMenus(); button.focus(); }
+      });
+    });
+
     buildMenu(typeMenu, UNIT_TYPE_OPTIONS, filterState.selectedTypes, function() {
       applyFilter(dom);
     });
@@ -100,26 +124,25 @@
 
     typeBtn.addEventListener("click", function(e) {
       e.stopPropagation();
-      groupMenu.style.display = "none";
-      typeMenu.style.display = typeMenu.style.display === "none" ? "" : "none";
+      var open = typeMenu.style.display === "none";
+      closeMenus(); setMenu(typeBtn, typeMenu, open);
     });
     groupBtn.addEventListener("click", function(e) {
       e.stopPropagation();
-      typeMenu.style.display = "none";
-      groupMenu.style.display = groupMenu.style.display === "none" ? "" : "none";
+      var open = groupMenu.style.display === "none";
+      closeMenus(); setMenu(groupBtn, groupMenu, open);
     });
 
-    document.addEventListener("click", function() {
-      typeMenu.style.display = "none";
-      groupMenu.style.display = "none";
-    });
+    document.addEventListener("click", closeMenus);
+    window.addEventListener("resize", closeMenus);
+    document.addEventListener("keydown", function(event) { if (event.key === "Escape") closeMenus(); });
     typeMenu.addEventListener("click", function(e) { e.stopPropagation(); });
     groupMenu.addEventListener("click", function(e) { e.stopPropagation(); });
 
     if (clearBtn) {
       clearBtn.addEventListener("click", function() {
-        filterState.selectedTypes = [];
-        filterState.selectedGroups = [];
+        filterState.selectedTypes.length = 0;
+        filterState.selectedGroups.length = 0;
         var cbs = typeMenu.querySelectorAll("input[type='checkbox']");
         for (var i = 0; i < cbs.length; i++) cbs[i].checked = false;
         cbs = groupMenu.querySelectorAll("input[type='checkbox']");

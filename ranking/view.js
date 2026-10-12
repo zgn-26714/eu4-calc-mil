@@ -162,6 +162,49 @@
         '</tr>';
     }
     dom.rankingTbody.innerHTML = rows;
+    renderScoreComparison(result, dom);
+  }
+
+  function renderScoreComparison(result, dom) {
+    var select = document.querySelector('#ranking-unit-select');
+    var chart = document.querySelector('#ranking-score-chart');
+    var podium = document.querySelector('#ranking-podium');
+    select.innerHTML = ''; chart.innerHTML = ''; podium.innerHTML = '';
+    var max = Math.max(1, result.rankings.reduce(function(best, entry) { return Math.max(best, entry.points); }, 0));
+    result.rankings.forEach(function(entry, index) {
+      var label = formatTournamentCandidate(entry.candidate);
+      var option = document.createElement('option'); option.value = index; option.textContent = (index + 1) + '. ' + label; select.append(option);
+      var row = document.createElement('button'); row.type = 'button'; row.className = 'ranking-score-row' + (index < 3 ? ' is-top' : '');
+      row.dataset.rank = index; row.setAttribute('aria-pressed', 'false');
+      row.setAttribute('aria-label', '第 ' + (index + 1) + ' 名，' + label + '，积分 ' + entry.points + '，点击选中');
+      var rank = document.createElement('span'); rank.textContent = index + 1;
+      var name = document.createElement('span'); name.textContent = label;
+      var track = document.createElement('span'); track.className = 'ranking-score-track'; track.setAttribute('aria-hidden', 'true');
+      var fill = document.createElement('span'); fill.className = 'ranking-score-fill'; fill.style.width = Math.max(0, entry.points / max * 100) + '%'; track.append(fill);
+      var score = document.createElement('strong'); score.textContent = entry.points;
+      row.append(rank, name, track, score); chart.append(row);
+      row.addEventListener('click', function() { select.value = index; highlight(false); });
+      if (index < 3) {
+        var card = document.createElement('article'); card.className = 'podium-card';
+        var badge = document.createElement('span'); badge.className = 'report-kicker'; badge.textContent = '第 ' + (index + 1) + ' 名';
+        var title = document.createElement('h4'); title.textContent = translateUnit(entry.candidate.unitName);
+        var meta = document.createElement('p'); meta.textContent = translateGroup(entry.candidate.group) + ' · ' + entry.points + ' 分';
+        card.append(badge, title, meta); podium.append(card);
+      }
+    });
+    function highlight(scroll) {
+      var index = Number(select.value); var entry = result.rankings[index]; if (!entry) return;
+      chart.querySelectorAll('.ranking-score-row').forEach(function(row, i) { row.setAttribute('aria-pressed', String(i === index)); });
+      dom.rankingTbody.querySelectorAll('tr').forEach(function(row, i) { row.classList.toggle('ranking-selected', i === index); });
+      var output = document.querySelector('#ranking-selection');
+      output.textContent = '选中：' + formatTournamentCandidate(entry.candidate) + ' · 第 ' + (index + 1) + ' 名 · ' + entry.points + ' 分 · 胜 / 平 / 负 ' + entry.wins + ' / ' + entry.draws + ' / ' + entry.losses;
+      if (scroll) {
+        var target = chart.children[index];
+        chart.scrollTop += target.getBoundingClientRect().top - chart.getBoundingClientRect().top - chart.clientHeight / 2;
+      }
+    }
+    select.onchange = function() { highlight(true); };
+    select.value = '0'; highlight(false); chart.scrollTop = 0;
   }
 
   function renderRankingLogPreview(logText, dom) {

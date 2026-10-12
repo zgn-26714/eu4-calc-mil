@@ -108,7 +108,11 @@
     }
     if (control.dataset.warnedStrengthValue === control.value) return;
     control.dataset.warnedStrengthValue = control.value;
-    window.alert("当前模型只按 1000 兵且固定前排计算；当初始兵力超过 1000 时，计算结果目前是不正确的。");
+    showInputNotice("当前模型只按 1000 兵且固定前排计算；当初始兵力超过 1000 时，计算结果目前是不正确的。");
+  }
+
+  function showInputNotice(message) {
+    M['shared/dialog'].openErrorDialog(message, "使用提示");
   }
 
   function lockNumericControl(control, reason) {
@@ -123,7 +127,7 @@
       var now = Date.now();
       if (now - lastNoticeAt < 800) return;
       lastNoticeAt = now;
-      window.alert(reason);
+      showInputNotice(reason);
     }
 
     control.addEventListener("pointerdown", function(event) {
@@ -159,6 +163,7 @@
     formatTemplateValue: formatTemplateValue,
     formatRemainingMorale: formatRemainingMorale,
     maybeWarnStrengthLimit: maybeWarnStrengthLimit,
+    showInputNotice: showInputNotice,
     lockNumericControl: lockNumericControl
   };
 })(window._M = window._M || {});

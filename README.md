@@ -55,6 +55,7 @@ P = 骰子 + 将领差 + 攻方进攻点数 - 守方防御点数 - 地形惩罚
 │   └── view.js             # 单日结果渲染
 ├── simulation/
 │   ├── logic.js            # 多回合推演编排
+│   ├── report.js           # 战报总览、每日趋势与已算结果回放
 │   └── view.js             # 推演结果表格渲染
 ├── ranking/
 │   ├── logic.js            # 循环赛算法
@@ -65,6 +66,7 @@ P = 骰子 + 将领差 + 攻方进攻点数 - 守方防御点数 - 地形惩罚
 └── styles/
     ├── base.css, layout.css, components.css
     ├── single.css, simulation.css, ranking.css
+    ├── parchment.css, report.css # 羊皮纸主题与战报布局
 ```
 
 ### 模块设计
@@ -79,6 +81,12 @@ P = 骰子 + 将领差 + 攻方进攻点数 - 守方防御点数 - 地形惩罚
 ```
 
 数据层 → 共享计算引擎 → 各功能模块 → main.js 编排与事件绑定。
+
+### 界面验收
+
+有 Node.js、Playwright 与 Chrome 的开发环境可运行 `node tests/ui-regression.cjs`。Windows 默认使用已安装的 Chrome；其他环境使用 Playwright Chromium，也可通过 `CHROME_PATH` 指定浏览器。`PLAYWRIGHT_MODULE` 可指定 Playwright 模块路径，`EU4_SCREENSHOTS` 可指定截图目录。
+
+验收涵盖三种模式与当前 Git HEAD 参数读取的数值对比、每日趋势与日志一致性、回放控制与不重算保证、输入保留、四种屏宽、科技排行、筛选、弹窗键盘焦点、两类排行导出和减少动画。具体范围见 [界面验收记录](docs/ui-acceptance.md)。
 
 ## 数据来源
 

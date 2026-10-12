@@ -142,7 +142,7 @@
     var fallbackType = controls.unitType.dataset.lastValidValue;
     if (!fallbackType || fallbackType === "Artillery") fallbackType = "Infantry";
     controls.unitType.value = fallbackType;
-    if (shouldAlert) window.alert("7军科前不存在炮兵。");
+    if (shouldAlert) uiHelpers.showInputNotice("7军科前不存在炮兵。");
     return true;
   }
 
@@ -164,11 +164,16 @@
         var btn = document.createElement("button");
         btn.type = "button";
         btn.className = "unit-btn" + (unit.unitName === currentUnit ? " selected" : "");
+        btn.setAttribute("aria-pressed", String(unit.unitName === currentUnit));
         btn.textContent = translateUnit(unit.unitName);
         btn.addEventListener("click", function() {
           var allBtns = container.querySelectorAll(".unit-btn");
-          for (var j = 0; j < allBtns.length; j++) allBtns[j].classList.remove("selected");
+          for (var j = 0; j < allBtns.length; j++) {
+            allBtns[j].classList.remove("selected");
+            allBtns[j].setAttribute("aria-pressed", "false");
+          }
           btn.classList.add("selected");
+          btn.setAttribute("aria-pressed", "true");
           if (!controls.unit) {
             var hidden = document.createElement("input");
             hidden.type = "hidden";
@@ -232,12 +237,8 @@
       var schemaMap = {};
       sideSchemas.template.forEach(function(s) { schemaMap[s.key] = s; });
       templateLayout.forEach(function(group) {
-        var section = document.createElement("div");
-        section.className = "template-section";
-        var header = document.createElement("div");
-        header.className = "template-section-header";
-        header.textContent = group.title;
-        section.append(header);
+        var section = createParameterSection(group.title, group.title === "基础属性");
+        section.classList.add("template-section");
         var row = document.createElement("div");
         row.className = "template-parameter-grid";
         group.fields.forEach(function(key) {
@@ -263,11 +264,11 @@
         });
         section.append(row);
         mount.append(section);
+        trackModifiedFields(section, side, group.fields);
       });
     } else {
       var leaderKeys = ["leaderFire", "leaderShock", "leaderManeuver", "leaderSiege"];
-      var selectorKeys = ["group", "unitType", "techLevel"];
-      var sideHead = document.querySelector("#" + side + "-card .side-head");
+      var selectorKeys = ["group", "unitType", "techLevel", "strength"];
       var selectorStrip = document.createElement("div");
       selectorStrip.className = "battle-selector-strip";
       var selectorRow = document.createElement("div");
@@ -281,9 +282,14 @@
 /* __PLACEHOLDER_STATE_BUILDPANEL2__ */
 
       var unitRow = document.createElement("div");
-      unitRow.className = "battle-unit-row battle-unit-row-head";
+      unitRow.className = "battle-unit-row";
       unitRow.id = side + "-unit-buttons";
-      if (sideHead) sideHead.append(unitRow);
+      unitRow.setAttribute("role", "group");
+      unitRow.setAttribute("aria-label", "具体兵种");
+      var unitTitle = document.createElement("div");
+      unitTitle.className = "battle-leader-title";
+      unitTitle.textContent = "具体兵种";
+      selectorStrip.append(unitTitle, unitRow);
       mount.append(selectorStrip);
 
       var leaderSection = document.createElement("div");
@@ -302,14 +308,24 @@
       leaderSection.append(leaderRow);
       mount.append(leaderSection);
 
-      var restRow = document.createElement("div");
-      restRow.className = "battle-field-grid battle-field-grid-stats";
-      sideSchemas[side].forEach(function(schema) {
-        if (selectorKeys.indexOf(schema.key) < 0 && leaderKeys.indexOf(schema.key) < 0) {
-          createField(side, schema, restRow);
-        }
+      var modifierGroups = [
+        { title: "作战能力与战术", fields: ["combatAbility", "discipline", "extraMilitaryTactics"] },
+        { title: "兵员伤害修正", fields: ["fireDamage", "shockDamage", "damageDone", "damageTaken"] },
+        { title: "士气修正", fields: ["moraleBonus", "moraleDamageDone", "moraleDamageTaken"] },
+        { title: "传统与额外修正", fields: ["armyTradition", "prestige", "powerProjection", "professionalism"] }
+      ];
+      modifierGroups.forEach(function(group) {
+        var section = createParameterSection(group.title, false);
+        var row = document.createElement("div");
+        row.className = "battle-field-grid battle-field-grid-stats";
+        group.fields.forEach(function(key) {
+          var schema = sideSchemas[side].find(function(item) { return item.key === key; });
+          createField(side, schema, row);
+        });
+        section.append(row);
+        mount.append(section);
+        trackModifiedFields(section, side, group.fields);
       });
-      mount.append(restRow);
 
       function refresh(event) {
         syncSideUnitButtons(side, !!event);
@@ -320,6 +336,37 @@
       });
       syncSideUnitButtons(side, false);
     }
+  }
+  // Native details only hides controls: values and event listeners stay mounted.
+  function createParameterSection(title, open) {
+    var section = document.createElement("details");
+    section.className = "parameter-section";
+    section.open = open;
+    var summary = document.createElement("summary");
+    var label = document.createElement("span");
+    label.textContent = title;
+    var status = document.createElement("span");
+    status.className = "parameter-status";
+    summary.append(label, status);
+    section.append(summary);
+    return section;
+  }
+
+  function trackModifiedFields(section, side, keys) {
+    var status = section.querySelector(".parameter-status");
+    function update() {
+      var count = keys.filter(function(key) {
+        var schema = sideSchemas[side].find(function(item) { return item.key === key; });
+        return Number(sideState[side][key].value) !== schema.value;
+      }).length;
+      status.textContent = count ? count + " 项已修改" : keys.length + " 项参数";
+      status.classList.toggle("is-modified", count > 0);
+    }
+    keys.forEach(function(key) {
+      sideState[side][key].addEventListener("input", update);
+      sideState[side][key].addEventListener("change", update);
+    });
+    update();
   }
 /* __PLACEHOLDER_STATE_INITOPTIONS__ */
 

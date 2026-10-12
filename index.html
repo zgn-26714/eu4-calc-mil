@@ -10,18 +10,21 @@
   <link rel="stylesheet" href="./styles/single.css">
   <link rel="stylesheet" href="./styles/simulation.css">
   <link rel="stylesheet" href="./styles/ranking.css">
+  <link rel="stylesheet" href="./styles/parchment.css">
+  <link rel="stylesheet" href="./styles/report.css">
 </head>
 <body>
   <div class="app-shell">
     <section class="result-topbar results-only">
-      <h1>EU4 陆战双向兵员伤害计算器</h1>
-      <button id="back-button" class="back-button" style="display:none" type="button">返回</button>
+      <div><span class="report-kicker">EUROPA UNIVERSALIS IV · 战报</span><h1 id="result-title">陆战战报</h1></div>
+      <button id="back-button" class="back-button secondary" style="display:none" type="button">返回修改配置</button>
     </section>
 
     <header class="topbar settings-only">
       <div>
+        <span class="report-kicker">EUROPA UNIVERSALIS IV · 陆战推演</span>
         <h1>EU4 陆战双向兵员伤害计算器</h1>
-        <p>双栏独立配置进攻方与防守方，按兵种组、兵种、军科和阶段同时结算双方兵员损失。</p>
+        <p>配置双方军队与战场条件，推演兵员损失、士气变化与兵种表现。</p>
       </div>
       <div class="phase-box">
         <label class="field compact">
@@ -130,20 +133,23 @@
     <main class="battle-grid settings-only">
       <section class="side-card attacker" id="attacker-card">
         <div class="side-head">
-          <h2>进攻方</h2>
+          <span class="army-banner" aria-hidden="true">⚔</span>
+          <div><span class="army-caption">ATTACKER · 进攻阵营</span><h2>进攻方</h2></div>
         </div>
         <div id="attacker-fields"></div>
       </section>
 
       <section class="side-card defender" id="defender-card">
         <div class="side-head">
-          <h2>防守方</h2>
+          <span class="army-banner" aria-hidden="true">◇</span>
+          <div><span class="army-caption">DEFENDER · 防守阵营</span><h2>防守方</h2></div>
         </div>
         <div id="defender-fields"></div>
       </section>
     </main>
 
-    <section class="results-grid results-only">
+    <p id="single-summary" class="single-context results-only" style="display:none"></p>
+    <section class="results-grid results-only" aria-label="单日损失总览">
       <article class="result-card">
         <span class="result-label">进攻方兵员损失</span>
         <strong id="attacker-loss">0.00</strong>
@@ -168,6 +174,25 @@
       </div>
       <div class="sim-summary" id="sim-summary"></div>
       <p class="morale-explanation">剩余士气同时列出「游戏显示」与「内部实际」：游戏显示用于对照战斗提示框；内部实际保留三位小数，用于后续扣减、士气百分比和胜负判定。多团暂仅提供模型内部总士气。</p>
+      <section class="battle-replay" aria-labelledby="replay-heading">
+        <div class="report-section-head"><h3 id="replay-heading">战况回放</h3><output id="replay-day" aria-live="off"></output></div>
+        <div id="replay-armies" class="army-report-grid"></div>
+        <div class="replay-controls">
+          <button id="replay-play" type="button" aria-pressed="false">播放</button>
+          <button id="replay-restart" class="secondary" type="button">重播</button>
+          <label class="replay-speed">播放速度 <select id="replay-speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="4">4×</option></select></label>
+          <output id="replay-status" role="status">已暂停</output>
+        </div>
+        <label class="replay-progress-label" for="replay-progress">定位战斗日 <span id="replay-position"></span></label>
+        <input id="replay-progress" type="range" min="0" max="0" value="0" step="1" aria-label="定位战斗日">
+        <div class="report-section-head trend-heading"><h3>战况趋势</h3><div class="trend-switch" role="group" aria-label="趋势指标"><button id="trend-strength" class="secondary" type="button" aria-pressed="true">兵力</button><button id="trend-morale" class="secondary" type="button" aria-pressed="false">士气</button></div></div>
+        <div class="trend-legend"><span class="attacker-legend">进攻方 · 实线</span><span class="defender-legend">防守方 · 虚线</span></div>
+        <div id="battle-trend" tabindex="0" role="group" aria-label="每日趋势图，左右方向键选择日期，Home 和 End 定位首尾"></div>
+        <output id="trend-readout" class="trend-readout" aria-live="off"></output>
+        <p class="report-hint">悬停查看每日数值，点击曲线或拖动进度定位；可用方向键逐日查看。淡色曲线为尚未播放的战况。</p>
+      </section>
+      <details class="daily-log round-log">
+        <summary class="daily-log-summary">每轮结算明细</summary>
       <div class="sim-table-wrap">
         <table class="sim-table" id="sim-table">
           <thead>
@@ -194,6 +219,7 @@
           <tbody id="sim-tbody"></tbody>
         </table>
       </div>
+      </details>
       <details class="daily-log" id="daily-log" style="margin-top:12px;">
         <summary class="daily-log-summary">每日损伤日志</summary>
         <div class="sim-table-wrap">
@@ -209,8 +235,8 @@
                 <th>守方<br>兵员损失</th>
                 <th>攻方<br>剩余兵力</th>
                 <th>守方<br>剩余兵力</th>
-                <th>攻方<br>主动士气损</th>
-                <th>守方<br>主动士气损</th>
+                <th>攻方<br>士气损失</th>
+                <th>守方<br>士气损失</th>
                 <th>攻方<br>当前士气</th>
                 <th>守方<br>当前士气</th>
                 <th>攻方<br>溃败团</th>
@@ -233,6 +259,7 @@
         <button id="cross-tech-ranking-btn" class="secondary">遍历科技排行</button>
       </div>
       <div class="sim-summary sim-summary--row" id="ranking-summary"></div>
+      <section class="ranking-comparison" aria-labelledby="ranking-comparison-title"><div class="report-section-head"><h3 id="ranking-comparison-title">兵种积分对比</h3><label class="ranking-select-label">选中兵种 <select id="ranking-unit-select"></select></label></div><div id="ranking-podium" class="ranking-podium"></div><div id="ranking-score-chart"></div><output id="ranking-selection" class="report-hint" aria-live="polite"></output></section>
       <div class="sim-table-wrap">
         <table class="sim-table">
           <thead>
@@ -256,13 +283,11 @@
       </div>
     </section>
 
-    <section class="details results-only" id="ranking-log-section" style="display:none">
-      <div class="details-head">
-        <h3>配对日志预览</h3>
-        <p>这里展示前若干行，完整日志请点击“下载配对日志”。</p>
-      </div>
+    <details class="details results-only" id="ranking-log-section" style="display:none">
+      <summary class="daily-log-summary">配对日志预览</summary>
+      <p>这里展示前若干行，完整日志请点击“下载配对日志”。</p>
       <pre id="ranking-log-output"></pre>
-    </section>
+    </details>
 
     <section class="sim-results results-only" id="cross-tech-section" style="display:none">
       <div class="details-head">
@@ -347,13 +372,11 @@
       <button id="download-cross-tech" class="secondary" style="margin-top:12px;" disabled>下载 CSV</button>
     </section>
 
-    <section class="details results-only" id="details-section">
-      <div class="details-head">
-        <h3>结算详情</h3>
-        <p>这里会拆开显示双方的兵种点数、科技修正和战术值。</p>
-      </div>
+    <details class="details results-only" id="details-section">
+      <summary class="daily-log-summary">结算详情与计算过程</summary>
+      <p>这里会拆开显示双方的兵种点数、科技修正和战术值。</p>
       <pre id="details-output"></pre>
-    </section>
+    </details>
   </div>
 
   <div class="chart-lightbox" id="chart-lightbox" style="display:none;" aria-hidden="true">
@@ -423,6 +446,7 @@
   <script src="./shared/battle-sim.js"></script>
   <script src="./single/logic.js"></script>
   <script src="./single/view.js"></script>
+  <script src="./simulation/report.js"></script>
   <script src="./simulation/logic.js"></script>
   <script src="./simulation/view.js"></script>
   <script src="./ranking/logic.js"></script>

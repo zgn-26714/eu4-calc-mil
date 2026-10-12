@@ -180,10 +180,13 @@ function getCalcMode() {
 }
 
 function updateModeUI() {
+  var wasSettings = document.body.classList.contains("settings-view");
   var mode = getCalcMode();
   var isSingle = mode === "single";
   var isSim = mode === "simulation";
   var isRanking = mode === "ranking";
+  if (uiView === "settings" || resultMode !== "simulation") M['simulation/report'].pause();
+  document.querySelector("#single-summary").style.display = uiView !== "settings" && resultMode === "single" ? "" : "none";
 
   calculateButton.textContent = isRanking ? "开始排行" : "计算双方损失";
 
@@ -209,7 +212,8 @@ function updateModeUI() {
     templateCard.style.display = "none";
     phaseBox.style.display = "none";
     battleGrid.style.display = "none";
-    resultsGrid.style.display = resultMode === "single" || resultMode === "simulation" ? "" : "none";
+    resultsGrid.style.display = resultMode === "single" ? "" : "none";
+    document.querySelector("#result-title").textContent = {single:"单日战报", simulation:"多轮战报", ranking:"兵种排行战报", "cross-tech":"全科技排行战报"}[resultMode] || "陆战战报";
     simResults.style.display = resultMode === "simulation" ? "" : "none";
     rankingResults.style.display = resultMode === "ranking" ? "" : "none";
     rankingLogSection.style.display = resultMode === "ranking" ? "" : "none";
@@ -223,6 +227,11 @@ function updateModeUI() {
   }
 
   updateSimDiceVisibility();
+  if (wasSettings !== (uiView === "settings")) {
+    requestAnimationFrame(function() {
+      if (!document.querySelector('.app-shell').inert) (uiView === "settings" ? calculateButton : backButton).focus();
+    });
+  }
 }
 
 function updateSimDiceVisibility() {
@@ -541,10 +550,17 @@ function bindEvents() {
 }
 
 // ---- Init ----
+document.querySelectorAll('.sim-table-wrap').forEach(function(region) {
+  region.tabIndex = 0;
+  region.setAttribute('role', 'region');
+  var table = region.querySelector('table');
+  region.setAttribute('aria-label', {"sim-table":"每轮结算表", "daily-log-table":"每日损伤日志", "cross-tech-table":"全科技排行表"}[table.id] || "兵种排行表");
+});
 buildPanel("attacker");
 buildPanel("defender");
 buildPanel("template");
 initOptions();
+M['simulation/report'].initReplay();
 bindEvents();
 document.body.className = "settings-view";
 updateModeUI();
